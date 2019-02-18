@@ -46,6 +46,16 @@ void cm_value_construct(struct cm_value * value) {
   value->reduce_fn = NULL;
 }
 
+void cm_value_construct_set(struct cm_value * value, float absolute) {
+  cm_value_construct(value);
+  cm_value_set(value, absolute);
+}
+
+void cm_value_destruct(struct cm_value * value) {
+  cm_value_unlink_all_downstream(value);
+  cm_value_unlink_all_upstream(value);
+}
+
 enum cm_value_link_result
 cm_value_link(struct cm_value * value, struct cm_value * up) {
   uint16_t i = 0;

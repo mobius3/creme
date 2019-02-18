@@ -82,6 +82,16 @@ struct cm_value
  */
 void cm_value_construct(struct cm_value * value);
 
+
+/**
+ * Constructs a cm_value with 0 offset and the argument given as absolute.
+ *
+ * This is equivalent to calling cm_value_construct and cm_value_set
+ *
+ * @param value the `cm_value` instance.
+ */
+void cm_value_construct_set(struct cm_value * value, float absolute);
+
 /**
  * Construct a cm_value with 0 offset and 0 absolute. It also sets a custom
  * reduce function that should be able to receive upstream absolute values and

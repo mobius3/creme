@@ -83,6 +83,23 @@ cm_value_link(struct cm_value * value, struct cm_value * up) {
   return cm_value_link__ok;
 }
 
+enum cm_value_link_result
+cm_value_link_offset(struct cm_value * value, struct cm_value * up, float off) {
+  float old = value->offset;
+  value->offset = off;
+  enum cm_value_link_result r = cm_value_link(value, up);
+  if (r != cm_value_link__ok) value->offset = old;
+  return r;
+}
+
+void cm_value_offset_set(struct cm_value * value, float offset) {
+  value->offset = offset;
+  cm_value_update(value);
+}
+
+float cm_value_offset_get(struct cm_value * value) {
+  return value->offset;
+}
 
 void cm_value_unlink(struct cm_value * value, struct cm_value * up) {
   uint16_t up_i = 0, down_i = 0;

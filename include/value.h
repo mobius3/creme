@@ -179,6 +179,41 @@ float cm_value_update(struct cm_value * value);
 enum cm_value_link_result
 cm_value_link(struct cm_value * value, struct cm_value * up);
 
+
+/**
+ * Links a value to an upstream value and sets an offset to it.
+ *
+ * This is equivalent to calling cm_value_offset_set and cm_value_link, in this
+ * order. If linking fails, offset is not changed.
+ *
+ * @param value The cm_value instance
+ * @param up The cm_value upstream instance
+ * @return the result of linking.
+ * @sa cm_value_link
+ */
+enum cm_value_link_result
+cm_value_link_offset(struct cm_value * value, struct cm_value * up, float off);
+
+/**
+ * Sets the offset amount of a value and triggers downstream update if
+ * resulting absolute is changed.
+ *
+ * @param value the cm_value instance
+ * @param offset the offset amount
+ */
+void cm_value_offset_set(struct cm_value * value, float offset);
+
+/**
+ * Gets the offset value of a cm_value.
+ *
+ * This is equivalent to accessing value->offset directly (you shouldn't change
+ * it directly, though).
+ *
+ * @param value The cm_value instance
+ * @return value->offset
+ */
+float cm_value_offset_get(struct cm_value * value);
+
 /**
  * Break the link between a value and an upstream value. This will trigger
  * value updates.

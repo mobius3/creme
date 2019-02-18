@@ -3,7 +3,11 @@ project(creme C)
 
 set(CMAKE_C_STANDARD 90)
 
-add_library(creme src/value.c include/value.h)
+add_library(creme
+  src/value.c
+  include/value.h
+  src/area.c
+  include/area.h)
 target_include_directories(creme PUBLIC include)
 
 add_executable(creme-sandbox creme-sandbox.c)

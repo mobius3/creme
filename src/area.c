@@ -5,7 +5,7 @@
 
 float cm_area_reduce_subtract(float const values[], uint16_t value_count) {
   if (value_count < 2) return 0;
-  return values[1] - values[0];
+  return values[0] - values[1];
 }
 
 void cm_area_construct(struct cm_area * area) {
@@ -19,11 +19,11 @@ void cm_area_construct(struct cm_area * area) {
   cm_value_construct_average(&area->center.x);
   cm_value_construct_average(&area->center.y);
 
-  cm_value_link(&area->center.x, &area->left);
   cm_value_link(&area->center.x, &area->right);
+  cm_value_link(&area->center.x, &area->left);
 
-  cm_value_link(&area->center.y, &area->top);
   cm_value_link(&area->center.y, &area->bottom);
+  cm_value_link(&area->center.y, &area->top);
 
   cm_value_link(&area->width, &area->left);
   cm_value_link(&area->width, &area->right);

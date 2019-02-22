@@ -7,7 +7,9 @@ add_library(creme
   src/value.c
   include/value.h
   src/area.c
-  include/area.h)
+  include/area.h
+  src/render-command.c
+  include/render-command.h)
 target_include_directories(creme PUBLIC include)
 
 add_executable(creme-sandbox creme-sandbox.c)

@@ -10,8 +10,7 @@ void cm_render_command_construct(
 void
 cm_render_command_construct_set_tile(
   struct cm_render_command * command,
-  uint16_t tile_x,
-  uint16_t tile_y,
+  struct cm_tile tile,
   float left,
   float top,
   float right,
@@ -22,16 +21,14 @@ cm_render_command_construct_set_tile(
   command->target.top = top;
   command->target.right = right;
   command->target.bottom = bottom;
-  command->tile.x = tile_x;
-  command->tile.y = tile_y;
+  command->tile = tile;
 }
 
 
 void
 cm_render_command_construct_tile(
   struct cm_render_command * command,
-  uint16_t tile_x,
-  uint16_t tile_y,
+  struct cm_tile tile,
   float left,
   float top,
   float right,
@@ -40,8 +37,7 @@ cm_render_command_construct_tile(
   cm_render_command_construct(command, cm_render_command__tile);
   cm_render_command_set_tile(
     command,
-    tile_x,
-    tile_y,
+    tile,
     left, top, right, bottom
     );
 }

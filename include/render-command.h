@@ -2,6 +2,7 @@
 #define CREME_RENDER_COMMAND_H
 
 #include <stdint.h>
+#include "tile.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,11 +26,7 @@ struct cm_render_command
   union
   {
     /** Tile-rendering specific information */
-    struct
-    {
-      uint16_t x;
-      uint16_t y;
-    } tile;
+    struct cm_tile tile;
   };
 
   /** The target coordinates ("canvas"-wise) Creme expect this to be rendered */
@@ -52,7 +49,7 @@ struct cm_render_command
  */
 extern void cm_render_command_construct_tile(
   struct cm_render_command * command,
-  uint16_t tile_x, uint16_t tile_y,
+  struct cm_tile tile,
   float left, float top, float right, float bottom);
 
 /**
@@ -67,7 +64,7 @@ extern void cm_render_command_construct_tile(
  */
 extern void cm_render_command_set_tile(
   struct cm_render_command * command,
-  uint16_t tile_x, uint16_t tile_y,
+  struct cm_tile tile,
   float left, float top, float right, float bottom);
 
 /**

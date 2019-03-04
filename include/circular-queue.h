@@ -28,7 +28,7 @@ Name##_dequeue__empty \
 }; \
  \
 void Name##_construct(struct Name * queue, Type buffer[], uint16_t size); \
-enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type item); \
+enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type const * item); \
 enum Name##_dequeue_result Name##_dequeue(struct Name * q, Type * item); \
 int8_t Name##_is_full(struct Name const * q); \
 int8_t Name##_is_empty(struct Name const * q); \
@@ -49,13 +49,13 @@ void Name##_construct(struct Name * queue, Type buffer[], uint16_t size) { \
   queue->write_head = -1; \
 } \
 \
-enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type item) { \
+enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type const * item) { \
   if (Name##_is_full(q)) return Name##_enqueue__full; \
   if (q->write_head == -1) { \
     q->write_head = 0; \
     q->read_head = 0; \
   } \
-  q->buffer[q->write_head] = item; \
+  q->buffer[q->write_head] = *item; \
   q->write_head = (q->write_head + 1) % q->size; \
   q->count += 1; \
   return Name##_enqueue__ok; \

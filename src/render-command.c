@@ -11,7 +11,7 @@ void cm_render_command_construct(
 
 
 void
-cm_render_command_construct_set_tile(
+cm_render_command_set_tile(
   struct cm_render_command * command,
   struct cm_tile tile,
   struct cm_rect rect)

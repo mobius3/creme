@@ -5,13 +5,11 @@ set(CMAKE_C_STANDARD 90)
 
 add_library(creme
   src/value.c
-  include/value.h
   src/area.c
-  include/area.h
   src/render-command.c
-  include/render-command.h
-  include/tile.h
   src/tile.c
+  src/render-queue.c
+  src/rect.c
   )
 target_include_directories(creme PUBLIC include)
 

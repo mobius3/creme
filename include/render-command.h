@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "tile.h"
+#include "rect.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,10 +31,7 @@ struct cm_render_command
   };
 
   /** The target coordinates ("canvas"-wise) Creme expect this to be rendered */
-  struct
-  {
-    float left, top, right, bottom;
-  } target;
+  struct cm_rect target;
 };
 
 /**
@@ -50,7 +48,7 @@ struct cm_render_command
 extern void cm_render_command_construct_tile(
   struct cm_render_command * command,
   struct cm_tile tile,
-  float left, float top, float right, float bottom);
+  struct cm_rect rect);
 
 /**
  * Sets this command as a tile command.
@@ -65,7 +63,7 @@ extern void cm_render_command_construct_tile(
 extern void cm_render_command_set_tile(
   struct cm_render_command * command,
   struct cm_tile tile,
-  float left, float top, float right, float bottom);
+  struct cm_rect rect);
 
 /**
  * Construct a command with a type. No other value is altered.

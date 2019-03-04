@@ -61,3 +61,13 @@ cm_area_set(struct cm_area * area, float left, float top, float right, float bot
   cm_value_set(&area->right, right);
   cm_value_set(&area->bottom, bottom);
 }
+
+struct cm_rect cm_area_to_rect(struct cm_area const * area) {
+  struct cm_rect result;
+  cm_rect_construct(&result,
+    area->left.absolute,
+    area->top.absolute,
+    area->right.absolute,
+    area->bottom.absolute);
+  return result;
+}

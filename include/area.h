@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include "value.h"
+#include "rect.h"
 
 /**
  * Describes an area starting at left, top and ending at right, bottom.
@@ -52,6 +53,8 @@ cm_area_set(
   float bottom);
 
 void cm_area_destruct(struct cm_area * area);
+
+struct cm_rect cm_area_to_rect(struct cm_area const * area);
 
 #ifdef __cplusplus
 }

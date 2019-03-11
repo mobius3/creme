@@ -1,22 +1,27 @@
 #include <stdio.h>
 
-#include "value.h"
+#include "area.h"
+#include "tile.h"
+
+#include "render-queue.h"
+
+#include "widget/frame.h"
+
+struct cm_tileset
+{
+  struct cm_tile frame;
+  struct cm_tile button;
+};
+
+
 
 int main(int argc, char * argv[]) {
-  struct cm_value values[12];
-  cm_value_construct_max(&values[0]);
-  cm_value_construct(&values[1]);
-  cm_value_construct(&values[2]);
-  cm_value_construct(&values[3]);
+  struct cmw_frame frame;
+  struct cm_render_command cmd[128];
+  struct cm_render_queue queue;
 
-  cm_value_set(&values[1], 10);
-  cm_value_set(&values[2], 20);
-  cm_value_set(&values[3], 30);
+  cm_render_queue_construct(&queue, cmd, 128);
 
-  cm_value_link(&values[0], &values[1]);
-  cm_value_link(&values[1], &values[2]);
-  cm_value_link(&values[2], &values[3]);
-  cm_value_link(&values[3], &values[0]);
-
+  cmw_frame_construct_set_area(&frame, cm_rect_make(0, 0, 100, 100));
   return 0;
 }

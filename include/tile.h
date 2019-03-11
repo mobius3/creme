@@ -14,6 +14,8 @@ extern "C" {
 struct cm_tile {
   uint16_t column;
   uint16_t row;
+  uint16_t width;
+  uint16_t height;
 };
 
 

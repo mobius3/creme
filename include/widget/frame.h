@@ -8,7 +8,11 @@
 extern "C" {
 #endif
 
-struct cmw_frame {
+struct cm_tileset;
+struct cm_render_queue;
+
+struct cmw_frame
+{
   struct cm_area area;
 };
 
@@ -22,6 +26,12 @@ extern void cmw_frame_construct(
 );
 
 extern void cmw_frame_set_area(struct cmw_frame * frame, struct cm_rect area);
+
+extern uint16_t cmw_frame_render(
+  struct cmw_frame * frame,
+  struct cm_tileset * tileset,
+  struct cm_render_queue * queue
+);
 
 #ifdef __cplusplus
 }

@@ -3,7 +3,7 @@
 
 #include "area.h"
 
-float cm_area_reduce_subtract(float const values[], uint16_t value_count) {
+float cm_area_reduce_0_minus_1(float const values[], uint16_t value_count) {
   if (value_count < 2) return 0;
   return values[0] - values[1];
 }
@@ -13,8 +13,8 @@ void cm_area_construct(struct cm_area * area) {
   cm_value_construct(&area->top);
   cm_value_construct(&area->right);
   cm_value_construct(&area->bottom);
-  cm_value_construct_reduce(&area->width, cm_area_reduce_subtract);
-  cm_value_construct_reduce(&area->height, cm_area_reduce_subtract);
+  cm_value_construct_reduce(&area->width, cm_area_reduce_0_minus_1);
+  cm_value_construct_reduce(&area->height, cm_area_reduce_0_minus_1);
 
   cm_value_construct_average(&area->center.x);
   cm_value_construct_average(&area->center.y);
@@ -25,11 +25,11 @@ void cm_area_construct(struct cm_area * area) {
   cm_value_link(&area->center.y, &area->bottom);
   cm_value_link(&area->center.y, &area->top);
 
-  cm_value_link(&area->width, &area->left);
   cm_value_link(&area->width, &area->right);
+  cm_value_link(&area->width, &area->left);
 
-  cm_value_link(&area->height, &area->top);
   cm_value_link(&area->height, &area->bottom);
+  cm_value_link(&area->height, &area->top);
 }
 
 void cm_area_destruct(struct cm_area * area) {

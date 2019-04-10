@@ -1,5 +1,5 @@
-option(CREME_BUILD_EXTRAS_SDL2_RENDERER "Build the SDL2 renderer" OFF)
+option(CREME_BUILD_EXTRAS_SDL2_RENDERER "Build the SDL2 extra" OFF)
 
-if (CREME_BUILD_EXTRAS_SDL2_RENDERER)
-  add_subdirectory(sdl2-renderer)
+if (CREME_BUILD_EXTRAS_SDL2)
+  add_subdirectory(sdl2)
 endif()

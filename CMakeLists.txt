@@ -19,9 +19,9 @@ target_compile_options(creme PRIVATE
   $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall,-Wextra,-pedantic>
   $<$<CXX_COMPILER_ID:MSVC>:/W4>)
 
-add_executable(creme-sandbox creme-sandbox.c)
-target_link_libraries(creme-sandbox PUBLIC creme)
-
 if (CREME_BUILD_EXTRAS)
   add_subdirectory(extras)
 endif()
+
+add_executable(creme-sandbox creme-sandbox.c)
+target_link_libraries(creme-sandbox PUBLIC creme creme::sdl2)

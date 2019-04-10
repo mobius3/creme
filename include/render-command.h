@@ -14,12 +14,13 @@ extern "C" {
  */
 enum cm_render_command_type
 {
+  cm_render_command__noop,
   cm_render_command__tile
 };
 
 /**
- * A render command contains the target area and command-specific information
- * to be used as parameters for rendering.
+ * A `cm_render_command` structure contains the target area and command-specific
+ * information to be used as parameters for rendering.
  */
 struct cm_render_command
 {
@@ -30,35 +31,17 @@ struct cm_render_command
     struct cm_tile tile;
   };
 
-  /** The target coordinates ("canvas"-wise) Creme expect this to be rendered */
+  /** The target coordinates ("canvas"-wise) Creme would like you to render to
+   * to make things looks as intended. */
   struct cm_rect target;
 };
 
 /**
- * Construct a tile render command. This is equivalent to
- * cm_render_command_construct and cm_render_command_set_tile.
- * @param command The cm_render_command instance
- * @param tile_x The x coordinate in the tile set
- * @param tile_y The y coordinate in the tile set
- * @param left The left target coordinate
- * @param top  The top target coordinate
- * @param right The right target coordinate
- * @param bottom The bottom target coordinate
- */
-extern void cm_render_command_construct_tile(
-  struct cm_render_command * command,
-  struct cm_tile tile,
-  struct cm_rect rect);
-
-/**
- * Sets this command as a tile command.
- * @param command The cm_render_command instance
- * @param tile_x The x coordinate in the tile set
- * @param tile_y The y coordinate in the tile set
- * @param left The left target coordinate
- * @param top  The top target coordinate
- * @param right The right target coordinate
- * @param bottom The bottom target coordinate
+ * Sets a `cm_render_command` value as a tile command.
+ *
+ * @param command A pointer to a `cm_render_command` value
+ * @param tile A `cm_tile` value containing column and row in the tileset
+ * @param rect A `cm_rect` value indicating the target rectangle
  */
 extern void cm_render_command_set_tile(
   struct cm_render_command * command,
@@ -66,13 +49,13 @@ extern void cm_render_command_set_tile(
   struct cm_rect rect);
 
 /**
- * Construct a command with a type. No other value is altered.
- * @param command The cm_render_command instance.
- * @param type The cm_render_command_type instance.
+ * Construct a `cm_render_command` value with type being
+ * `cm_render_command__noop`. It basically initializes the command with
+ * zeroed values.
+ *
+ * @param command A pointer to a `cm_render_command` value.
  */
-extern void cm_render_command_construct(
-  struct cm_render_command * command,
-  enum cm_render_command_type type);
+extern void cm_render_command_construct(struct cm_render_command * command);
 
 #ifdef __cplusplus
 }

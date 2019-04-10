@@ -1,6 +1,14 @@
 #ifndef CREME_CIRCULAR_QUEUE_H
 #define CREME_CIRCULAR_QUEUE_H
 
+/**
+ * This file contains a function-macro to declare and another to
+ * define a simple circular queue. Its purpose is mainly to facilitate
+ * dealing with finite storage where things can be written and later, read.
+ *
+ * It is not really inteded for public use.
+ */
+
 #include <stdint.h>
 
 #ifdef __cplusplus

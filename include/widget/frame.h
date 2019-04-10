@@ -29,7 +29,7 @@ extern void cmw_frame_set_area(struct cmw_frame * frame, struct cm_rect area);
 
 extern uint16_t cmw_frame_render(
   struct cmw_frame * frame,
-  struct cm_tileset * tileset,
+  struct cm_tileset const * tileset,
   struct cm_render_queue * queue
 );
 

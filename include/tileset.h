@@ -7,6 +7,15 @@
 extern "C" {
 #endif
 
+  /**
+   * A `cm_tileset` structure indicates the center tile in a tileset to
+   * render widgets. Widgets usually
+   * tell (via their documentation) which tiles it is going to use in a tileset.
+   *
+   * The most useful information in this structure is the `tile_width` and
+   * `tile_height` variables as they are used to calculate target width and
+   * height for render commands.
+   */
 struct cm_tileset {
   struct cm_tile frame;
   struct cm_tile button;

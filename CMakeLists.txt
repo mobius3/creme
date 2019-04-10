@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(creme C)
 
+option(CREME_BUILD_EXTRAS "Build extras (inside extras/ folder)" OFF)
+
 add_library(creme
   src/value.c
   src/area.c
@@ -19,3 +21,7 @@ target_compile_options(creme PRIVATE
 
 add_executable(creme-sandbox creme-sandbox.c)
 target_link_libraries(creme-sandbox PUBLIC creme)
+
+if (CREME_BUILD_EXTRAS)
+  add_subdirectory(extras)
+endif()

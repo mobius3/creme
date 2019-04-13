@@ -1,5 +1,7 @@
 project(creme::sdl2 C)
 
+find_package(SDL2 REQUIRED)
+
 add_library(cmx-sdl2
   src/render.c
 )
@@ -11,4 +13,4 @@ target_include_directories(cmx-sdl2 PUBLIC include)
 target_compile_options(cmx-sdl2 PRIVATE
   $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall,-Wextra,-pedantic>
   $<$<CXX_COMPILER_ID:MSVC>:/W4>)
-target_link_libraries(cmx-sdl2 PUBLIC creme)
+target_link_libraries(cmx-sdl2 PUBLIC creme SDL2)

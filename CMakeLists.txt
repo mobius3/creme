@@ -11,7 +11,7 @@ add_library(creme
   src/render-queue.c
   src/rect.c
   src/widget/frame.c
-  )
+)
 
 set_target_properties(creme PROPERTIES C_STANDARD 90)
 target_include_directories(creme PUBLIC include)
@@ -22,6 +22,3 @@ target_compile_options(creme PRIVATE
 if (CREME_BUILD_EXTRAS)
   add_subdirectory(extras)
 endif()
-
-add_executable(creme-sandbox creme-sandbox.c)
-target_link_libraries(creme-sandbox PUBLIC creme creme::sdl2)

@@ -6,6 +6,7 @@
 
 struct SDL_Window;
 struct SDL_Renderer;
+struct SDL_Texture;
 
 /**
  * This struct holds important variables about the example state, including
@@ -16,6 +17,8 @@ struct cmex_sdl2_state
   struct SDL_Window * sdl_window;
   struct SDL_Renderer * sdl_renderer;
   struct cm_area window_area;
+  struct SDL_Texture * tileset_texture;
+
 };
 
 /**
@@ -44,5 +47,17 @@ void cmex_sdl2_state_destruct(struct cmex_sdl2_state * state);
  * @param state The state to update
  */
 void cmex_sdl2_state_update(struct cmex_sdl2_state * state);
+
+/**
+ * Loads a tileset from a image already in a buffer.
+ *
+ * This creates, uploads and sets as a tileset. If there is another
+ * tileset loaded, it will be destroyed.
+ *
+ * @param data The raw image data (e.g, PNG)
+ * @param length The length of the data buffer
+ */
+void cmex_sdl2_state_load_tileset(struct cmex_sdl2_state * state,
+                                  unsigned char const * data, int length);
 
 #endif /* CREME_EXAMPLE_SDL2_RENDERING_STATE_H */

@@ -117,7 +117,7 @@ struct cm_value
  *
  * @param value A pointer to a `cm_value` value.
  */
-void cm_value_construct(struct cm_value * value);
+extern void cm_value_construct(struct cm_value * value);
 
 
 /**
@@ -128,7 +128,7 @@ void cm_value_construct(struct cm_value * value);
  *
  * @param value A pointer to a `cm_value` value.
  */
-void cm_value_construct_set(struct cm_value * value, float absolute);
+extern void cm_value_construct_set(struct cm_value * value, float absolute);
 
 /**
  * Construct a `cm_value` value with 0 offset and 0 absolute. It also sets a
@@ -138,7 +138,7 @@ void cm_value_construct_set(struct cm_value * value, float absolute);
  * @param value A pointer to a `cm_value` value to be constructed
  * @param reduce_fn the reduce function.
  */
-void cm_value_construct_reduce(struct cm_value * value, cm_reduce_fn reduce_fn);
+extern void cm_value_construct_reduce(struct cm_value * value, cm_reduce_fn reduce_fn);
 
 /**
  * Constructs a `cm_value` value with 0 offset and 0 absolute. It's absolute
@@ -146,7 +146,7 @@ void cm_value_construct_reduce(struct cm_value * value, cm_reduce_fn reduce_fn);
  *
  * @param value A pointer to a `cm_value` value to be constructed
  */
-void cm_value_construct_average(struct cm_value * value);
+extern void cm_value_construct_average(struct cm_value * value);
 
 /**
  * Constructs a `cm_value` value with 0 offset and 0 absolute. It's absolute
@@ -154,7 +154,7 @@ void cm_value_construct_average(struct cm_value * value);
  *
  * @param value A pointer to a `cm_value` value to be constructed
  */
-void cm_value_construct_max(struct cm_value * value);
+extern void cm_value_construct_max(struct cm_value * value);
 
 /**
  * Constructs a `cm_value` value with 0 offset and 0 absolute. It's absolute
@@ -162,7 +162,7 @@ void cm_value_construct_max(struct cm_value * value);
  *
  * @param value A pointer to a `cm_value` value to be constructed
  */
-void cm_value_construct_min(struct cm_value * value);
+extern void cm_value_construct_min(struct cm_value * value);
 
 /**
  * Sets the absolute value of a `cm_value`, regardless of its offset or
@@ -181,7 +181,7 @@ void cm_value_construct_min(struct cm_value * value);
  * @param absolute the absolute value to set
  * @sa cm_value_unlink_all_upstream
  */
-void cm_value_set(struct cm_value * value, float absolute);
+extern void cm_value_set(struct cm_value * value, float absolute);
 
 /**
  * Returns the value of a cm_value. This is equal to `value->absolute`. No
@@ -190,7 +190,7 @@ void cm_value_set(struct cm_value * value, float absolute);
  * @param value A pointer to a `cm_value` value
  * @return value->absolute
  */
-float cm_value_get(struct cm_value const * value);
+extern float cm_value_get(struct cm_value const * value);
 
 /**
  * Calculates the value of a cm_value considering its direct upstreams,
@@ -202,7 +202,7 @@ float cm_value_get(struct cm_value const * value);
  * @param value A pointer to a `cm_value` value
  * @return the updated absolute value
  */
-float cm_value_update(struct cm_value * value);
+extern float cm_value_update(struct cm_value * value);
 
 /**
  * Links a `cm_value` to another `cm_value` as an upstream value.
@@ -221,7 +221,7 @@ float cm_value_update(struct cm_value * value);
  * @return the result of linking.
  * @sa cm_value_link_result
  */
-enum cm_value_link_result
+extern enum cm_value_link_result
 cm_value_link(struct cm_value * value, struct cm_value * up);
 
 /**
@@ -230,7 +230,7 @@ cm_value_link(struct cm_value * value, struct cm_value * up);
  * @param value A pointer to a `cm_value` value
  * @param offset the offset amount
  */
-void cm_value_offset_set(struct cm_value * value, float offset);
+extern void cm_value_offset_set(struct cm_value * value, float offset);
 
 /**
  * Gets the offset value of a `cm_value`.
@@ -241,7 +241,7 @@ void cm_value_offset_set(struct cm_value * value, float offset);
  * @param value A pointer to a `cm_value` value
  * @return value->offset
  */
-float cm_value_offset_get(struct cm_value * value);
+extern float cm_value_offset_get(struct cm_value * value);
 
 /**
  * Breaks the link between a `cm_value` and a direct upstream `cm_value`.
@@ -256,7 +256,7 @@ float cm_value_offset_get(struct cm_value * value);
  * @param value A pointer to a `cm_value` that is a direct downsteam of `up`
  * @param up A pointer to a `cm_value` that is a direct upstream of `value`
  */
-void
+extern void
 cm_value_unlink(struct cm_value * value, struct cm_value * up);
 
 /**
@@ -267,7 +267,7 @@ cm_value_unlink(struct cm_value * value, struct cm_value * up);
  *
  * @param value A ponter to a `cm_value` value
  */
-void
+extern void
 cm_value_unlink_all_upstream(struct cm_value * value);
 
 /**
@@ -280,7 +280,7 @@ cm_value_unlink_all_upstream(struct cm_value * value);
  *
  * @param value A ponter to a `cm_value` value
  */
-void
+extern void
 cm_value_unlink_all_downstream(struct cm_value * value);
 
 /**
@@ -292,7 +292,7 @@ cm_value_unlink_all_downstream(struct cm_value * value);
  *
  * @param value A pointer to a `cm_value` value
  */
-void cm_value_destruct(struct cm_value * value);
+extern void cm_value_destruct(struct cm_value * value);
 
 
 #ifdef __cplusplus

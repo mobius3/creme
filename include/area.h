@@ -51,7 +51,7 @@ struct cm_area
  *
  * @param area A pointer to a `cm_area` to construct
  */
-void cm_area_construct(struct cm_area * area);
+extern void cm_area_construct(struct cm_area * area);
 
 /**
  * Resets all `cm_value`s of an area to the absolute values passed in.
@@ -67,7 +67,7 @@ void cm_area_construct(struct cm_area * area);
  * @param right A float value to assign to `right` member
  * @param bottom A float value to assign to `bottom` member
  */
-void
+extern void
 cm_area_set(
   struct cm_area * area,
   float left,
@@ -87,7 +87,7 @@ cm_area_set(
  *
  * @param area A pointer to a `cm_area` value to destroy
  */
-void cm_area_destruct(struct cm_area * area);
+extern void cm_area_destruct(struct cm_area * area);
 
 /**
  * Creates a `cm_rect` value from a pointer to a `cm_area` value.
@@ -97,7 +97,7 @@ void cm_area_destruct(struct cm_area * area);
  * @return A `cm_rect` value
  * @sa cm_rect
  */
-struct cm_rect cm_area_to_rect(struct cm_area const * area);
+extern struct cm_rect cm_area_to_rect(struct cm_area const * area);
 
 #ifdef __cplusplus
 }

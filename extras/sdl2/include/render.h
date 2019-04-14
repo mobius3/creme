@@ -9,7 +9,7 @@ struct SDL2_Renderer;
 struct SDL_Texture;
 struct cm_render_queue;
 
-void cmx_sdl2_render(
+extern void cmx_sdl2_render(
   struct SDL2_Renderer * renderer,
   struct SDL_Texture * tileset_texture,
   struct cm_render_queue * queue);

@@ -35,15 +35,13 @@ Name##_dequeue__ok, \
 Name##_dequeue__empty \
 }; \
  \
-void Name##_construct(struct Name * queue, Type buffer[], uint16_t size); \
-enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type const * item); \
-enum Name##_dequeue_result Name##_dequeue(struct Name * q, Type * item); \
-int8_t Name##_is_full(struct Name const * q); \
-int8_t Name##_is_empty(struct Name const * q); \
-uint16_t Name##_count(struct Name const * q); \
-uint16_t Name##_free_space(struct Name const * q);
-
-
+extern void Name##_construct(struct Name * queue, Type buffer[], uint16_t size); \
+extern enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type const * item); \
+extern enum Name##_dequeue_result Name##_dequeue(struct Name * q, Type * item); \
+extern int8_t Name##_is_full(struct Name const * q); \
+extern int8_t Name##_is_empty(struct Name const * q); \
+extern uint16_t Name##_count(struct Name const * q); \
+extern uint16_t Name##_free_space(struct Name const * q);
 
 #include <stdio.h>
 #include <stdint.h>

@@ -299,4 +299,4 @@ void cm_value_destruct(struct cm_value * value);
 }
 #endif
 
-#endif //CREME_VALUE_H
+#endif /* CREME_VALUE_H */

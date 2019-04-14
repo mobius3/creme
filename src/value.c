@@ -95,20 +95,20 @@ float cm_value_offset_get(struct cm_value * value) {
 void cm_value_unlink(struct cm_value * value, struct cm_value * up) {
   uint16_t up_i = 0, down_i = 0;
 
-  // find up index in value's upstream;
+  /* find up index in value's upstream; */
   for (up_i = 0; up_i < value->upstream_count; up_i++) {
     if (value->upstream[up_i] == up) break;
   }
-  // up is not an upstream of value
+  /* up is not an upstream of value */
   if (up_i == value->upstream_count) return;
   value->upstream[up_i] = value->upstream[value->upstream_count - 1];
   value->upstream_count--;
 
-  // find value index in up downstream
+  /* find value index in up downstream */
   for (down_i = 0; down_i < up->downstream_count; down_i++) {
     if (up->downstream[down_i] == value) break;
   }
-  // wat, value is not a downstream of up, something is broken;
+  /* wat, value is not a downstream of up, something is broken; */
   if (down_i == up->downstream_count) return;
   up->downstream[down_i] = up->downstream[up->downstream_count - 1];
   up->downstream_count--;

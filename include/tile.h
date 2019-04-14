@@ -112,4 +112,4 @@ extern struct cm_tile cm_tile_bottom_left_of(struct cm_tile const * center);
 }
 #endif
 
-#endif //CREME_TILE_H
+#endif /* CREME_TILE_H */

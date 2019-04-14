@@ -103,4 +103,4 @@ struct cm_rect cm_area_to_rect(struct cm_area const * area);
 }
 #endif
 
-#endif //CREME_AREA_H
+#endif /* CREME_AREA_H */

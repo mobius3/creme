@@ -80,4 +80,4 @@ extern float cm_rect_height(struct cm_rect const * rect);
 }
 #endif
 
-#endif // CREME_RECT_H
+#endif /* CREME_RECT_H */

@@ -82,7 +82,7 @@ if (CREME_BUILD_EXAMPLES AND NOT CREME_BUILD_EXTRAS)
 endif()
 
 if (CREME_BUILD_EXTRAS)
-  add_subdirectory(third-party)
+  add_subdirectory(third-party EXCLUDE_FROM_ALL)
   add_subdirectory(extras)
 endif()
 

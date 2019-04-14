@@ -18,4 +18,4 @@ extern void cmx_sdl2_render(
 };
 #endif
 
-#endif //CREME_EXTRAS_SDL2_RENDERER_H
+#endif /* CREME_EXTRAS_SDL2_RENDERER_H */

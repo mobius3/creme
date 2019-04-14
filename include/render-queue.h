@@ -23,4 +23,4 @@ CM_CIRQUE_DECLARE(cm_render_queue, struct cm_render_command)
 }
 #endif
 
-#endif //CREME_RENDER_QUEUE_H
+#endif /* CREME_RENDER_QUEUE_H */

@@ -98,4 +98,4 @@ uint16_t Name##_free_space(struct Name const * q) { \
 }
 #endif
 
-#endif //CREME_CIRCULAR_QUEUE_H
+#endif /* CREME_CIRCULAR_QUEUE_H */

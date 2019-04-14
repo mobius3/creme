@@ -30,4 +30,4 @@ struct cm_tileset {
 };
 #endif
 
-#endif // CREME_TILESET_H
+#endif /* CREME_TILESET_H */

@@ -61,4 +61,4 @@ extern void cm_render_command_construct(struct cm_render_command * command);
 }
 #endif
 
-#endif //CREME_RENDER_COMMAND_H
+#endif /* CREME_RENDER_COMMAND_H */

@@ -3,7 +3,7 @@ add_executable(sdl2-rendering
   src/state.c
 )
 
-target_link_libraries(sdl2-rendering creme::creme creme::x-sdl2)
+target_link_libraries(sdl2-rendering creme::creme creme::x-sdl2 c-rez::tilesets)
 target_include_directories(sdl2-rendering PRIVATE include/)
 
 set_target_properties(sdl2-rendering PROPERTIES

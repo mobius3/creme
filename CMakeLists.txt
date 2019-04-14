@@ -52,6 +52,7 @@ set(CREME_SOURCES
 )
 
 add_library(creme ${CREME_SOURCES} ${CREME_HEADERS})
+add_library(creme::creme ALIAS creme)
 
 set_target_properties(creme PROPERTIES
   C_STANDARD 90

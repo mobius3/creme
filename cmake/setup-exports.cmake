@@ -27,6 +27,7 @@ include(GNUInstallDirs)
 # Setup install of exported targets
 install(EXPORT creme-targets
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/creme
+  NAMESPACE creme::
   )
 
 # Macro to write config

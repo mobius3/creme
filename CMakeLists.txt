@@ -27,6 +27,7 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 option(CREME_BUILD_EXTRAS "Build extras (inside extras/ folder)" OFF)
+option(CREME_BUILD_EXAMPLES "Build examples (inside examples/ folder)" OFF)
 option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" ON)
 
 # keep it sorted, directories first.
@@ -75,8 +76,17 @@ install(TARGETS creme
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/creme
 )
 
+if (CREME_BUILD_EXAMPLES AND NOT CREME_BUILD_EXTRAS)
+  set(CREME_BUILD_EXTRAS ON)
+  set(CREME_BUILD_EXTRAS_SDL2 ON)
+endif()
+
 if (CREME_BUILD_EXTRAS)
   add_subdirectory(extras)
+endif()
+
+if (CREME_BUILD_EXAMPLES)
+  add_subdirectory(examples)
 endif()
 
 include(cmake/setup-exports.cmake)

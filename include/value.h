@@ -11,6 +11,14 @@
 #define CREME_MAX_VALUE_DOWNSTREAM 16
 #endif
 
+#if CREME_MAX_VALUE_DOWNSTREAM > 32
+#error "A value cannot have more than 32 downstreams"
+#endif
+
+#if CREME_MAX_VALUE_UPSTREAM > 32
+#error "A value cannot have more than 32 upstreams"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -100,14 +108,14 @@ struct cm_value
 {
   float absolute;
   float offset;
-  struct cm_value * upstream[16];
-  struct cm_value * downstream[16];
+  struct cm_value * upstream[CREME_MAX_VALUE_UPSTREAM];
+  struct cm_value * downstream[CREME_MAX_VALUE_DOWNSTREAM];
   uint8_t upstream_count;
   uint8_t downstream_count;
+  uint8_t index_at_downstream[CREME_MAX_VALUE_DOWNSTREAM];
   cm_reduce_fn reduce_fn;
   int update_token;
-  int update_seen;
-  uint8_t index_at_downstream[16];
+  uint32_t update_seen;
 };
 
 /**

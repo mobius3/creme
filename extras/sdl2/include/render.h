@@ -5,14 +5,16 @@
 extern "C" {
 #endif
 
-struct SDL2_Renderer;
+struct SDL_Renderer;
 struct SDL_Texture;
 struct cm_render_queue;
+struct cm_tileset;
 
 extern void cmx_sdl2_render(
-  struct SDL2_Renderer * renderer,
-  struct SDL_Texture * tileset_texture,
-  struct cm_render_queue * queue);
+  struct cm_render_queue * queue,
+  struct cm_tileset const * tileset,
+  struct SDL_Renderer * renderer,
+  struct SDL_Texture * tileset_texture);
 
 #ifdef __cplusplus
 };

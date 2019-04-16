@@ -41,6 +41,7 @@ extern enum Name##_dequeue_result Name##_dequeue(struct Name * q, Type * item); 
 extern int8_t Name##_is_full(struct Name const * q); \
 extern int8_t Name##_is_empty(struct Name const * q); \
 extern uint16_t Name##_count(struct Name const * q); \
+extern void Name##_flush(struct Name * q); \
 extern uint16_t Name##_free_space(struct Name const * q);
 
 #include <stdio.h>
@@ -90,6 +91,12 @@ uint16_t Name##_count(struct Name const * q) { \
 }\
 uint16_t Name##_free_space(struct Name const * q) { \
   return q->size - q->count;\
+}\
+\
+void Name##_flush(struct Name * q) { \
+  q->count = 0; \
+  q->write_head = -1; \
+  q->read_head = -1; \
 }
 
 #ifdef __cplusplus

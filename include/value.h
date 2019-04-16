@@ -102,10 +102,12 @@ struct cm_value
   float offset;
   struct cm_value * upstream[16];
   struct cm_value * downstream[16];
-  uint16_t upstream_count;
-  uint16_t downstream_count;
+  uint8_t upstream_count;
+  uint8_t downstream_count;
   cm_reduce_fn reduce_fn;
   int update_token;
+  int update_seen;
+  uint8_t index_at_downstream[16];
 };
 
 /**

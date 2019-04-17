@@ -16,7 +16,7 @@ struct cmex_sdl2_state
 {
   struct SDL_Window * sdl_window;
   struct SDL_Renderer * sdl_renderer;
-  struct cm_area window_area;
+  struct cm_area area;
   struct SDL_Texture * tileset_texture;
 
 };

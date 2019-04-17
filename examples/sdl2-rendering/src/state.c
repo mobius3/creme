@@ -42,10 +42,10 @@ void cmex_sdl2_state_construct(
 
   state->sdl_renderer = sdl_renderer;
   state->sdl_window = sdl_window;
-  cm_area_construct(&state->window_area);
-  cm_area_set(&state->window_area, 0, 0,
-              (float) window_rect.w - window_rect.x,
-              (float) window_rect.h - window_rect.y
+  cm_area_construct(&state->area);
+  cm_area_set(&state->area, 0, 0,
+              (float) window_rect.w,
+              (float) window_rect.h
   );
   state->tileset_texture = NULL;
 }
@@ -62,8 +62,8 @@ void cmex_sdl2_state_destruct(struct cmex_sdl2_state * state) {
 void cmex_sdl2_state_update(struct cmex_sdl2_state * state) {
   int window_w, window_h;
   SDL_GetWindowSize(state->sdl_window, &window_w, &window_h);
-  cm_value_set(&state->window_area.right, (float) window_w);
-  cm_value_set(&state->window_area.bottom, (float) window_h);
+  cm_value_set(&state->area.right, (float) window_w);
+  cm_value_set(&state->area.bottom, (float) window_h);
 
   SDL_PumpEvents();
 }

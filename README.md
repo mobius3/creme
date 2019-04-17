@@ -34,12 +34,12 @@ platforms.
 
 ## Running examples
 
-if you wish to build and run examples, you will need to clone this repository
+If you wish to build and run examples, you will need to clone this repository
 and also update its submodules.
 
 ```
 git clone git@github.com:mobius3/creme.git
-cd creme.git
+cd creme
 git submodule update --init
 ```
 

@@ -33,6 +33,7 @@ option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" ON)
 # keep it sorted, directories first.
 set(CREME_HEADERS
   include/widget/frame.h
+  include/widget/label.h
   include/area.h
   include/circular-queue.h
   include/rect.h
@@ -45,6 +46,7 @@ set(CREME_HEADERS
 
 set(CREME_SOURCES
   src/widget/frame.c
+  src/widget/label.c
   src/area.c
   src/rect.c
   src/render-command.c

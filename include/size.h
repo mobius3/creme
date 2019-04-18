@@ -35,7 +35,7 @@ extern void cm_size_set(struct cm_size * size, float width, float height);
  * @param height The height value to set
  * @return A `cm_size` value
  */
-struct cm_size cm_size_make(float width, float height);
+extern struct cm_size cm_size_make(float width, float height);
 
 #ifdef __cplusplus
 };

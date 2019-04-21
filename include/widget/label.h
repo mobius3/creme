@@ -4,6 +4,10 @@
 #include "area.h"
 #include "size.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct cm_tileset;
 struct cm_render_queue;
 
@@ -14,7 +18,7 @@ struct cmw_label {
   struct cm_value text_width;
   struct cm_value text_height;
   char const * text;
-  void * priv;
+  void * text_size_fn_data;
   cm_text_size_fn text_size_fn;
 };
 
@@ -25,7 +29,7 @@ extern char const * cwm_label_get_text(struct cmw_label * label);
 extern void cmw_label_set_size_fn(
   struct cmw_label * label,
   cm_text_size_fn text_size_fn,
-  void * priv
+  void * text_size_fn_data
 );
 
 extern uint16_t cmw_label_render(
@@ -33,5 +37,9 @@ extern uint16_t cmw_label_render(
   struct cm_tileset const * tileset,
   struct cm_render_queue * queue
 );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

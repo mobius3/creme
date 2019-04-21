@@ -225,6 +225,10 @@ extern float cm_value_update(struct cm_value * value);
  * cm_value_update is called you will get an error in stderr if
  * there's any cycle downstream.
  *
+ * This function **WILL** break all upstream links and is equivalent to calling
+ * `cm_value_unlink_all_upstream` and `cm_value_link_add`. It is meant as a
+ * shortcut when you only want one upstream.
+ *
  * @param value A pointer to a `cm_value` value
  * @param up A pointer to a `cm_value` that will be a direct upstream of this
  *           `value`
@@ -233,6 +237,21 @@ extern float cm_value_update(struct cm_value * value);
  */
 extern enum cm_value_link_result
 cm_value_link(struct cm_value * value, struct cm_value * up);
+
+/**
+ * Adds `up` as upstream of `up`. The maximum number of upstream values
+ * in a `cm_link` value is governed by the compile-time definition
+ * CREME_MAX_VALUE_UPSTREAM.
+ *
+ * @param value A pointer to a `cm_value` value
+ * @param up A pointer to a `cm_value` that will be the only
+ *           direct upstream of this `value`
+ * @return the result of linking.
+ * @sa cm_value_link_result
+ * @sa cm_value_link
+ */
+extern enum cm_value_link_result
+  cm_value_link_add(struct cm_value * value, struct cm_value * up);
 
 /**
  * Sets the offset amount of a value and triggers `cm_value_update`.

@@ -57,7 +57,7 @@ void cm_value_destruct(struct cm_value * value) {
 }
 
 enum cm_value_link_result
-cm_value_link(struct cm_value * value, struct cm_value * up) {
+cm_value_link_add(struct cm_value * value, struct cm_value * up) {
   uint16_t i = 0;
   if (up->downstream_count >= CREME_MAX_VALUE_DOWNSTREAM)
     return cm_value_link__upstream_full;
@@ -82,6 +82,12 @@ cm_value_link(struct cm_value * value, struct cm_value * up) {
   cm_value_update(value);
 
   return cm_value_link__ok;
+}
+
+enum cm_value_link_result
+cm_value_link(struct cm_value * value, struct cm_value * up) {
+  cm_value_unlink_all_upstream(value);
+  return cm_value_link_add(value, up);
 }
 
 void cm_value_offset_set(struct cm_value * value, float offset) {

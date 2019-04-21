@@ -19,17 +19,17 @@ void cm_area_construct(struct cm_area * area) {
   cm_value_construct_average(&area->center.x);
   cm_value_construct_average(&area->center.y);
 
-  cm_value_link(&area->center.x, &area->right);
-  cm_value_link(&area->center.x, &area->left);
+  cm_value_link_add(&area->center.x, &area->right);
+  cm_value_link_add(&area->center.x, &area->left);
 
-  cm_value_link(&area->center.y, &area->bottom);
-  cm_value_link(&area->center.y, &area->top);
+  cm_value_link_add(&area->center.y, &area->bottom);
+  cm_value_link_add(&area->center.y, &area->top);
 
-  cm_value_link(&area->width, &area->right);
-  cm_value_link(&area->width, &area->left);
+  cm_value_link_add(&area->width, &area->right);
+  cm_value_link_add(&area->width, &area->left);
 
-  cm_value_link(&area->height, &area->bottom);
-  cm_value_link(&area->height, &area->top);
+  cm_value_link_add(&area->height, &area->bottom);
+  cm_value_link_add(&area->height, &area->top);
 }
 
 void cm_area_destruct(struct cm_area * area) {

@@ -1,4 +1,6 @@
 #include "widget/label.h"
+#include "render-command.h"
+#include "render-queue.h"
 #include <stdlib.h>
 
 void cmw_label_update_text_size(struct cmw_label * label);
@@ -45,6 +47,19 @@ cmw_label_render(
   struct cm_tileset const * tileset,
   struct cm_render_queue * queue
 ) {
-  return 0;
+  (void) tileset;
+  struct cm_render_command cmd;
+  cm_render_command_construct(&cmd);
+  cm_render_command_set_text(
+    &cmd,
+    label->text,
+    cm_size_make(
+      cm_value_get(&label->text_width),
+      cm_value_get(&label->text_height)
+    ),
+    cm_area_to_rect(&label->area)
+  );
+  cm_render_queue_enqueue(queue, &cmd);
+  return 1;
 }
 

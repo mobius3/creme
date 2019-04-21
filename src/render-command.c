@@ -17,3 +17,16 @@ cm_render_command_set_tile(
   command->target = rect;
   command->tile = tile;
 }
+
+void
+cm_render_command_set_text(
+  struct cm_render_command * command,
+  char const * value,
+  struct cm_size size,
+  struct cm_rect target)
+{
+  command->type = cm_render_command__text;
+  command->target = target;
+  command->text.size = size;
+  command->text.value = value;
+}

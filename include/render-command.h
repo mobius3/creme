@@ -57,6 +57,21 @@ extern void cm_render_command_set_tile(
   struct cm_rect rect);
 
 /**
+ * Sets a `cm_render_command` value as a text command.
+ *
+ * @param command A pointer to a `cm_render_command` value
+ * @param value A pointer to a constant character array
+ * @param size A `cm_size` value representing width and height of the text
+ * @param target A `cm_rect` value indicating the target rectangle
+ */
+void
+cm_render_command_set_text(
+  struct cm_render_command * command,
+  char const * value,
+  struct cm_size size,
+  struct cm_rect target);
+
+/**
  * Construct a `cm_render_command` value with type being
  * `cm_render_command__noop`. It basically initializes the command with
  * zeroed values.

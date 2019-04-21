@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "tile.h"
 #include "rect.h"
+#include "size.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,7 +16,8 @@ extern "C" {
 enum cm_render_command_type
 {
   cm_render_command__noop,
-  cm_render_command__tile
+  cm_render_command__tile,
+  cm_render_command__text
 };
 
 /**
@@ -29,6 +31,12 @@ struct cm_render_command
   {
     /** Tile-rendering specific information */
     struct cm_tile tile;
+
+    /** Text-rendering specific information */
+    struct {
+      struct cm_size size;
+      const char * value;
+    } text;
   };
 
   /** The target coordinates ("canvas"-wise) Creme would like you to render to

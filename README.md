@@ -52,4 +52,4 @@ cmake .. -DCREME_BUILD_EXTRAS=1 -DCREME_BUILD_EXAMPLES=1
 cmake --build .
 ```
 
-Examples will be inside the `bin/` folder.
+Examples will be inside the `bin/` folder inside the `build` directory.

@@ -27,7 +27,7 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 option(CREME_BUILD_EXTRAS "Build extras (inside extras/ folder)" OFF)
-option(CREME_BUILD_EXAMPLES "Build examples (inside examples/ folder)" OFF)
+option(CREME_BUILD_EXAMPLES "Build examples (inside examples/ folder). It will also turn on all extras" OFF)
 option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" ON)
 
 # keep it sorted, directories first.

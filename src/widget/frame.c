@@ -1,6 +1,7 @@
 #include "widget/frame.h"
 #include "tileset.h"
 #include "render-queue.h"
+#include <math.h>
 
 static void cmw_frame_set_area_from_ptr(
   struct cmw_frame * frame,
@@ -48,7 +49,15 @@ extern uint16_t cmw_frame_render(
   cm_render_command_construct(&cmd);
   cm_rect_construct(&target);
   area_rect = cm_area_to_rect(&frame->area);
+
+  /* flooring is important because of less-than-pixel values */
+  area_rect.left = (float) floor((double) area_rect.left);
+  area_rect.top = (float) floor((double) area_rect.top);
+  area_rect.right = (float) floor((double) area_rect.right);
+  area_rect.bottom = (float) floor((double) area_rect.bottom);
   center = &tileset->frame;
+
+  /* TODO: create utiility function to render tiled 'frames' */
 
   /* produce left */
   target.left = area_rect.left;

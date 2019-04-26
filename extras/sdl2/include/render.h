@@ -16,6 +16,13 @@ extern void cmx_sdl2_render(
   struct SDL_Renderer * renderer,
   struct SDL_Texture * tileset_texture);
 
+extern struct SDL_Texture *
+cmx_sdl2_texture_from_bytes(
+  struct SDL_Renderer * renderer,
+  unsigned char const * bytes,
+  unsigned int length
+);
+
 #ifdef __cplusplus
 };
 #endif

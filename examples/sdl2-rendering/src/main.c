@@ -7,7 +7,6 @@
 
 #include "SDL.h"
 #include "c-rez/tilesets.h"
-#include "stb_image.h"
 
 
 int main(int argc, const char * argv[]) {

@@ -7,7 +7,6 @@ target_link_libraries(sdl2-rendering
   creme::creme
   creme::x-sdl2
   c-rez::tilesets
-  stb::image
 )
 target_include_directories(sdl2-rendering PRIVATE include/)
 

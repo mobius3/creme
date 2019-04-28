@@ -4,14 +4,21 @@ find_package(SDL2 REQUIRED)
 include(GNUInstallDirs)
 
 set(CREME_X_SDL2_HEADERS
-  include/render.h
+  include/cmx-sdl2.h
+  include/context.h
+  include/window.h
+  include/renderer.h
+  include/texture.h
 )
 
 set(CREME_X_SDL2_SOURCES
-  src/render.c
+  src/context.c
+  src/renderer.c
+  src/window.c
+  src/texture.c
 )
 
-add_library(x-sdl2 ${CREME_X_SDL2_SOURCES})
+add_library(x-sdl2 ${CREME_X_SDL2_SOURCES} ${CREME_X_SDL2_HEADERS})
 add_library(creme::x-sdl2 ALIAS x-sdl2)
 
 set_target_properties(x-sdl2 PROPERTIES

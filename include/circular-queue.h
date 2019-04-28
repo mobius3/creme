@@ -36,6 +36,7 @@ Name##_dequeue__empty \
 }; \
  \
 extern void Name##_construct(struct Name * queue, Type buffer[], uint16_t size); \
+extern struct Name Name##_make(Type buffer[], uint16_t size); \
 extern enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type const * item); \
 extern enum Name##_dequeue_result Name##_dequeue(struct Name * q, Type * item); \
 extern int8_t Name##_is_full(struct Name const * q); \
@@ -54,6 +55,15 @@ void Name##_construct(struct Name * queue, Type buffer[], uint16_t size) { \
   queue->size = size; \
   queue->read_head = -1; \
   queue->write_head = -1; \
+} \
+\
+struct Name Name##_make(Type buffer[], uint16_t size) { \
+  struct Name result;\
+  result.buffer = buffer; \
+  result.size = size; \
+  result.read_head = -1; \
+  result.write_head = -1; \
+  return result; \
 } \
 \
 enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type const * item) { \

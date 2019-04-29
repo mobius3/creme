@@ -5,6 +5,7 @@ add_executable(text-rendering
 target_link_libraries(text-rendering
   creme::creme
   creme::x-sdl2
+  creme::x-font
   c-rez::tilesets
   c-rez::fonts
 )

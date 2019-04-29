@@ -11,7 +11,7 @@ int main(int argc, const char * argv[]) {
   /* initializes the cmx_sdl2_context value */
   struct cm_render_command buffer[256];
   struct cmx_sdl2_context context = {
-    .window = cmx_sdl2_window_make("SDL2 example", cm_size_make(320, 240)),
+    .window = cmx_sdl2_window_make("cmex: sdl2-rendering", cm_size_make(320, 240)),
     .renderer = cmx_sdl2_renderer_make(context.window, cm_color_blue),
     .tileset_texture = cmx_sdl2_texture_make_from_image_data(
       context.renderer, tilesets_kiwi_png.data, tilesets_kiwi_png.length

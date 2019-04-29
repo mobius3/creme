@@ -36,24 +36,26 @@ set(CREME_HEADERS
   include/widget/label.h
   include/area.h
   include/circular-queue.h
+  include/color.h
   include/rect.h
   include/render-command.h
   include/render-queue.h
+  include/size.h
   include/tile.h
   include/value.h
-  include/size.h
 )
 
 set(CREME_SOURCES
   src/widget/frame.c
   src/widget/label.c
   src/area.c
+  src/color.c
   src/rect.c
   src/render-command.c
   src/render-queue.c
+  src/size.c
   src/tile.c
-  src/value.c
-  src/size.c)
+  src/value.c)
 
 add_library(creme ${CREME_SOURCES} ${CREME_HEADERS})
 add_library(creme::creme ALIAS creme)

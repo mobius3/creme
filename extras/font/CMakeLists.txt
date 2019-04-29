@@ -4,7 +4,6 @@ include(GNUInstallDirs)
 
 set(CREME_X_FONT_HEADERS
   include/font.h
-  include/pixels.h
 )
 
 set(CREME_X_FONT_SOURCES

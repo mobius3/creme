@@ -4,10 +4,12 @@ include(GNUInstallDirs)
 
 set(CREME_X_FONT_HEADERS
   include/font.h
+  include/unicode-block.h
 )
 
 set(CREME_X_FONT_SOURCES
   src/font.c
+  src/unicode-block.c
 )
 
 add_library(x-font ${CREME_X_FONT_SOURCES} ${CREME_X_FONT_HEADERS})

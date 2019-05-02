@@ -480,6 +480,9 @@ int main(int arg, char **argv)
 /*// */
 /*// */
 
+/* force use of rect_pack */
+#include "stb_rect_pack.h"
+
 #ifndef __STB_INCLUDE_STB_TRUETYPE_H__
 #define __STB_INCLUDE_STB_TRUETYPE_H__
 

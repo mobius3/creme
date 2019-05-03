@@ -7,14 +7,17 @@
 extern "C" {
 #endif
 
-
-
+/**
+ * Provides information about a specific unicode block, as specified in
+ * ftp://ftp.unicode.org/Public/UNIDATA/Blocks.txt
+ */
 struct cmx_font_unicode_block {
   uint32_t first;
   uint32_t last;
   uint32_t count;
 };
 
+/* All the blocks, minus a few in the bottom */
 extern struct cmx_font_unicode_block cmx_font_unicode_block_control;
 extern struct cmx_font_unicode_block cmx_font_unicode_block_basic_latin;
 extern struct cmx_font_unicode_block cmx_font_unicode_block_latin_1_supplement;

@@ -162,9 +162,10 @@ void cmx_font_pack(
 
 void cmx_font_destruct(struct cmx_font * font) {
   free(font->pixels.data);
+  free(font->metadata.data);
   int i = 0;
   for (i = 0; i < font->packing.packed_block_count; i++) {
-    free(font->packing.packed_blocks->mapping);
+    free(font->packing.packed_blocks[i].mapping);
   }
   free(font->packing.packed_blocks);
 }

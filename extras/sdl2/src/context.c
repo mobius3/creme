@@ -18,6 +18,7 @@ static void render_text(
 
 void cmx_sdl2_context_destruct(struct cmx_sdl2_context * context) {
   SDL_DestroyTexture(context->tileset_texture);
+  SDL_DestroyTexture(context->font_texture);
   SDL_DestroyRenderer(context->renderer);
   SDL_DestroyWindow(context->window);
 }

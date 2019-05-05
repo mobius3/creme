@@ -1,19 +1,37 @@
+#include "render-command.h"
 #include "context.h"
+#include "font.h"
 
 static void render_tile(
   struct cm_render_command const * command,
   struct cm_tileset const * tileset,
   struct SDL_Renderer * renderer,
-  struct SDL_Texture * tileset_texture);
+  struct SDL_Texture * tileset_texture
+);
+
+static void render_text(
+  struct cm_render_command const * command,
+  struct cmx_font const * font,
+  struct SDL_Renderer * renderer,
+  struct SDL_Texture * font_texture
+);
+
+void cmx_sdl2_context_destruct(struct cmx_sdl2_context * context) {
+  SDL_DestroyTexture(context->tileset_texture);
+  SDL_DestroyRenderer(context->renderer);
+  SDL_DestroyWindow(context->window);
+}
 
 void cmx_sdl2_context_init(struct cmx_sdl2_context * context) {
   int window_w, window_h;
   SDL_GetWindowSize(context->window, &window_w, &window_h);
 
   cm_area_construct(&context->area);
-  cm_area_set(&context->area, 0, 0,
-              (float) window_w,
-              (float) window_h);
+  cm_area_set(
+    &context->area, 0, 0,
+    (float) window_w,
+    (float) window_h
+  );
   context->left = &context->area.left;
   context->top = &context->area.top;
   context->right = &context->area.right;
@@ -43,23 +61,20 @@ void cmx_sdl2_context_render(struct cmx_sdl2_context * context) {
       case cm_render_command__tile:
         render_tile(&cmd, tileset, renderer, tileset_texture);
         break;
+      case cm_render_command__text:
+        render_text(&cmd, context->font, context->renderer, context->font_texture);
       default:
         break;
     }
   }
 }
 
-void cmx_sdl2_context_destruct(struct cmx_sdl2_context * context) {
-  SDL_DestroyTexture(context->tileset_texture);
-  SDL_DestroyRenderer(context->renderer);
-  SDL_DestroyWindow(context->window);
-}
-
 void render_tile(
   struct cm_render_command const * command,
   struct cm_tileset const * tileset,
   struct SDL_Renderer * renderer,
-  struct SDL_Texture * tileset_texture) {
+  struct SDL_Texture * tileset_texture
+) {
   SDL_Rect src = {
     .x = command->tile.column * tileset->tile_width,
     .y = command->tile.row * tileset->tile_height,
@@ -73,6 +88,34 @@ void render_tile(
     .h = (int) cm_rect_height(&command->target)
   };
   SDL_RenderCopy(renderer, tileset_texture, &src, &dst);
+}
+
+void render_text(
+  struct cm_render_command const * command,
+  struct cmx_font const * font,
+  struct SDL_Renderer * renderer,
+  struct SDL_Texture * font_texture
+) {
+  char const * text = command->text.value;
+  int len = strlen(text);
+  struct cmx_font_character_mapping * mapping = malloc(
+    (len + 1) * sizeof(*mapping));
+  SDL_Rect src, dst;
+  int i = 0;
+
+  cmx_font_render(font, command->text.value, len, mapping);
+  for (i = 0; i < len +1; i++) {
+    src.x = (int) (mapping[i].source.left * font->pixels.dimensions.width);
+    src.y = (int) (mapping[i].source.top * font->pixels.dimensions.height);
+    src.w = (int) (cm_rect_width(&mapping[i].source) * font->pixels.dimensions.width);
+    src.h = (int) (cm_rect_height(&mapping[i].source) * font->pixels.dimensions.height);
+    dst.x = (int) mapping[i].target.left;
+    dst.y = (int) mapping[i].target.top;
+    dst.w = (int) cm_rect_width(&mapping[i].target);
+    dst.h = (int) cm_rect_height(&mapping[i].target);
+    SDL_RenderCopy(renderer, font_texture, &src, &dst);
+  }
+  free(mapping);
 }
 
 

@@ -91,8 +91,9 @@ cm_value_link_add(struct cm_value * value, struct cm_value * up) {
 }
 
 enum cm_value_link_result
-cm_value_link(struct cm_value * value, struct cm_value * up) {
+cm_value_link(struct cm_value * value, struct cm_value * up, float offset) {
   cm_value_unlink_all_upstream(value);
+  value->offset = offset;
   return cm_value_link_add(value, up);
 }
 

@@ -12,7 +12,7 @@ int main(int argc, const char * argv[]) {
   struct cm_render_command buffer[256];
   struct cmx_sdl2_context context = {
     .window = cmx_sdl2_window_make("cmex: sdl2-rendering", cm_size_make(320, 240)),
-    .renderer = cmx_sdl2_renderer_make(context.window, cm_color_blue),
+    .renderer = cmx_sdl2_renderer_make(context.window, cm_color_make(238, 232, 213, 0)),
     .tileset_texture = cmx_sdl2_texture_make_from_image_data(
       context.renderer, tilesets_kiwi_png.data, tilesets_kiwi_png.length
     ),
@@ -45,25 +45,25 @@ int main(int argc, const char * argv[]) {
   cmw_frame_construct(&bottom_left);
 
   /* link all frames */
-  cm_value_link(&top_left.area.left, context.left);
-  cm_value_link(&top_left.area.top, context.top);
-  cm_value_link(&top_left.area.right, &context.area.center.x);
-  cm_value_link(&top_left.area.bottom, &context.area.center.y);
+  cm_value_link(&top_left.area.left, context.left, 0.0f);
+  cm_value_link(&top_left.area.top, context.top, 0.0f);
+  cm_value_link(&top_left.area.right, &context.area.center.x, 0.0f);
+  cm_value_link(&top_left.area.bottom, &context.area.center.y, 0.0f);
 
-  cm_value_link(&top_right.area.left, &top_left.area.right);
-  cm_value_link(&top_right.area.top, context.top);
-  cm_value_link(&top_right.area.right, context.right);
-  cm_value_link(&top_right.area.bottom, &context.area.center.y);
+  cm_value_link(&top_right.area.left, &top_left.area.right, 0.0f);
+  cm_value_link(&top_right.area.top, context.top, 0.0f);
+  cm_value_link(&top_right.area.right, context.right, 0.0f);
+  cm_value_link(&top_right.area.bottom, &context.area.center.y, 0.0f);
 
-  cm_value_link(&bottom_right.area.left, &context.area.center.x);
-  cm_value_link(&bottom_right.area.top, &top_left.area.bottom);
-  cm_value_link(&bottom_right.area.right, context.right);
-  cm_value_link(&bottom_right.area.bottom, context.bottom);
+  cm_value_link(&bottom_right.area.left, &context.area.center.x, 0.0f);
+  cm_value_link(&bottom_right.area.top, &top_left.area.bottom, 0.0f);
+  cm_value_link(&bottom_right.area.right, context.right, 0.0f);
+  cm_value_link(&bottom_right.area.bottom, context.bottom, 0.0f);
 
-  cm_value_link(&bottom_left.area.left, context.left);
-  cm_value_link(&bottom_left.area.top, &context.area.center.y);
-  cm_value_link(&bottom_left.area.right, &bottom_right.area.left);
-  cm_value_link(&bottom_left.area.bottom, context.bottom);
+  cm_value_link(&bottom_left.area.left, context.left, 0.0f);
+  cm_value_link(&bottom_left.area.top, &context.area.center.y, 0.0f);
+  cm_value_link(&bottom_left.area.right, &bottom_right.area.left, 0.0f);
+  cm_value_link(&bottom_left.area.bottom, context.bottom, 0.0f);
 
   /* main program loop */
   while (!SDL_QuitRequested()) {

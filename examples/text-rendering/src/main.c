@@ -43,6 +43,8 @@ int main(int argc, const char * argv[]) {
   cmw_label_construct(&label);
   cmw_label_set_text(&label, "Oi, mundo!");
 
+  cm_value_link(&label.area.left, &context.area.center.x, 0.0f);
+
   /* main program loop */
   while (!SDL_QuitRequested()) {
     SDL_Delay(16);

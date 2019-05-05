@@ -31,3 +31,27 @@ float cm_rect_height(struct cm_rect const * rect) {
 void cm_rect_construct(struct cm_rect * rect) {
   cm_rect_set(rect, 0, 0, 0, 0);
 }
+
+struct cm_rect
+cm_rect_make_inset_of(struct cm_rect const * rect, float inset_amount) {
+  struct cm_rect result = {
+    .left = rect->left + inset_amount,
+    .top = rect->top + inset_amount,
+    .right = rect->right - inset_amount,
+    .bottom = rect->bottom - inset_amount
+  };
+  return result;
+}
+
+struct cm_rect
+cm_rect_make_outset_of(struct cm_rect const * rect, float outset_amount) {
+  struct cm_rect result = {
+    .left = rect->left - outset_amount,
+    .top = rect->top - outset_amount,
+    .right = rect->right + outset_amount,
+    .bottom = rect->bottom + outset_amount
+  };
+  return result;
+}
+
+

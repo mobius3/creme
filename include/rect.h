@@ -32,6 +32,31 @@ extern struct cm_rect
 cm_rect_make(float left, float top, float right, float bottom);
 
 /**
+ * Creates another reclangle that is padded by `inset_amount`. This allows you
+ * to create rectangles that inset or offset another one. This means
+ * that the new rectangle will have:
+ * - left = rect->left + pad_amount
+ * - top = rect->top + pad_amount
+ * - right = rect->right - pad_amount
+ * - bottom = rect->bottom - pad_amount
+ *
+ * @param rect A pointer to another `cm_rect` value that will be used as a base.
+ * @param pad_amount How much inset padding to add
+ * @return A `cm_rect` value with the padding applied.
+ */
+extern struct cm_rect cm_rect_make_inset_of(struct cm_rect const * rect, float inset_amount);
+
+/**
+ * This is literally `cm_rect_make_inset_of` but passing a negative
+ * inset_amount. This is here just for the sake of completeness.
+ *
+ * @param rect A pointer to another `cm_rect` value that will be used as a base.
+ * @param pad_amount How much outset padding to add
+ * @return A `cm_rect` value with the padding applied.
+ */
+extern struct cm_rect cm_rect_make_outset_of(struct cm_rect const * rect, float outset_amount);
+
+/**
  * Constructs a `cm_rect` value with all its values zeroed.
  *
  * This is equivalent to `cm_rect_set(rect, 0, 0, 0, 0)`

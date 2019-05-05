@@ -99,6 +99,19 @@ extern void cm_area_destruct(struct cm_area * area);
  */
 extern struct cm_rect cm_area_to_rect(struct cm_area const * area);
 
+/**
+ * Links left, top, right and bottom to its equivalent values in the `cm_area`
+ * value pointed by `target` and optionally offset them by values specified
+ * in the `offset` cm_rect.
+ *
+ * Please note that this will **REPLACE** all current upstreams of `area->left`,
+ * `area->top`, `area->right` and `area->bottom`.
+ *
+ * @param area A pointer to a `cm_area` value that'll be downstream of `target`
+ * @param target A pointer to a `cm_area` value that wil be upstream of `area`
+ */
+extern void cm_area_fill(struct cm_area * area, struct cm_area * target, struct cm_rect offset);
+
 #ifdef __cplusplus
 }
 #endif

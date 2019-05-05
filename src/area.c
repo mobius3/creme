@@ -76,3 +76,15 @@ struct cm_rect cm_area_to_rect(struct cm_area const * area) {
               area->bottom.absolute);
   return result;
 }
+
+void cm_area_fill(
+  struct cm_area * area,
+  struct cm_area * target,
+  struct cm_rect offset
+) {
+  cm_value_link(&area->left, &target->left, offset.left);
+  cm_value_link(&area->top, &target->top, offset.top);
+  cm_value_link(&area->right, &target->right, offset.right);
+  cm_value_link(&area->bottom, &target->bottom, offset.bottom);
+}
+

@@ -3,12 +3,16 @@ project(creme::font C)
 include(GNUInstallDirs)
 
 set(CREME_X_FONT_HEADERS
+  include/character-mapping.h
   include/font.h
+  include/font-size.h
+  include/packed-block.h
   include/unicode-block.h
 )
 
 set(CREME_X_FONT_SOURCES
   src/font.c
+  src/font-size.c
   src/unicode-block.c
 )
 

@@ -14,6 +14,8 @@ struct cm_rect
   float left, top, right, bottom;
 };
 
+extern struct cm_rect const cm_rect_zero;
+
 /**
  * Creates a `cm_rect` value by copying `left`, `top`, `right` and `bottom`.
  *

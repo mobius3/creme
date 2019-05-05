@@ -3,6 +3,8 @@
 
 #include "rect.h"
 
+struct cm_rect const cm_rect_zero = {0, 0, 0, 0};
+
 struct cm_rect cm_rect_make(float left, float top, float right, float bottom) {
   struct cm_rect result;
   cm_rect_set(&result, left, top, right, bottom);

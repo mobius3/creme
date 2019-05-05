@@ -36,44 +36,28 @@ enum cm_value_link_result
   cm_value_link__cyclic_link
 };
 
+
+extern struct cm_value_reduce cm_reduce_first;
+extern struct cm_value_reduce cm_reduce_average;
+extern struct cm_value_reduce cm_reduce_max;
+extern struct cm_value_reduce cm_reduce_min;
+
 /**
  * Specifies the type of a reduce function. These functions take an array
  * of float values corresponding to absolute values of a `cm_value` upstream
  * links and it returns a new float value that will be set in the `cm_value`.
  */
-typedef float (* cm_reduce_fn)(float const values[], uint16_t values_count);
+typedef float (* cm_reduce_fn)(
+  float const values[],
+  uint16_t values_count,
+  void * reduce_data
+);
 
-/**
- * Ignores all but the first value in the array and returns it.
- * @param values The array of values
- * @param values_count How many values were passed in
- * @return values[0]
- */
-float cm_reduce_first(float const values[], uint16_t values_count);
-
-/**
- * Calculates the average of all values passed in and returns it.
- * @param values The array of values
- * @param values_count How many values were passed in
- * @return The average of all values
- */
-float cm_reduce_average(float const values[], uint16_t values_count);
-
-/**
- * Finds the maximum value in the value array and returns it.
- * @param values The array of values
- * @param values_count How many values were passed in
- * @return The maximum value in the values array
- */
-float cm_reduce_max(float const values[], uint16_t values_count);
-
-/**
- * Finds the minimum value in the value array and returns it.
- * @param values The array of values
- * @param values_count How many values were passed in
- * @return The minimum value in the values array
- */
-float cm_reduce_min(float const values[], uint16_t values_count);
+struct cm_value_reduce
+{
+  cm_reduce_fn reduce_fn;
+  void * reduce_data;
+};
 
 /**
  * A `cm_value` structure represents values whose changes can be chained
@@ -113,9 +97,9 @@ struct cm_value
   uint8_t upstream_count;
   uint8_t downstream_count;
   uint8_t index_at_downstream[CREME_MAX_VALUE_DOWNSTREAM];
-  cm_reduce_fn reduce_fn;
   int update_token;
   uint32_t update_seen;
+  struct cm_value_reduce reduce;
 };
 
 /**
@@ -148,7 +132,10 @@ extern void cm_value_construct_set(struct cm_value * value, float absolute);
  * @param value A pointer to a `cm_value` value to be constructed
  * @param reduce_fn the reduce function.
  */
-extern void cm_value_construct_reduce(struct cm_value * value, cm_reduce_fn reduce_fn);
+extern void cm_value_construct_reduce(
+  struct cm_value * value,
+  struct cm_value_reduce reduce
+);
 
 /**
  * Constructs a `cm_value` value with 0 offset and 0 absolute. It's absolute
@@ -251,7 +238,7 @@ cm_value_link(struct cm_value * value, struct cm_value * up);
  * @sa cm_value_link
  */
 extern enum cm_value_link_result
-  cm_value_link_add(struct cm_value * value, struct cm_value * up);
+cm_value_link_add(struct cm_value * value, struct cm_value * up);
 
 /**
  * Sets the offset amount of a value and triggers `cm_value_update`.
@@ -322,6 +309,8 @@ cm_value_unlink_all_downstream(struct cm_value * value);
  * @param value A pointer to a `cm_value` value
  */
 extern void cm_value_destruct(struct cm_value * value);
+
+extern void cm_value_set_reduce(struct cm_value * value, struct cm_value_reduce reduce);
 
 
 #ifdef __cplusplus

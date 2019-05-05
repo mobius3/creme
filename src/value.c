@@ -4,48 +4,6 @@
 #include <time.h>
 #include <stdio.h>
 
-
-/**
- * Ignores all but the first value in the array and returns it.
- * @param values The array of values
- * @param values_count How many values were passed in
- * @return values[0]
- */
-extern float
-cm_reduce_first_fn(float const values[], uint16_t values_count, void * data);
-
-/**
- * Calculates the average of all values passed in and returns it.
- * @param values The array of values
- * @param values_count How many values were passed in
- * @return The average of all values
- */
-float
-cm_reduce_average_fn(float const values[], uint16_t values_count, void * data);
-
-/**
- * Finds the maximum value in the value array and returns it.
- * @param values The array of values
- * @param values_count How many values were passed in
- * @return The maximum value in the values array
- */
-float
-cm_reduce_max_fn(float const values[], uint16_t values_count, void * data);
-
-/**
- * Finds the minimum value in the value array and returns it.
- * @param values The array of values
- * @param values_count How many values were passed in
- * @return The minimum value in the values array
- */
-float
-cm_reduce_min_fn(float const values[], uint16_t values_count, void * data);
-
-struct cm_value_reduce cm_reduce_first = {cm_reduce_first_fn, NULL};
-struct cm_value_reduce cm_reduce_average = {cm_reduce_average_fn, NULL};
-struct cm_value_reduce cm_reduce_max = {cm_reduce_max_fn, NULL};
-struct cm_value_reduce cm_reduce_min = {cm_reduce_min_fn, NULL};
-
 #ifdef CREME_DEBUG_UPDATE_CYCLE
 #include <assert.h>
 #endif
@@ -258,7 +216,7 @@ float cm_value_update_with_token(
 
   value->update_seen |= 0x1 << parent_index;
 
-  if (reduce_fn == NULL) reduce_fn = cm_reduce_first_fn;
+  if (reduce_fn == NULL) reduce_fn = cm_reduce_first.reduce_fn;
   for (i = 0; i < value->upstream_count; i++) {
     values[i] = value->upstream[i]->absolute;
   }
@@ -304,39 +262,7 @@ float cm_value_get(struct cm_value const * value) {
   return value->absolute;
 }
 
-float
-cm_reduce_first_fn(const float * values, uint16_t values_count, void * data) {
-  if (values_count == 0) return 0;
-  return values[0];
-}
-
-float
-cm_reduce_average_fn(const float * values, uint16_t values_count, void * data) {
-  float acc = 0.0f;
-  uint16_t i = 0;
-  for (i = 0; i < values_count; i++) acc += values[i];
-  return acc / values_count;
-}
-
-float cm_reduce_max_fn(const float * values, uint16_t values_count, void * data) {
-  int i = 0;
-  float max = 0.0f;
-  if (values_count == 0) return 0.0f;
-  for (i = 0; i < values_count; i++)
-    if (values[i] > max) max = values[i];
-  return max;
-}
-
-float cm_reduce_min_fn(const float * values, uint16_t values_count, void * data) {
-  int i = 0;
-  float min = 0.0f;
-  if (values_count == 0) return 0.0f;
-  for (i = 0; i < values_count; i++)
-    if (values[i] < min) min = values[i];
-  return min;
-}
-
-void cm_value_set_reduce_fn(struct cm_value * value, struct cm_value_reduce reduce) {
+void cm_value_set_reduce(struct cm_value * value, struct cm_value_reduce reduce) {
   value->reduce = reduce;
   cm_value_update(value);
 }

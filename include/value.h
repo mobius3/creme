@@ -2,6 +2,7 @@
 #define CREME_VALUE_H
 
 #include <stdint.h>
+#include <value-reduce.h>
 
 #ifndef CREME_MAX_VALUE_UPSTREAM
 #define CREME_MAX_VALUE_UPSTREAM 16
@@ -37,27 +38,6 @@ enum cm_value_link_result
 };
 
 
-extern struct cm_value_reduce cm_reduce_first;
-extern struct cm_value_reduce cm_reduce_average;
-extern struct cm_value_reduce cm_reduce_max;
-extern struct cm_value_reduce cm_reduce_min;
-
-/**
- * Specifies the type of a reduce function. These functions take an array
- * of float values corresponding to absolute values of a `cm_value` upstream
- * links and it returns a new float value that will be set in the `cm_value`.
- */
-typedef float (* cm_reduce_fn)(
-  float const values[],
-  uint16_t values_count,
-  void * reduce_data
-);
-
-struct cm_value_reduce
-{
-  cm_reduce_fn reduce_fn;
-  void * reduce_data;
-};
 
 /**
  * A `cm_value` structure represents values whose changes can be chained

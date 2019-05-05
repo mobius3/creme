@@ -43,6 +43,7 @@ set(CREME_HEADERS
   include/size.h
   include/tile.h
   include/value.h
+  include/value-reduce.h
 )
 
 set(CREME_SOURCES
@@ -55,7 +56,8 @@ set(CREME_SOURCES
   src/render-queue.c
   src/size.c
   src/tile.c
-  src/value.c)
+  src/value.c
+  src/value-reduce.c)
 
 add_library(creme ${CREME_SOURCES} ${CREME_HEADERS})
 add_library(creme::creme ALIAS creme)

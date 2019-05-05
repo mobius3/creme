@@ -2,6 +2,7 @@
 #include "render-command.h"
 #include "render-queue.h"
 #include <stdlib.h>
+#include <string.h>
 
 void cmw_label_update_text_size(struct cmw_label * label);
 
@@ -21,7 +22,7 @@ void cmw_label_set_text(struct cmw_label * label, char const * text) {
 
 void cmw_label_update_text_size(struct cmw_label * label) {
   if (label->text_size_fn == NULL) return;
-  struct cm_size size = label->text_size_fn(label->text, label->text_size_fn_data);
+  struct cm_size size = label->text_size_fn(label->text, strlen(label->text), label->text_size_fn_data);
   cm_value_set(&label->text_width, size.width);
   cm_value_set(&label->text_height, size.height);
 }

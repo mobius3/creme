@@ -206,6 +206,16 @@ cmx_font_locate_block(struct cmx_font const * font, uint32_t point) {
   return NULL;
 }
 
+static float get_kern(struct cmx_font const * font, uint32_t ch1, uint32_t ch2) {
+  float scale = 0;
+  if (font->metadata.size.type == cmx_font_size_type__pt) {
+    scale = stbtt_ScaleForMappingEmToPixels(font->metadata.data, font->metadata.size.value);
+  } else {
+    scale = stbtt_ScaleForPixelHeight(font->metadata.data, font->metadata.size.value);
+  }
+  return scale * stbtt_GetCodepointKernAdvance(font->metadata.data, ch1, ch2);
+}
+
 void cmx_font_render(
   struct cmx_font const * font,
   char const * text,
@@ -215,6 +225,18 @@ void cmx_font_render(
   int i = 0;
   struct cmx_font_packed_block * block;
   float x = 0;
+  float expected_height = 0.0f, offset_height;
+
+  /* the following loop calculates the maximum character height and then creates
+   * an offset to be used when rendering. We cannot use the actual size because
+   * that can be much higher than the actual rendering height. */
+  for (i = 0; i < text_length; i++) {
+    block = cmx_font_locate_block(font, text[i]);
+    int mapping_buffer_index = text[i] - block->first;
+    float current_height = cm_rect_height(&block->mapping[mapping_buffer_index].target);
+    if (current_height > expected_height) expected_height = current_height;
+  }
+  offset_height = font->metadata.size.value - expected_height;
 
   float kern = 0;
   for (i = 0; i < text_length; i++) {
@@ -226,15 +248,32 @@ void cmx_font_render(
     mapping[i].target = source_mapping[mapping_buffer_index].target;
     mapping[i].target.left += x + kern;
     mapping[i].target.right += x + kern;
+    mapping[i].target.top -= offset_height;
+    mapping[i].target.bottom -= offset_height;
     x += cm_rect_width(&source_mapping[mapping_buffer_index].target);
-    if (i + 1 < text_length) {
-      float scale = 0;
-      if (font->metadata.size.type == cmx_font_size_type__pt) {
-        scale = stbtt_ScaleForMappingEmToPixels(font->metadata.data, font->metadata.size.value);
-      } else {
-        scale = stbtt_ScaleForPixelHeight(font->metadata.data, font->metadata.size.value);
-      }
-      kern += scale * stbtt_GetCodepointKernAdvance(font->metadata.data, text[i], text[i+1]);
-    }
+    if (i + 1 < text_length) kern += get_kern(font, text[i], text[i + 1]);
   }
+}
+
+struct cm_size cmx_font_text_size(struct cmx_font const * font, const char * text, size_t text_length) {
+  int i = 0;
+  struct cmx_font_packed_block * block;
+  struct cm_size result = {0, 0};
+  float min_top = 0.0f, max_bottom = 0.0f;
+
+  float total_kern = 0;
+  for (i = 0; i < text_length; i++) {
+    block = cmx_font_locate_block(font, text[i]);
+    struct cmx_font_character_mapping * source_mapping = block->mapping;
+    int mapping_buffer_index = text[i] - block->first;
+    struct cm_rect * target = &source_mapping[mapping_buffer_index].target;
+    if (target->top < min_top || i == 0) min_top = target->top;
+    if (target->bottom > max_bottom || i == 0) max_bottom = target->bottom;
+    result.width += cm_rect_width(&source_mapping[mapping_buffer_index].target);
+    if (i + 1 < text_length) total_kern += get_kern(font, text[i], text[i+1]);
+  }
+
+  result.width += total_kern;
+  result.height = max_bottom - min_top;
+  return result;
 }

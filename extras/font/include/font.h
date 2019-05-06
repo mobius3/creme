@@ -89,7 +89,7 @@ extern void cmx_font_pack(
  *
  * @param font A pointer to a `cmx_font` value that will be used
  * @param text A pointer to a character array containing the text to map
- * @param text_length How many characters are ther in the text array
+ * @param text_length How many bytes are there in the text array
  * @param mapping An array of `cmx_font_character_mapping` values that
  *                       must be at least `text_length` long.
  */
@@ -99,6 +99,16 @@ extern void cmx_font_render(
   size_t text_length,
   struct cmx_font_character_mapping mapping[]
 );
+
+/**
+ * Returns the expected width and height of a text rendering with the given font.
+ * @param font A pointer to a `cmx_font` value
+ * @param text A pointer to the character sequence containing the text
+ * @param text_length The length of the text (in bytes, not in characters)
+ * @return A `cm_size` value containing width and height
+ */
+extern struct cm_size
+cmx_font_text_size(struct cmx_font const * font, const char * text, size_t text_length);
 
 /**
  * Destroys and frees all memory allocated by this library. You *must* call

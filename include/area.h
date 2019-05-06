@@ -25,8 +25,7 @@ extern "C" {
  * Note that `right` and `bottom` are *not* equivalent to `width` and `height`.
  *
  */
-struct cm_area
-{
+struct cm_area {
   struct cm_value left;
   struct cm_value right;
   struct cm_value top;
@@ -73,7 +72,8 @@ cm_area_set(
   float left,
   float top,
   float right,
-  float bottom);
+  float bottom
+);
 
 /**
  * Destructs and breaks all uplinks and downlinks of a `cm_area`.
@@ -110,7 +110,11 @@ extern struct cm_rect cm_area_to_rect(struct cm_area const * area);
  * @param area A pointer to a `cm_area` value that'll be downstream of `target`
  * @param target A pointer to a `cm_area` value that wil be upstream of `area`
  */
-extern void cm_area_fill(struct cm_area * area, struct cm_area * target, struct cm_rect offset);
+extern void cm_area_fill(
+  struct cm_area * area,
+  struct cm_area * target,
+  struct cm_rect offset
+);
 
 #ifdef __cplusplus
 }

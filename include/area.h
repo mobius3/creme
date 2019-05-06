@@ -116,6 +116,32 @@ extern void cm_area_fill(
   struct cm_rect offset
 );
 
+/**
+ * Centers the `cm_area` value pointed by `area` around the `cm_vallue`s x
+ * and y. `area->left` and `area->right` will be linked to produce the
+ * absolute value of the `cm_value` pointed by `width` but centered at the
+ * absolute value of the `cm_value` pointed by `x`. Similarly, `area->top` and
+ * `area->bottom` will be linked in such a way as to produce the absolute value
+ * of the `cm_value` pointed by `height` but centered at the absolute value
+ * of the `cm_value` pointed by `y`
+ *
+ * This will break all upstream links of `left`, `top`, `right` and `bottom`
+ * fields of `area` and linking them again to other upstreams will break
+ * centering.
+ * @param area
+ * @param x
+ * @param y
+ * @param width
+ * @param height
+ */
+extern void cm_area_center_at(
+  struct cm_area * area,
+  struct cm_value * x,
+  struct cm_value * y,
+  struct cm_value * width,
+  struct cm_value * height
+);
+
 #ifdef __cplusplus
 }
 #endif

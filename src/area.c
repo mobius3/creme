@@ -4,6 +4,18 @@
 #include "area.h"
 #include <stdlib.h>
 
+/* center is expected to be at [0], full size at [1], returns x - size/2 */
+float cm_area_reduce_half_size_fn(float const values[], uint16_t values_count, void * priv) {
+  (void) priv;
+  if (values_count < 2) return 0.0f;
+  return values[0] - values[1]/2;
+}
+
+struct cm_value_reduce cm_area_reduce_half_size = {
+  .reduce_fn = cm_area_reduce_half_size_fn,
+  .reduce_data = NULL
+};
+
 void cm_area_construct(struct cm_area * area) {
   cm_value_construct(&area->left);
   cm_value_construct(&area->top);
@@ -77,5 +89,34 @@ void cm_area_fill(
   cm_value_link(&area->top, &target->top, offset.top);
   cm_value_link(&area->right, &target->right, offset.right);
   cm_value_link(&area->bottom, &target->bottom, offset.bottom);
+}
+
+void cm_area_center_at(
+  struct cm_area * area,
+  struct cm_value * x,
+  struct cm_value * y,
+  struct cm_value * width,
+  struct cm_value * height
+) {
+  cm_value_unlink_all_upstream(&area->left);
+  cm_value_unlink_all_upstream(&area->top);
+  cm_value_unlink_all_upstream(&area->right);
+  cm_value_unlink_all_upstream(&area->bottom);
+
+  cm_value_set_reduce(&area->right, cm_reduce_sum);
+  cm_value_link_add(&area->right, &area->left);
+  cm_value_link_add(&area->right, width);
+
+  cm_value_set_reduce(&area->left, cm_area_reduce_half_size);
+  cm_value_link_add(&area->left, x);
+  cm_value_link_add(&area->left, width);
+
+  cm_value_set_reduce(&area->bottom, cm_reduce_sum);
+  cm_value_link_add(&area->bottom, &area->top);
+  cm_value_link_add(&area->bottom, height);
+
+  cm_value_set_reduce(&area->top, cm_area_reduce_half_size);
+  cm_value_link_add(&area->top, y);
+  cm_value_link_add(&area->top, height);
 }
 

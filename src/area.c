@@ -4,22 +4,13 @@
 #include "area.h"
 #include <stdlib.h>
 
-float cm_area_reduce_0_minus_1_fn(float const values[], uint16_t value_count, void * data) {
-  if (value_count < 2) return 0;
-  return values[0] - values[1];
-}
-
-struct cm_value_reduce cm_area_reduce_0_minus_1 = {
-  cm_area_reduce_0_minus_1_fn, NULL
-};
-
 void cm_area_construct(struct cm_area * area) {
   cm_value_construct(&area->left);
   cm_value_construct(&area->top);
   cm_value_construct(&area->right);
   cm_value_construct(&area->bottom);
-  cm_value_construct_reduce(&area->width, cm_area_reduce_0_minus_1);
-  cm_value_construct_reduce(&area->height, cm_area_reduce_0_minus_1);
+  cm_value_construct_reduce(&area->width, cm_reduce_0_minus_1);
+  cm_value_construct_reduce(&area->height, cm_reduce_0_minus_1);
 
   cm_value_construct_average(&area->center.x);
   cm_value_construct_average(&area->center.y);

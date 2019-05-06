@@ -44,6 +44,16 @@ extern struct cm_value_reduce const cm_reduce_max;
  */
 extern struct cm_value_reduce const cm_reduce_min;
 
+/**
+ * Sums all values and returns the result
+ */
+extern struct cm_value_reduce const cm_reduce_sum;
+
+/**
+ * Runs (upstream[0].absolute - upstream[1].absolute) and returns the result
+ */
+extern struct cm_value_reduce const cm_reduce_0_minus_1;
+
 #ifdef __cplusplus
 }
 #endif

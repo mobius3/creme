@@ -21,8 +21,7 @@ int main(int argc, const char * argv[]) {
   /* initializes and pack used font */
   struct cmx_font_unicode_block blocks[] = {
     cmx_font_unicode_block_basic_latin,
-    cmx_font_unicode_block_emoticons,
-    cmx_font_unicode_block_cyrillic
+    cmx_font_unicode_block_emoticons
   };
   struct cmx_font font;
   cmx_font_construct(&font, fonts_jost_600_semi_ttf.data, cmx_font_size_px(18), cm_color_make(109, 112, 196, 0));

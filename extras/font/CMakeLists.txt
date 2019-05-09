@@ -34,7 +34,7 @@ target_compile_options(x-font PRIVATE
   $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall,-Wextra,-pedantic>
   $<$<CXX_COMPILER_ID:MSVC>:/W4>)
 
-target_link_libraries(x-font PUBLIC creme PRIVATE stb::truetype)
+target_link_libraries(x-font PUBLIC creme PRIVATE stb::truetype utf8-decode)
 
 install(TARGETS x-font
   EXPORT creme-targets

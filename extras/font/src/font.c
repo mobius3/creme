@@ -1,5 +1,6 @@
 #include "font.h"
 #include "stb_truetype.h"
+#include "utf8-decode.h"
 #include <math.h>
 
 void cmx_font_colorify(
@@ -107,7 +108,7 @@ void cmx_font_pack(
   );
   stbtt_PackFontRanges(&pack_context, font->metadata.font_data, 0, ranges, block_count);
 
-  /* map all the stbtt_packedchar to render_mapping */
+  /* map all the stbtt_packedchar to character_mapping */
   for (i = 0; i < block_count; i++) {
     struct cmx_font_packed_block * packed_block = &font->packing.packed_blocks[i];
     struct cmx_font_character_mapping * mappings = packed_block->mapping;
@@ -122,13 +123,8 @@ void cmx_font_pack(
       struct cm_rect * dst = &mapping->target;
       stbtt_GetPackedQuad(
         chardata,
-        (int) dimensions.width,
-        (int) dimensions.height,
-        character,
-        &x,
-        &y,
-        &quad,
-        1
+        (int) dimensions.width, (int) dimensions.height,
+        character, &x, &y, &quad, 1
       );
 
       src->left = quad.s0;
@@ -139,17 +135,14 @@ void cmx_font_pack(
        * from x and y */
       if (quad.x1 - quad.x0 == 0.0f) quad.x1 = x;
       if (quad.y1 - quad.y0 == 0.0f) quad.y1 = y;
-
       dst->left = quad.x0;
-      dst->top = font->metadata.size.value + quad.y0;
+      dst->top = quad.y0;
       dst->right = quad.x1;
-      dst->bottom = dst->top + (quad.y1 - quad.y0);
+      dst->bottom = quad.y1;
     }
 
     free(chardata);
   }
-
-
   stbtt_PackEnd(&pack_context);
 
   cmx_font_colorify(pixels_1bpp, pixels_4bpp, dimensions, font->metadata.color);
@@ -181,7 +174,8 @@ void cmx_font_colorify(
   unsigned char * dst;
 
   int i = 0, j = 0,
-    w = (int) dimensions.width, h = (int) dimensions.height;
+      w = (int) dimensions.width,
+      h = (int) dimensions.height;
 
   for (j = 0; j < h; ++j) {
     src = old_pixels + j * w;
@@ -216,64 +210,91 @@ static float get_kern(struct cmx_font const * font, uint32_t ch1, uint32_t ch2) 
   return scale * stbtt_GetCodepointKernAdvance(font->metadata.data, ch1, ch2);
 }
 
-void cmx_font_render(
+int cmx_font_render(
   struct cmx_font const * font,
-  char const * text,
+  unsigned char const * text,
   size_t text_length,
   struct cmx_font_character_mapping mapping[]
 ) {
-  int i = 0;
+  int i = 0, target_index = 0, source_index = 0;
   struct cmx_font_packed_block * block;
-  float x = 0;
-  float expected_height = 0.0f, offset_height;
+  float x = 0, kern = 0, top_offset = 0.0f;
+  struct utf8_decode_result decode;
 
-  /* the following loop calculates the maximum character height and then creates
-   * an offset to be used when rendering. We cannot use the actual size because
-   * that can be much higher than the actual rendering height. */
-  for (i = 0; i < text_length; i++) {
-    block = cmx_font_locate_block(font, text[i]);
-    int mapping_buffer_index = text[i] - block->first;
-    float current_height = cm_rect_height(&block->mapping[mapping_buffer_index].target);
-    if (current_height > expected_height) expected_height = current_height;
-  }
-  offset_height = font->metadata.size.value - expected_height;
+  /* decode all utf8 characters into unicode codepoints, find their
+   * block, gets their rendering parameters, adds kerning */
+  for (i = 0; i < text_length; i += decode.skip, target_index++) {
+    decode = utf8_decode(text + i, text_length -i);
 
-  float kern = 0;
-  for (i = 0; i < text_length; i++) {
-    block = cmx_font_locate_block(font, text[i]);
+    block = cmx_font_locate_block(font, decode.codepoint);
+    /* skips half the pixel "height" if block was not found */
+    if (block == NULL) {
+      x += font->metadata.size.value/2;
+      continue;
+    }
+
+    /* gets the mapping done by cmx_font_pack and copies it into the result */
     struct cmx_font_character_mapping * source_mapping = block->mapping;
-    int mapping_buffer_index = text[i] - block->first;
+    source_index = decode.codepoint - block->first;
+    mapping[target_index].source = source_mapping[source_index].source;
+    mapping[target_index].target = source_mapping[source_index].target;
+    mapping[target_index].target.left += x + kern;
+    mapping[target_index].target.right += x + kern;
 
-    mapping[i].source = source_mapping[mapping_buffer_index].source;
-    mapping[i].target = source_mapping[mapping_buffer_index].target;
-    mapping[i].target.left += x + kern;
-    mapping[i].target.right += x + kern;
-    mapping[i].target.top -= offset_height;
-    mapping[i].target.bottom -= offset_height;
-    x += cm_rect_width(&source_mapping[mapping_buffer_index].target);
-    if (i + 1 < text_length) kern += get_kern(font, text[i], text[i + 1]);
+    /* stores the top offset to add it later to the mappings, to make sure
+     * that rendering starts at 0 */
+    if ((mapping[target_index].target.top < top_offset) || target_index == 0)
+      top_offset = mapping[target_index].target.top;
+
+    /* advances to the next character position */
+    x += cm_rect_width(&source_mapping[source_index].target);
+
+    /* checks to see if there is kerning to add to the next character, and
+     * sets it to be used in the next iteration */
+    if (i + decode.skip < text_length) {
+      struct utf8_decode_result next = utf8_decode(text + i + decode.skip, text_length - (i + decode.skip));
+      kern += get_kern(font, decode.codepoint, next.codepoint);
+    }
   }
+
+  /* characters are rendered around a baseline, which was set to 0 when
+   * cmx_font_pack was called. the following loop goes through all glyph
+   * mappings and adjusts them to remove the "empty" space on top caused
+   * by that. */
+  top_offset = fabs(top_offset);
+  for (i = 0; i < target_index; i++) {
+    mapping[i].target.top += top_offset;
+    mapping[i].target.bottom += top_offset;
+  }
+
+  /* end of the loop, target_index will be the amount of decoded glyphs */
+  return target_index;
 }
 
-struct cm_size cmx_font_text_size(struct cmx_font const * font, const char * text, size_t text_length) {
-  int i = 0;
-  struct cmx_font_packed_block * block;
+struct cm_size cmx_font_text_size(struct cmx_font const * font, unsigned char const * text, size_t text_length) {
+  /* renders the text to a temporary mapping then use that to calculate
+   * text width and height */
+  struct cmx_font_character_mapping * mapping = malloc(sizeof(*mapping) * text_length);
+  int i = 0, total_glyphs = cmx_font_render(font, text, text_length, mapping);
   struct cm_size result = {0, 0};
-  float min_top = 0.0f, max_bottom = 0.0f;
+  if (total_glyphs == 0) return result;
 
-  float total_kern = 0;
-  for (i = 0; i < text_length; i++) {
-    block = cmx_font_locate_block(font, text[i]);
-    struct cmx_font_character_mapping * source_mapping = block->mapping;
-    int mapping_buffer_index = text[i] - block->first;
-    struct cm_rect * target = &source_mapping[mapping_buffer_index].target;
-    if (target->top < min_top || i == 0) min_top = target->top;
-    if (target->bottom > max_bottom || i == 0) max_bottom = target->bottom;
-    result.width += cm_rect_width(&source_mapping[mapping_buffer_index].target);
-    if (i + 1 < text_length) total_kern += get_kern(font, text[i], text[i+1]);
+  struct cm_rect * target = &mapping[i].target;
+  struct cm_rect bounds = *target;
+  for (i = 1; i < total_glyphs; i++) {
+    target = &mapping[i].target;
+    if (target->left < bounds.left) bounds.left = target->left;
+    if (target->top < bounds.top) bounds.top = target->top;
+    if (target->right > bounds.right) bounds.right = target->right;
+    if (target->bottom > bounds.bottom) bounds.bottom = target->bottom;
   }
 
-  result.width += total_kern;
-  result.height = max_bottom - min_top;
+  result.width = cm_rect_width(&bounds);
+  result.height = cm_rect_height(&bounds);
+
+  /* some characters have a base x start that is not 0. this code takes care of
+   * that by adding the starting amount to the width */
+  if (bounds.left != 0.0f) result.width += fabs(bounds.left);
+  free(mapping);
   return result;
 }

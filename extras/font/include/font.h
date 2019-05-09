@@ -92,10 +92,11 @@ extern void cmx_font_pack(
  * @param text_length How many bytes are there in the text array
  * @param mapping An array of `cmx_font_character_mapping` values that
  *                       must be at least `text_length` long.
+ * @return the actual number of glyphs rendered.
  */
-extern void cmx_font_render(
+extern int cmx_font_render(
   struct cmx_font const * font,
-  char const * text,
+  unsigned char const * text,
   size_t text_length,
   struct cmx_font_character_mapping mapping[]
 );
@@ -108,7 +109,7 @@ extern void cmx_font_render(
  * @return A `cm_size` value containing width and height
  */
 extern struct cm_size
-cmx_font_text_size(struct cmx_font const * font, const char * text, size_t text_length);
+cmx_font_text_size(struct cmx_font const * font, unsigned const char * text, size_t text_length);
 
 /**
  * Destroys and frees all memory allocated by this library. You *must* call

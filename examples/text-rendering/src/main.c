@@ -10,7 +10,7 @@
 
 #include "stb_truetype.h"
 
-static struct cm_size text_size(char const * text, size_t len, void * priv) {
+static struct cm_size text_size(unsigned char const * text, size_t len, void * priv) {
   return cmx_font_text_size(priv, text, len);
 }
 
@@ -21,10 +21,11 @@ int main(int argc, const char * argv[]) {
   /* initializes and pack used font */
   struct cmx_font_unicode_block blocks[] = {
     cmx_font_unicode_block_basic_latin,
+    cmx_font_unicode_block_latin_1_supplement,
     cmx_font_unicode_block_emoticons
   };
   struct cmx_font font;
-  cmx_font_construct(&font, fonts_jost_600_semi_ttf.data, cmx_font_size_px(18), cm_color_make(109, 112, 196, 0));
+  cmx_font_construct(&font, fonts_symbola_ttf.data, cmx_font_size_px(28), cm_color_make(109, 112, 196, 0));
   cmx_font_pack(&font, blocks, sizeof(blocks)/sizeof(*blocks));
 
   /* initializes the cmx_sdl2_context value */
@@ -55,13 +56,19 @@ int main(int argc, const char * argv[]) {
 
   struct cmw_label label;
   cmw_label_construct(&label);
-  cmw_label_set_text(&label, "Oi, mundo!");
+  cmw_label_set_text(&label, (uint8_t *) "Olá, mundão!  😉");
   cmw_label_set_size_fn(&label, text_size, &font);
-  cm_area_center_at(&label.area, &context.area.center.x, &context.area.center.y, &label.text_width, &label.text_height);
+  cm_area_center_at(
+    &label.area,
+    &context.area.center.x,
+    &context.area.center.y,
+    &label.text_width,
+    &label.text_height
+  );
 
   struct cmw_frame frame;
   cmw_frame_construct(&frame);
-  cm_area_fill(&frame.area, &label.area, cm_rect_make_outset_of(&cm_rect_zero, 12));
+  cm_area_fill(&frame.area, &label.area, cm_rect_make_outset_of(&cm_rect_zero, 20));
 
   /* main program loop */
   while (!SDL_QuitRequested()) {

@@ -197,9 +197,25 @@ float cm_value_update_with_token(
   int token,
   int parent_index
 ) {
-  cm_reduce_fn reduce_fn = value->reduce.reduce_fn;
+  cm_reduce_fn reduce_fn = value->reduce.reduce_fn ? value->reduce.reduce_fn
+                                                   : cm_reduce_first.reduce_fn;
   float values[CREME_MAX_VALUE_UPSTREAM];
   uint16_t i = 0;
+
+
+  /* calculates new abolute first */
+  for (i = 0; i < value->upstream_count; i++) {
+    values[i] = value->upstream[i]->absolute;
+  }
+  float new_absolute = reduce_fn(
+    values,
+    value->upstream_count, value->reduce.reduce_data
+  );
+  new_absolute += value->offset;
+
+  /* If the new absolute is the exact same of the old absolute, we're done.
+   * This is important to allow "sane" cycles to happen */
+  if (new_absolute == value->absolute) return new_absolute;
 
   if (value->update_token != token) {
     value->update_token = token;
@@ -217,18 +233,10 @@ float cm_value_update_with_token(
 
   value->update_seen |= 0x1 << parent_index;
 
-  if (reduce_fn == NULL) reduce_fn = cm_reduce_first.reduce_fn;
   for (i = 0; i < value->upstream_count; i++) {
     values[i] = value->upstream[i]->absolute;
   }
-  cm_value_set_with_token(
-    value,
-    reduce_fn(
-      values,
-      value->upstream_count, value->reduce.reduce_data
-    ) + value->offset,
-    token
-  );
+  cm_value_set_with_token(value, new_absolute, token);
   return value->absolute;
 }
 
@@ -263,7 +271,8 @@ float cm_value_get(struct cm_value const * value) {
   return value->absolute;
 }
 
-void cm_value_set_reduce(struct cm_value * value, struct cm_value_reduce reduce) {
+void
+cm_value_set_reduce(struct cm_value * value, struct cm_value_reduce reduce) {
   value->reduce = reduce;
   cm_value_update(value);
 }

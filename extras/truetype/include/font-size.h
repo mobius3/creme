@@ -1,5 +1,5 @@
-#ifndef CREME_EXTRAS_FONT_FONT_SIZE_H
-#define CREME_EXTRAS_FONT_FONT_SIZE_H
+#ifndef CREME_EXTRAS_TRUETYPE_FONT_SIZE_H
+#define CREME_EXTRAS_TRUETYPE_FONT_SIZE_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,4 +39,4 @@ extern struct cmx_font_size cmx_font_size_px(float value);
 }
 #endif
 
-#endif /* CREME_EXTRAS_FONT_FONT_SIZE_H */
+#endif /* CREME_EXTRAS_TRUETYPE_FONT_SIZE_H */

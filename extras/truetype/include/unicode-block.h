@@ -1,5 +1,5 @@
-#ifndef CREME_EXTRAS_FONT_UNICODE_RANGE_H
-#define CREME_EXTRAS_FONT_UNICODE_RANGE_H
+#ifndef CREME_EXTRAS_TRUETYPE_UNICODE_BLOCK_H
+#define CREME_EXTRAS_TRUETYPE_UNICODE_BLOCK_H
 
 #include <stdint.h>
 
@@ -322,4 +322,4 @@ extern struct cmx_font_unicode_block cmx_font_unicode_block_variation_selectors_
 }
 #endif
 
-#endif /* CREME_EXTRAS_FONT_UNICODE_RANGE_H */
+#endif /* CREME_EXTRAS_TRUETYPE_UNICODE_BLOCK_H */

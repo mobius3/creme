@@ -6,7 +6,7 @@
 #include "widget/frame.h"
 
 #include "cmx-sdl2.h"
-#include "cmx-font.h"
+#include "cmx-truetype.h"
 
 #include "stb_truetype.h"
 

@@ -1,5 +1,5 @@
-#ifndef CREME_EXTRAS_FONT_H
-#define CREME_EXTRAS_FONT_H
+#ifndef CREME_EXTRAS_TRUETYPE_FONT_H
+#define CREME_EXTRAS_TRUETYPE_FONT_H
 
 #include <stdlib.h>
 #include <stdint.h>

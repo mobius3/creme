@@ -4,6 +4,6 @@ if (CREME_BUILD_EXTRAS_SDL2)
   add_subdirectory(sdl2)
 endif()
 
-if (CREME_BUILD_EXTRAS_FONT)
-  add_subdirectory(font)
+if (CREME_BUILD_EXTRAS_TRUETYPE)
+  add_subdirectory(truetype)
 endif()

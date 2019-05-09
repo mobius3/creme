@@ -1,5 +1,5 @@
-#ifndef CREME_EXTRAS_FONT_PACKED_BLOCK_H
-#define CREME_EXTRAS_FONT_PACKED_BLOCK_H
+#ifndef CREME_EXTRAS_TRUETYPE_PACKED_BLOCK_H
+#define CREME_EXTRAS_TRUETYPE_PACKED_BLOCK_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,4 +19,4 @@ struct cmx_font_packed_block {
 }
 #endif
 
-#endif /* CREME_EXTRAS_FONT_PACKED_BLOCK_H */
+#endif /* CREME_EXTRAS_TRUETYPE_PACKED_BLOCK_H */

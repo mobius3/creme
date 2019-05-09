@@ -15,7 +15,7 @@ void cmw_label_construct(struct cmw_label * label) {
   label->text_size_fn = NULL;
 }
 
-void cmw_label_set_text(struct cmw_label * label, char const * text) {
+void cmw_label_set_text(struct cmw_label * label, unsigned char const * text) {
   label->text = text;
   cmw_label_update_text_size(label);
 }

@@ -11,7 +11,7 @@
 #include "stb_truetype.h"
 
 static struct cm_size text_size(unsigned char const * text, size_t len, void * priv) {
-  return cmx_font_text_size(priv, text, len);
+  return cmx_truetype_text_size(priv, text, len);
 }
 
 int main(int argc, const char * argv[]) {
@@ -19,14 +19,16 @@ int main(int argc, const char * argv[]) {
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 
   /* initializes and pack used font */
-  struct cmx_font_unicode_block blocks[] = {
-    cmx_font_unicode_block_basic_latin,
-    cmx_font_unicode_block_latin_1_supplement,
-    cmx_font_unicode_block_emoticons
+  struct cmx_truetype_unicode_block blocks[] = {
+    cmx_truetype_unicode_block_basic_latin,
+    cmx_truetype_unicode_block_latin_1_supplement,
+    cmx_truetype_unicode_block_emoticons
   };
-  struct cmx_font font;
-  cmx_font_construct(&font, fonts_symbola_ttf.data, cmx_font_size_px(28), cm_color_make(109, 112, 196, 0));
-  cmx_font_pack(&font, blocks, sizeof(blocks)/sizeof(*blocks));
+  struct cmx_truetype_font font;
+  cmx_truetype_font_construct(
+    &font, fonts_symbola_ttf.data,
+    cmx_truetype_font_size_px(28), cm_color_make(109, 112, 196, 0));
+  cmx_truetype_font_pack(&font, blocks, sizeof(blocks) / sizeof(*blocks));
 
   /* initializes the cmx_sdl2_context value */
   struct cm_render_command buffer[256];
@@ -83,7 +85,7 @@ int main(int argc, const char * argv[]) {
   }
 
   cmx_sdl2_context_destruct(&context);
-  cmx_font_destruct(&font);
+  cmx_truetype_font_destruct(&font);
   SDL_Quit();
   return 0;
 }

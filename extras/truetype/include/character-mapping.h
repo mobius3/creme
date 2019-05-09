@@ -9,7 +9,7 @@ extern "C" {
  * Specifies an unicode character mapping in terms of source texture and target
  * destination (screen or world-space).
  */
-struct cmx_font_character_mapping {
+struct cmx_truetype_character_mapping {
   struct cm_rect source;
   struct cm_rect target;
 };

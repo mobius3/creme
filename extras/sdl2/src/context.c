@@ -1,6 +1,6 @@
 #include "render-command.h"
 #include "context.h"
-#include "font.h"
+#include "cmx-truetype.h"
 
 static void render_tile(
   struct cm_render_command const * command,
@@ -11,7 +11,7 @@ static void render_tile(
 
 static void render_text(
   struct cm_render_command const * command,
-  struct cmx_font const * font,
+  struct cmx_truetype_font const * font,
   struct SDL_Renderer * renderer,
   struct SDL_Texture * font_texture
 );
@@ -93,18 +93,18 @@ void render_tile(
 
 void render_text(
   struct cm_render_command const * command,
-  struct cmx_font const * font,
+  struct cmx_truetype_font const * font,
   struct SDL_Renderer * renderer,
   struct SDL_Texture * font_texture
 ) {
   char const * text = command->text.value;
   int len = strlen(text);
-  struct cmx_font_character_mapping * mapping = malloc(
+  struct cmx_truetype_character_mapping * mapping = malloc(
     (len + 1) * sizeof(*mapping));
   SDL_Rect src, dst;
   int i = 0;
 
-  cmx_font_render(font, command->text.value, len, mapping);
+  cmx_truetype_font_render(font, (uint8_t *) command->text.value, len, mapping);
   for (i = 0; i < len +1; i++) {
     src.x = (int) (mapping[i].source.left * font->pixels.dimensions.width);
     src.y = (int) (mapping[i].source.top * font->pixels.dimensions.height);

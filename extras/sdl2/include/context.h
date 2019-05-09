@@ -4,6 +4,9 @@
 #include "tileset.h"
 #include "area.h"
 #include "render-queue.h"
+#include "value.h"
+#include "cmx-truetype.h"
+
 #include "SDL.h"
 
 #ifdef __cplusplus
@@ -17,7 +20,7 @@ struct cmx_sdl2_context {
   struct cm_tileset tileset;
   struct cm_area area;
   struct cm_render_queue queue;
-  struct cmx_font const * font;
+  struct cmx_truetype_font const * font;
   SDL_Texture * font_texture;
   struct cm_value * left, * top, * right, * bottom;
 };

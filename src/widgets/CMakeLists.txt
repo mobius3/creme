@@ -29,7 +29,7 @@ target_include_directories(widgets PUBLIC
 
 target_compile_options(widgets PRIVATE
   $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
-  $<$<C_COMPILER_ID:MSVC>:/W4>)
+  $<$<C_COMPILER_ID:MSVC>:/W4 /Wall /WX>)
 
 install(TARGETS widgets
   EXPORT creme-targets

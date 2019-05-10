@@ -44,7 +44,7 @@ target_include_directories(core PUBLIC
 
 target_compile_options(core PRIVATE
   $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
-  $<$<C_COMPILER_ID:MSVC>:/W4>)
+  $<$<C_COMPILER_ID:MSVC>:/W4 /Wall /WX>)
 
 install(TARGETS core
   EXPORT creme-targets

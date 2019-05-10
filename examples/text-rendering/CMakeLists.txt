@@ -17,4 +17,4 @@ set_target_properties(text-rendering PROPERTIES
 
 target_compile_options(text-rendering PRIVATE
   $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
-  $<$<C_COMPILER_ID:MSVC>:/W4>)
+  $<$<C_COMPILER_ID:MSVC>:/W4 /Wall /WX>)

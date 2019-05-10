@@ -5,6 +5,9 @@
 #include "creme-x-sdl2.h"
 
 int main(int argc, const char * argv[]) {
+  (void) argc;
+  (void) argv;
+
   /* initializes SDL2. */
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 

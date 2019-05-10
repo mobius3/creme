@@ -15,7 +15,7 @@ add_library(widgets ${CREME_WIDGETS_SOURCE_FILES} ${CREME_WIDGETS_INCLUDE_FILES}
 add_library(creme::widgets ALIAS widgets)
 
 set_target_properties(widgets PROPERTIES
-  C_STANDARD 90
+  C_STANDARD 99
   VERSION ${CREME_WIDGETS_VERSION}
   PUBLIC_HEADER "${CREME_WIDGETS_INCLUDE_FILES}"
   OUTPUT_NAME "creme-widgets")
@@ -27,7 +27,7 @@ target_include_directories(widgets PUBLIC
   $<INSTALL_INTERFACE:include/creme/widgets>)
 
 target_compile_options(widgets PRIVATE
-  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden>
+  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
   $<$<C_COMPILER_ID:MSVC>:/W4>)
 
 install(TARGETS widgets

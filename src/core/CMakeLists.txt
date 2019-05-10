@@ -43,7 +43,7 @@ target_include_directories(core PUBLIC
   $<INSTALL_INTERFACE:include/creme/core>)
 
 target_compile_options(core PRIVATE
-  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden>
+  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
   $<$<C_COMPILER_ID:MSVC>:/W4>)
 
 install(TARGETS core

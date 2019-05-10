@@ -33,7 +33,7 @@ target_include_directories(x-sdl2 PUBLIC
   $<INSTALL_INTERFACE:include/creme/x/sdl2>)
 
 target_compile_options(x-sdl2 PRIVATE
-  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden>
+  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
   $<$<C_COMPILER_ID:MSVC>:/W4>)
 
 target_link_libraries(x-sdl2 PUBLIC creme::core creme::x-truetype SDL2 PRIVATE stb::image)

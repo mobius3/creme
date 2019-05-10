@@ -11,6 +11,10 @@ target_link_libraries(text-rendering
   c-rez::fonts
 )
 set_target_properties(text-rendering PROPERTIES
-  C_STANDARD 90
+  C_STANDARD 99
   OUTPUT_NAME "creme-example-text-rendering"
 )
+
+target_compile_options(text-rendering PRIVATE
+  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
+  $<$<C_COMPILER_ID:MSVC>:/W4>)

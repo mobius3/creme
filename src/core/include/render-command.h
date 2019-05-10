@@ -34,7 +34,7 @@ struct cm_render_command {
       struct cm_size size;
       const char * value;
     } text;
-  };
+  } data;
 
   /** The target coordinates ("canvas"-wise) Creme would like you to render to
    * to make things looks as intended. */

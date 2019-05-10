@@ -78,8 +78,8 @@ void render_tile(
   struct SDL_Texture * tileset_texture
 ) {
   SDL_Rect src = {
-    .x = command->tile.column * tileset->tile_width,
-    .y = command->tile.row * tileset->tile_height,
+    .x = command->data.tile.column * tileset->tile_width,
+    .y = command->data.tile.row * tileset->tile_height,
     .w = tileset->tile_width,
     .h = tileset->tile_height
   };
@@ -98,14 +98,14 @@ void render_text(
   struct SDL_Renderer * renderer,
   struct SDL_Texture * font_texture
 ) {
-  char const * text = command->text.value;
+  char const * text = command->data.text.value;
   int len = strlen(text);
   struct cmx_truetype_character_mapping * mapping = malloc(
     (len + 1) * sizeof(*mapping));
   SDL_Rect src, dst;
   int i = 0;
 
-  cmx_truetype_font_render(font, (uint8_t *) command->text.value, len, mapping);
+  cmx_truetype_font_render(font, (uint8_t *) command->data.text.value, len, mapping);
   for (i = 0; i < len +1; i++) {
     src.x = (int) (mapping[i].source.left * font->pixels.dimensions.width);
     src.y = (int) (mapping[i].source.top * font->pixels.dimensions.height);

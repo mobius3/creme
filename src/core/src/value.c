@@ -247,7 +247,7 @@ void cm_value_set(struct cm_value * value, float absolute) {
    * we just care its different each time this function is called */
   int token = rand();
   value->update_token = token;
-  return cm_value_set_with_token(value, absolute, token);
+  cm_value_set_with_token(value, absolute, token);
 }
 
 void cm_value_set_with_token(

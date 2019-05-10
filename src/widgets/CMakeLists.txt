@@ -27,8 +27,8 @@ target_include_directories(widgets PUBLIC
   $<INSTALL_INTERFACE:include/creme/widgets>)
 
 target_compile_options(widgets PRIVATE
-  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall,-Wextra,-pedantic>
-  $<$<CXX_COMPILER_ID:MSVC>:/W4>)
+  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden>
+  $<$<C_COMPILER_ID:MSVC>:/W4>)
 
 install(TARGETS widgets
   EXPORT creme-targets

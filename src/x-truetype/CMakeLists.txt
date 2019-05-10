@@ -32,8 +32,8 @@ target_include_directories(x-truetype PUBLIC
   $<INSTALL_INTERFACE:include/creme/x/truetype>)
 
 target_compile_options(x-truetype PRIVATE
-  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall,-Wextra,-pedantic>
-  $<$<CXX_COMPILER_ID:MSVC>:/W4>)
+  $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden>
+  $<$<C_COMPILER_ID:MSVC>:/W4>)
 
 target_link_libraries(x-truetype PUBLIC creme::core PRIVATE stb::truetype utf8-decode)
 

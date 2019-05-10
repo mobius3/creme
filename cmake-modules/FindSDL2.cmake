@@ -82,7 +82,7 @@ set(SDL2_SEARCH_PATHS
   /opt/local # DarwinPorts
   /opt/csw # Blastwave
   /opt
-  ${SDL2_PATH}
+  ${SDL2_ROOT}
 )
 
 find_path(SDL2_INCLUDE_DIR SDL.h

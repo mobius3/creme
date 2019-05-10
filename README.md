@@ -20,7 +20,7 @@ might sound harsh but the benefits are greater than the hurdle:
 you will retain full control of your memory, allowing
 you to use whatever allocation strategy is best for your platform.
 
-It is written in plain C90, ensuring high compatibility with many systems and
+It is written in plain C99, ensuring high compatibility with many systems and
 platforms.
 
 **Features**

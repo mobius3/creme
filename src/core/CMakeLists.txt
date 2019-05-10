@@ -32,7 +32,7 @@ add_library(core ${CREME_CORE_SOURCE_FILES} ${CREME_CORE_INCLUDE_FILES})
 add_library(creme::core ALIAS core)
 
 set_target_properties(core PROPERTIES
-  C_STANDARD 90
+  C_STANDARD 99
   VERSION ${CREME_CORE_VERSION}
   PUBLIC_HEADER "${CREME_CORE_INCLUDE_FILES}"
   OUTPUT_NAME "creme-core"

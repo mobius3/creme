@@ -272,35 +272,61 @@ int cmx_truetype_font_render(
   return target_index;
 }
 
-struct cm_size cmx_truetype_text_size(struct cmx_truetype_font const * font, unsigned char const * text, size_t text_length) {
-  /* renders the text to a temporary mapping then use that to calculate
-   * text width and height */
-  struct cmx_truetype_character_mapping * mapping = malloc(sizeof(*mapping) * text_length);
-  int i = 0, total_glyphs = cmx_truetype_font_render(
-    font,
-    text,
-    text_length,
-    mapping
-  );
-  struct cm_size result = {0, 0};
-  if (total_glyphs == 0) return result;
+/* TODO: refactor and merge duplicate code from `render` func */
+struct cm_size cmx_truetype_text_size(
+  struct cmx_truetype_font const * font,
+  unsigned char const * text,
+  size_t text_length
+) {
+  size_t target_index = 0, source_index = 0;
+  struct cmx_truetype_packed_block * block;
+  float x = 0, kern = 0;
+  struct utf8_decode_result decode;
+  struct cm_rect bounds = {0, 0, 0, 0};
+  struct cmx_truetype_character_mapping mapping;
+  struct cm_size size = {0, 0};
 
-  struct cm_rect * target = &mapping[i].target;
-  struct cm_rect bounds = *target;
-  for (i = 1; i < total_glyphs; i++) {
-    target = &mapping[i].target;
-    if (target->left < bounds.left) bounds.left = target->left;
-    if (target->top < bounds.top) bounds.top = target->top;
-    if (target->right > bounds.right) bounds.right = target->right;
-    if (target->bottom > bounds.bottom) bounds.bottom = target->bottom;
+  /* decode all utf8 characters into unicode codepoints, find their
+   * block, gets their rendering parameters, adds kerning */
+  for (size_t i = 0; i < text_length; i += decode.skip, target_index++) {
+    decode = utf8_decode(text + i, text_length -i);
+
+    block = cmx_truetype_locate_block(font, decode.codepoint);
+    /* skips half the pixel "height" if block was not found */
+    if (block == NULL) {
+      x += font->metadata.size.value/2;
+      continue;
+    }
+
+    /* gets the mapping done by cmx_truetype_font_pack and copies it into the result */
+    struct cmx_truetype_character_mapping * source_mapping = block->mapping;
+    source_index = decode.codepoint - block->first;
+    mapping.target = source_mapping[source_index].target;
+    mapping.target.left += x + kern;
+    mapping.target.right += x + kern;
+
+    /* advances to the next character position */
+    x += cm_rect_width(&source_mapping[source_index].target);
+
+    /* checks to see if there is kerning to add to the next character, and
+     * sets it to be used in the next iteration */
+    if (i + decode.skip < text_length) {
+      struct utf8_decode_result next = utf8_decode(text + i + decode.skip, text_length - (i + decode.skip));
+      kern += get_kern(font, decode.codepoint, next.codepoint);
+    }
+
+    struct cm_rect * target = &mapping.target;
+    if (target->left < bounds.left || i == 0) bounds.left = target->left;
+    if (target->top < bounds.top || i == 0) bounds.top = target->top;
+    if (target->right > bounds.right || i == 0) bounds.right = target->right;
+    if (target->bottom > bounds.bottom || i == 0) bounds.bottom = target->bottom;
   }
 
-  result.width = cm_rect_width(&bounds);
-  result.height = cm_rect_height(&bounds);
+  size.width = cm_rect_width(&bounds);
+  size.height = cm_rect_height(&bounds);
 
-  /* some characters have a base x start that is not 0. this code takes care of
-   * that by adding the starting amount to the width */
-  if (bounds.left != 0.0f) result.width += cm_fabs(bounds.left);
-  free(mapping);
-  return result;
+  if (bounds.left != 0.0f) size.width += cm_fabs(bounds.left);
+
+  /* end of the loop, target_index will be the amount of decoded glyphs */
+  return size;
 }

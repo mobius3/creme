@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(creme LANGUAGES C VERSION 1.0.0)
 
 include(GNUInstallDirs)
+list(APPEND CMAKE_MODULE_PATH cmake-modules)
 
 # Setup bin/lib/executable folders
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}")

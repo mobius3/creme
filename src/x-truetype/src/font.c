@@ -33,8 +33,7 @@ struct cm_size cmx_truetype_calculate_pixel_buffer_size(
   size_t i = 0;
   float expected_size = 0;
   for (i = 0; i < block_count; i++) {
-    expected_size +=
-      (blocks[i].last - blocks[i].first);
+    expected_size += (blocks[i].last - blocks[i].first);
   }
   expected_size *= font_height * font_height;
   struct cm_size size = {
@@ -101,7 +100,8 @@ void cmx_truetype_font_pack(
     ranges[i].first_unicode_codepoint_in_range = blocks[i].first;
     ranges[i].num_chars = char_count_in_block;
     ranges[i].chardata_for_range = malloc(
-      sizeof(stbtt_packedchar) * (char_count_in_block));
+      sizeof(stbtt_packedchar) * (char_count_in_block)
+    );
   }
 
   stbtt_PackBegin(
@@ -109,16 +109,27 @@ void cmx_truetype_font_pack(
     (int) dimensions.width, (int) dimensions.height,
     0, 1, NULL
   );
-  stbtt_PackFontRanges(&pack_context, font->metadata.font_data, 0, ranges, block_count);
+  stbtt_PackFontRanges(
+    &pack_context,
+    font->metadata.font_data,
+    0,
+    ranges,
+    block_count
+  );
 
   /* map all the stbtt_packedchar to character_mapping */
   for (i = 0; i < block_count; i++) {
-    struct cmx_truetype_packed_block * packed_block = &font->packing.packed_blocks[i];
+    struct cmx_truetype_packed_block * packed_block = &font->packing
+                                                           .packed_blocks[i];
     struct cmx_truetype_character_mapping * mappings = packed_block->mapping;
     stbtt_packedchar * chardata = ranges[i].chardata_for_range;
 
     size_t character = 0;
-    for (character = 0; character < (packed_block->last - packed_block->first); character++) {
+    for (
+      character = 0;
+      character < (packed_block->last - packed_block->first);
+      character++
+    ) {
       float x = 0, y = 0;
       stbtt_aligned_quad quad;
       struct cmx_truetype_character_mapping * mapping = &mappings[character];
@@ -148,7 +159,12 @@ void cmx_truetype_font_pack(
   }
   stbtt_PackEnd(&pack_context);
 
-  cmx_truetype_colorify(pixels_1bpp, pixels_4bpp, dimensions, font->metadata.color);
+  cmx_truetype_colorify(
+    pixels_1bpp,
+    pixels_4bpp,
+    dimensions,
+    font->metadata.color
+  );
 
   font->pixels.data = pixels_4bpp;
   font->pixels.dimensions = dimensions;
@@ -175,9 +191,7 @@ void cmx_truetype_colorify(
   unsigned char * src;
   unsigned char * dst;
 
-  int i = 0, j = 0,
-      w = (int) dimensions.width,
-      h = (int) dimensions.height;
+  int i = 0, j = 0, w = (int) dimensions.width, h = (int) dimensions.height;
 
   for (j = 0; j < h; ++j) {
     src = old_pixels + j * w;
@@ -191,8 +205,10 @@ void cmx_truetype_colorify(
   }
 }
 
-struct cmx_truetype_packed_block *
-cmx_truetype_locate_block(struct cmx_truetype_font const * font, uint32_t point) {
+struct cmx_truetype_packed_block * cmx_truetype_locate_block(
+  struct cmx_truetype_font const * font,
+  uint32_t point
+) {
   for (size_t i = 0; i < font->packing.packed_block_count; i++) {
     if (point >= font->packing.packed_blocks[i].first &&
         point <= font->packing.packed_blocks[i].last)
@@ -201,12 +217,22 @@ cmx_truetype_locate_block(struct cmx_truetype_font const * font, uint32_t point)
   return NULL;
 }
 
-static float get_kern(struct cmx_truetype_font const * font, uint32_t ch1, uint32_t ch2) {
+static float get_kern(
+  struct cmx_truetype_font const * font,
+  uint32_t ch1,
+  uint32_t ch2
+) {
   float scale = 0;
   if (font->metadata.size.type == cmx_truetype_size_type__pt) {
-    scale = stbtt_ScaleForMappingEmToPixels(font->metadata.data, font->metadata.size.value);
+    scale = stbtt_ScaleForMappingEmToPixels(
+      font->metadata.data,
+      font->metadata.size.value
+    );
   } else {
-    scale = stbtt_ScaleForPixelHeight(font->metadata.data, font->metadata.size.value);
+    scale = stbtt_ScaleForPixelHeight(
+      font->metadata.data,
+      font->metadata.size.value
+    );
   }
   return scale * stbtt_GetCodepointKernAdvance(font->metadata.data, ch1, ch2);
 }
@@ -225,12 +251,12 @@ int cmx_truetype_font_render(
   /* decode all utf8 characters into unicode codepoints, find their
    * block, gets their rendering parameters, adds kerning */
   for (size_t i = 0; i < text_length; i += decode.skip, target_index++) {
-    decode = utf8_decode(text + i, text_length -i);
+    decode = utf8_decode(text + i, text_length - i);
 
     block = cmx_truetype_locate_block(font, decode.codepoint);
     /* skips half the pixel "height" if block was not found */
     if (block == NULL) {
-      x += font->metadata.size.value/2;
+      x += font->metadata.size.value / 2;
       continue;
     }
 
@@ -253,7 +279,10 @@ int cmx_truetype_font_render(
     /* checks to see if there is kerning to add to the next character, and
      * sets it to be used in the next iteration */
     if (i + decode.skip < text_length) {
-      struct utf8_decode_result next = utf8_decode(text + i + decode.skip, text_length - (i + decode.skip));
+      struct utf8_decode_result next = utf8_decode(
+        text + i + decode.skip,
+        text_length - (i + decode.skip)
+      );
       kern += get_kern(font, decode.codepoint, next.codepoint);
     }
   }
@@ -289,12 +318,12 @@ struct cm_size cmx_truetype_text_size(
   /* decode all utf8 characters into unicode codepoints, find their
    * block, gets their rendering parameters, adds kerning */
   for (size_t i = 0; i < text_length; i += decode.skip, target_index++) {
-    decode = utf8_decode(text + i, text_length -i);
+    decode = utf8_decode(text + i, text_length - i);
 
     block = cmx_truetype_locate_block(font, decode.codepoint);
     /* skips half the pixel "height" if block was not found */
     if (block == NULL) {
-      x += font->metadata.size.value/2;
+      x += font->metadata.size.value / 2;
       continue;
     }
 
@@ -311,7 +340,10 @@ struct cm_size cmx_truetype_text_size(
     /* checks to see if there is kerning to add to the next character, and
      * sets it to be used in the next iteration */
     if (i + decode.skip < text_length) {
-      struct utf8_decode_result next = utf8_decode(text + i + decode.skip, text_length - (i + decode.skip));
+      struct utf8_decode_result next = utf8_decode(
+        text + i + decode.skip,
+        text_length - (i + decode.skip)
+      );
       kern += get_kern(font, decode.codepoint, next.codepoint);
     }
 
@@ -319,7 +351,8 @@ struct cm_size cmx_truetype_text_size(
     if (target->left < bounds.left || i == 0) bounds.left = target->left;
     if (target->top < bounds.top || i == 0) bounds.top = target->top;
     if (target->right > bounds.right || i == 0) bounds.right = target->right;
-    if (target->bottom > bounds.bottom || i == 0) bounds.bottom = target->bottom;
+    if (target->bottom > bounds.bottom || i == 0)
+      bounds.bottom = target->bottom;
   }
 
   size.width = cm_rect_width(&bounds);

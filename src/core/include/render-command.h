@@ -13,8 +13,7 @@ extern "C" {
 /**
  * Specifies the type of render command.
  */
-enum cm_render_command_type
-{
+enum cm_render_command_type {
   cm_render_command__noop,
   cm_render_command__tile,
   cm_render_command__text
@@ -24,11 +23,9 @@ enum cm_render_command_type
  * A `cm_render_command` structure contains the target area and command-specific
  * information to be used as parameters for rendering.
  */
-struct cm_render_command
-{
+struct cm_render_command {
   enum cm_render_command_type type;
-  union
-  {
+  union {
     /** Tile-rendering specific information */
     struct cm_tile tile;
 
@@ -54,7 +51,8 @@ struct cm_render_command
 extern void cm_render_command_set_tile(
   struct cm_render_command * command,
   struct cm_tile tile,
-  struct cm_rect rect);
+  struct cm_rect rect
+);
 
 /**
  * Sets a `cm_render_command` value as a text command.
@@ -69,7 +67,8 @@ cm_render_command_set_text(
   struct cm_render_command * command,
   char const * value,
   struct cm_size size,
-  struct cm_rect target);
+  struct cm_rect target
+);
 
 /**
  * Construct a `cm_render_command` value with type being

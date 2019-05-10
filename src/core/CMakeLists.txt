@@ -5,6 +5,7 @@ set(CREME_CORE_INCLUDE_FILES
   include/circular-queue.h
   include/creme-core.h
   include/color.h
+  include/core-exports.h
   include/rect.h
   include/render-command.h
   include/render-queue.h

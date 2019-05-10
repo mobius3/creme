@@ -2,7 +2,7 @@
 #define CREME_EXTRAS_SDL2_CONTEXT_H
 
 #include "creme-core.h"
-#include "cmx-truetype.h"
+#include "creme-x-truetype.h"
 
 #include "SDL.h"
 

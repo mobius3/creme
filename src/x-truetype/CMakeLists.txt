@@ -4,7 +4,7 @@ include(GNUInstallDirs)
 
 set(CREME_X_TRUETYPE_HEADERS
   include/character-mapping.h
-  include/cmx-truetype.h
+  include/creme-x-truetype.h
   include/font.h
   include/font-size.h
   include/packed-block.h

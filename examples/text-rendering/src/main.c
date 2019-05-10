@@ -5,8 +5,8 @@
 #include "creme-core.h"
 #include "creme-widgets.h"
 
-#include "cmx-sdl2.h"
-#include "cmx-truetype.h"
+#include "creme-x-sdl2.h"
+#include "creme-x-truetype.h"
 
 static struct cm_size text_size(unsigned char const * text, size_t len, void * priv) {
   return cmx_truetype_text_size(priv, text, len);

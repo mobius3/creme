@@ -2,7 +2,7 @@
 #include "c-rez/tilesets.h"
 #include "creme-core.h"
 #include "creme-widgets.h"
-#include "cmx-sdl2.h"
+#include "creme-x-sdl2.h"
 
 int main(int argc, const char * argv[]) {
   /* initializes SDL2. */

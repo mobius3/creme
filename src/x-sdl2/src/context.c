@@ -1,7 +1,7 @@
 #include "context.h"
 
 #include "creme-core.h"
-#include "cmx-truetype.h"
+#include "creme-x-truetype.h"
 
 static void render_tile(
   struct cm_render_command const * command,

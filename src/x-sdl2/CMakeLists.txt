@@ -4,7 +4,7 @@ find_package(SDL2 REQUIRED)
 include(GNUInstallDirs)
 
 set(CREME_X_SDL2_HEADERS
-  include/cmx-sdl2.h
+  include/creme-x-sdl2.h
   include/context.h
   include/window.h
   include/renderer.h

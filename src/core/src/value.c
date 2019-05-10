@@ -45,6 +45,7 @@ void cm_value_construct_min(struct cm_value * value) {
 void cm_value_construct(struct cm_value * value) {
   int i = 0;
   value->absolute = 0;
+  value->offset = 0;
   for (i = 0; i < 16; i++) value->upstream[i] = NULL;
   for (i = 0; i < 16; i++) value->downstream[i] = NULL;
   value->upstream_count = 0;

@@ -32,8 +32,7 @@ struct cm_area {
   struct cm_value bottom;
   struct cm_value width;
   struct cm_value height;
-  struct
-  {
+  struct {
     struct cm_value x;
     struct cm_value y;
   } center;

@@ -8,7 +8,11 @@
 #include "creme-x-sdl2.h"
 #include "creme-x-truetype.h"
 
-static struct cm_size text_size(unsigned char const * text, size_t len, void * priv) {
+static struct cm_size text_size(
+  unsigned char const * text,
+  size_t len,
+  void * priv
+) {
   return cmx_truetype_text_size(priv, text, len);
 }
 
@@ -28,17 +32,26 @@ int main(int argc, const char * argv[]) {
   struct cmx_truetype_font font;
   cmx_truetype_font_construct(
     &font, fonts_symbola_ttf.data,
-    cmx_truetype_font_size_px(28), cm_color_make(109, 112, 196, 0));
+    cmx_truetype_font_size_px(28), cm_color_make(109, 112, 196, 0)
+  );
   cmx_truetype_font_pack(&font, blocks, sizeof(blocks) / sizeof(*blocks));
 
   /* initializes the cmx_sdl2_context value */
   struct cm_render_command buffer[256];
   struct cmx_sdl2_context context = {
-    .window = cmx_sdl2_window_make("cmex: text-rendering", cm_size_make(320, 240)),
-    .renderer = cmx_sdl2_renderer_make(context.window, cm_color_make(231, 225, 206, 0)),
+    .window = cmx_sdl2_window_make(
+      "cmex: text-rendering",
+      cm_size_make(320, 240)),
+    .renderer = cmx_sdl2_renderer_make(
+      context.window,
+      cm_color_make(231, 225, 206, 0)),
     .queue = cm_render_queue_make(buffer, 256),
     .font = &font,
-    .font_texture = cmx_sdl2_texture_make_from_pixel_data(context.renderer, font.pixels.data, font.pixels.dimensions),
+    .font_texture = cmx_sdl2_texture_make_from_pixel_data(
+      context.renderer,
+      font.pixels.data,
+      font.pixels.dimensions
+    ),
     .tileset = {
       .tile_height = 8,
       .tile_width = 8,
@@ -71,7 +84,11 @@ int main(int argc, const char * argv[]) {
 
   struct cmw_frame frame;
   cmw_frame_construct(&frame);
-  cm_area_fill(&frame.area, &label.area, cm_rect_make_outset_of(&cm_rect_zero, 20));
+  cm_area_fill(
+    &frame.area,
+    &label.area,
+    cm_rect_make_outset_of(&cm_rect_zero, 20)
+  );
 
   /* main program loop */
   while (!SDL_QuitRequested()) {

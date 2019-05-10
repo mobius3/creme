@@ -28,7 +28,8 @@ CORE_API extern void cm_size_construct(struct cm_size * size);
  * @param width The width to set
  * @param height The height to set
  */
-CORE_API extern void cm_size_set(struct cm_size * size, float width, float height);
+CORE_API extern void
+cm_size_set(struct cm_size * size, float width, float height);
 
 /**
  * Constructs and returns a `cm_size` value and sets width and height to the

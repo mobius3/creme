@@ -21,7 +21,7 @@ add_library(x-truetype ${CREME_X_TRUETYPE_SOURCES} ${CREME_X_TRUETYPE_HEADERS})
 add_library(creme::x-truetype ALIAS x-truetype)
 
 set_target_properties(x-truetype PROPERTIES
-  C_STANDARD 90
+  C_STANDARD 99
   VERSION ${creme_VERSION}
   PUBLIC_HEADER "${CREME_X_TRUETYPE_HEADERS}"
   OUTPUT_NAME "creme-x-truetype"

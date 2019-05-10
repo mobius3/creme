@@ -22,7 +22,7 @@ add_library(x-sdl2 ${CREME_X_SDL2_SOURCES} ${CREME_X_SDL2_HEADERS})
 add_library(creme::x-sdl2 ALIAS x-sdl2)
 
 set_target_properties(x-sdl2 PROPERTIES
-  C_STANDARD 90
+  C_STANDARD 99
   VERSION ${creme_VERSION}
   PUBLIC_HEADER "${CREME_X_SDL2_HEADERS}"
   OUTPUT_NAME "creme-x-sdl2"

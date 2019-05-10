@@ -15,7 +15,7 @@ SDL_Texture * cmx_sdl2_texture_make_from_image_data(
   SDL_Texture * result = cmx_sdl2_texture_make_from_pixel_data(
     renderer,
     pixels,
-    cm_size_make(x, y)
+    cm_size_make((float) x, (float) y)
   );
   stbi_image_free(pixels);
   return result;

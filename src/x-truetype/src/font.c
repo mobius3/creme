@@ -4,6 +4,8 @@
 #include "utf8-decode.h"
 #include <math.h>
 
+#define cm_fabs(x) ((float) fabs((double) x))
+
 void cmx_truetype_colorify(
   unsigned char * old_pixels,
   unsigned char * new_pixels,
@@ -260,7 +262,7 @@ int cmx_truetype_font_render(
    * cmx_truetype_font_pack was called. the following loop goes through all glyph
    * mappings and adjusts them to remove the "empty" space on top caused
    * by that. */
-  top_offset = fabs(top_offset);
+  top_offset = cm_fabs(top_offset);
   for (size_t i = 0; i < target_index; i++) {
     mapping[i].target.top += top_offset;
     mapping[i].target.bottom += top_offset;
@@ -298,7 +300,7 @@ struct cm_size cmx_truetype_text_size(struct cmx_truetype_font const * font, uns
 
   /* some characters have a base x start that is not 0. this code takes care of
    * that by adding the starting amount to the width */
-  if (bounds.left != 0.0f) result.width += fabs(bounds.left);
+  if (bounds.left != 0.0f) result.width += cm_fabs(bounds.left);
   free(mapping);
   return result;
 }

@@ -3,6 +3,8 @@
 #include "creme-core.h"
 #include "creme-x-truetype.h"
 
+#include <string.h>
+
 static void render_tile(
   struct cm_render_command const * command,
   struct cm_tileset const * tileset,

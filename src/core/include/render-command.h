@@ -78,7 +78,8 @@ cm_render_command_set_text(
  *
  * @param command A pointer to a `cm_render_command` value.
  */
-CORE_API extern void cm_render_command_construct(struct cm_render_command * command);
+CORE_API extern void
+cm_render_command_construct(struct cm_render_command * command);
 
 #ifdef __cplusplus
 }

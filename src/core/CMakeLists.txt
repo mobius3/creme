@@ -37,8 +37,6 @@ set_target_properties(core PROPERTIES
   OUTPUT_NAME "creme-core"
 )
 
-message(STATUS ${CMAKE_CURRENT_SOURCE_DIR})
-
 target_include_directories(core PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include/creme/core>)

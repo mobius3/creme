@@ -18,4 +18,4 @@ set_target_properties(sdl2-rendering PROPERTIES
 
 target_compile_options(sdl2-rendering PRIVATE
   $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
-  $<$<C_COMPILER_ID:MSVC>:/W4 /Wall /WX>)
+  $<$<C_COMPILER_ID:MSVC>:/W3 /WX /wd4820 /wd4668 /wd4204>)

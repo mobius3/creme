@@ -34,7 +34,7 @@ target_include_directories(x-truetype PUBLIC
 
 target_compile_options(x-truetype PRIVATE
   $<$<OR:$<C_COMPILER_ID:Clang>,$<C_COMPILER_ID:GNU>>:-Wall -Wextra -pedantic -fvisibility=hidden -Werror>
-  $<$<C_COMPILER_ID:MSVC>:/W4 /Wall /WX>)
+  $<$<C_COMPILER_ID:MSVC>:/W3 /WX /wd4820 /wd4668 /wd4204>)
 
 target_link_libraries(x-truetype PUBLIC creme::core PRIVATE stb::truetype utf8-decode)
 

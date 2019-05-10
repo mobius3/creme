@@ -2,8 +2,8 @@
 #include "c-rez/fonts.h"
 #include "c-rez/tilesets.h"
 
-#include "label.h"
-#include "frame.h"
+#include "creme-core.h"
+#include "creme-widgets.h"
 
 #include "cmx-sdl2.h"
 #include "cmx-truetype.h"

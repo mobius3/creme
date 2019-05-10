@@ -1,4 +1,5 @@
 #include "font.h"
+#include "creme-core.h"
 #include "stb_truetype.h"
 #include "utf8-decode.h"
 #include <math.h>

@@ -3,6 +3,7 @@ set(CREME_CORE_VERSION 1.0.0)
 set(CREME_CORE_INCLUDE_FILES
   include/area.h
   include/circular-queue.h
+  include/creme-core.h
   include/color.h
   include/rect.h
   include/render-command.h

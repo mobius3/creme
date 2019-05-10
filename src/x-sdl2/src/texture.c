@@ -1,4 +1,5 @@
 #include "texture.h"
+#include "creme-core.h"
 #include "stb_image.h"
 
 SDL_Texture * cmx_sdl2_texture_make_from_image_data(

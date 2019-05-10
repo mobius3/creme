@@ -4,9 +4,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include "rect.h"
-#include "size.h"
-#include "color.h"
+#include "creme-core.h"
 
 #include "unicode-block.h"
 #include "font-size.h"

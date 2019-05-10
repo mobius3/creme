@@ -1,8 +1,8 @@
 #ifndef CREME_EXTRAS_SDL2_TEXTURE_H
 #define CREME_EXTRAS_SDL2_TEXTURE_H
 
+#include "creme-core.h"
 #include "SDL.h"
-#include "size.h"
 
 #ifdef __cplusplus
 extern "C" {

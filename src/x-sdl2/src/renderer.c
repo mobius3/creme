@@ -1,4 +1,5 @@
 #include "renderer.h"
+#include "creme-core.h"
 #include "SDL.h"
 
 struct SDL_Renderer * cmx_sdl2_renderer_make(struct SDL_Window * window,

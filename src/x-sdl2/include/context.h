@@ -1,10 +1,7 @@
 #ifndef CREME_EXTRAS_SDL2_CONTEXT_H
 #define CREME_EXTRAS_SDL2_CONTEXT_H
 
-#include "tileset.h"
-#include "area.h"
-#include "render-queue.h"
-#include "value.h"
+#include "creme-core.h"
 #include "cmx-truetype.h"
 
 #include "SDL.h"

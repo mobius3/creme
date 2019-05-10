@@ -1,6 +1,8 @@
 #ifndef CREME_EXTRAS_TRUETYPE_CHARACTER_MAPPING_H
 #define CREME_EXTRAS_TRUETYPE_CHARACTER_MAPPING_H
 
+#include "creme-core.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

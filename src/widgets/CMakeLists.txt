@@ -1,6 +1,7 @@
 set(CREME_WIDGETS_VERSION 1.0.0)
 
 set(CREME_WIDGETS_INCLUDE_FILES
+  include/creme-widgets.h
   include/frame.h
   include/label.h
 )

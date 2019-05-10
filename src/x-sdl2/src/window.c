@@ -1,4 +1,5 @@
 #include "window.h"
+#include "creme-core.h"
 #include "SDL.h"
 
 

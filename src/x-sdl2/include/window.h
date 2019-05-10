@@ -2,7 +2,7 @@
 #ifndef CREME_EXTRAS_SDL2_WINDOW_H
 #define CREME_EXTRAS_SDL2_WINDOW_H
 
-#include "size.h"
+#include "creme-core.h"
 #include "SDL.h"
 
 #ifdef __cplusplus

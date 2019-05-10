@@ -1,8 +1,8 @@
 #ifndef CREME_EXTRAS_SDL2_RENDERER_H
 #define CREME_EXTRAS_SDL2_RENDERER_H
 
+#include "creme-core.h"
 #include "SDL.h"
-#include "color.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,9 +1,9 @@
 #ifndef CREME_WIDGET_LABEL_H
 #define CREME_WIDGET_LABEL_H
 
+#include "creme-core.h"
+
 #include <stdlib.h>
-#include "area.h"
-#include "size.h"
 
 #ifdef __cplusplus
 extern "C" {

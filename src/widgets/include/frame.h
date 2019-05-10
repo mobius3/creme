@@ -1,8 +1,7 @@
 #ifndef CREME_WIDGET_FRAME_H
 #define CREME_WIDGET_FRAME_H
 
-#include "area.h"
-#include "rect.h"
+#include "creme-core.h"
 
 #ifdef __cplusplus
 extern "C" {

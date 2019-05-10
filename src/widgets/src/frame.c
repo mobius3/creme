@@ -1,6 +1,5 @@
 #include "frame.h"
-#include "tileset.h"
-#include "render-queue.h"
+
 #include <math.h>
 
 static void cmw_frame_set_area_from_ptr(

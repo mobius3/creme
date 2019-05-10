@@ -1,5 +1,6 @@
-#include "render-command.h"
 #include "context.h"
+
+#include "creme-core.h"
 #include "cmx-truetype.h"
 
 static void render_tile(

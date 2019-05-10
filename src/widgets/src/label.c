@@ -1,6 +1,5 @@
 #include "label.h"
-#include "render-command.h"
-#include "render-queue.h"
+
 #include <stdlib.h>
 #include <string.h>
 

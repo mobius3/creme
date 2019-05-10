@@ -13,6 +13,9 @@ static struct cm_size text_size(unsigned char const * text, size_t len, void * p
 }
 
 int main(int argc, const char * argv[]) {
+  (void) argc;
+  (void) argv;
+
   /* initializes SDL2. */
   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS);
 

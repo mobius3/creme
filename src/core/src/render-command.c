@@ -21,7 +21,7 @@ cm_render_command_set_tile(
 void
 cm_render_command_set_text(
   struct cm_render_command * command,
-  char const * value,
+  unsigned char const * value,
   struct cm_size size,
   struct cm_rect target)
 {

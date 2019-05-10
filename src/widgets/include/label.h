@@ -25,7 +25,7 @@ struct cmw_label {
 
 extern void cmw_label_construct(struct cmw_label * label);
 extern void cmw_label_set_text(struct cmw_label * label, unsigned char const * text);
-extern char const * cwm_label_get_text(struct cmw_label * label);
+extern unsigned char const * cwm_label_get_text(struct cmw_label * label);
 
 extern void cmw_label_set_size_fn(
   struct cmw_label * label,

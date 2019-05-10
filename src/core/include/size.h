@@ -41,4 +41,4 @@ extern struct cm_size cm_size_make(float width, float height);
 };
 #endif
 
-#endif
+#endif /* CREME_SIZE_H */

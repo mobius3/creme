@@ -1,4 +1,4 @@
-project(creme::sdl2 C)
+project(creme-x-sdl2 C)
 
 find_package(SDL2 REQUIRED)
 include(GNUInstallDirs)

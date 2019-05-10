@@ -1,4 +1,4 @@
-project(creme::truetype C)
+project(creme-x-truetype C)
 
 include(GNUInstallDirs)
 

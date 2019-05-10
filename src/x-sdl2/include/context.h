@@ -5,6 +5,7 @@
 #include "creme-x-truetype.h"
 
 #include "SDL.h"
+#include "x-sdl2-exports.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,10 +23,10 @@ struct cmx_sdl2_context {
   struct cm_value * left, * top, * right, * bottom;
 };
 
-extern void cmx_sdl2_context_init(struct cmx_sdl2_context * context);
-extern void cmx_sdl2_context_update(struct cmx_sdl2_context * context);
-extern void cmx_sdl2_context_render(struct cmx_sdl2_context * context);
-extern void cmx_sdl2_context_destruct(struct cmx_sdl2_context * context);
+X_SDL2_API extern void cmx_sdl2_context_init(struct cmx_sdl2_context * context);
+X_SDL2_API extern void cmx_sdl2_context_update(struct cmx_sdl2_context * context);
+X_SDL2_API extern void cmx_sdl2_context_render(struct cmx_sdl2_context * context);
+X_SDL2_API extern void cmx_sdl2_context_destruct(struct cmx_sdl2_context * context);
 
 #ifdef __cplusplus
 }

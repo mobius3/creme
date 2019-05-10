@@ -4,12 +4,13 @@
 
 #include "creme-core.h"
 #include "SDL.h"
+#include "x-sdl2-exports.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern SDL_Window * cmx_sdl2_window_make(char const * title, struct cm_size size);
+X_SDL2_API extern SDL_Window * cmx_sdl2_window_make(char const * title, struct cm_size size);
 
 #ifdef __cplusplus
 }

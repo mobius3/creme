@@ -63,8 +63,7 @@ CORE_API extern void cm_render_command_set_tile(
  * @param size A `cm_size` value representing width and height of the text
  * @param target A `cm_rect` value indicating the target rectangle
  */
-void
-cm_render_command_set_text(
+CORE_API void cm_render_command_set_text(
   struct cm_render_command * command,
   unsigned char const * value,
   struct cm_size size,

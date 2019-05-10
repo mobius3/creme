@@ -3,18 +3,19 @@
 
 #include "creme-core.h"
 #include "SDL.h"
+#include "x-sdl2-exports.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern SDL_Texture * cmx_sdl2_texture_make_from_image_data(
+X_SDL2_API extern SDL_Texture * cmx_sdl2_texture_make_from_image_data(
   SDL_Renderer * renderer,
   unsigned char const * image_data,
   size_t image_data_size
 );
 
-extern SDL_Texture * cmx_sdl2_texture_make_from_pixel_data(
+X_SDL2_API extern SDL_Texture * cmx_sdl2_texture_make_from_pixel_data(
   SDL_Renderer * renderer,
   unsigned char * pixel_data,
   struct cm_size dimensions

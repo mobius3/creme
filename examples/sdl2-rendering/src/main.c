@@ -4,7 +4,7 @@
 #include "creme-widgets.h"
 #include "creme-x-sdl2.h"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, char * argv[]) {
   (void) argc;
   (void) argv;
 

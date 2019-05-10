@@ -4,6 +4,7 @@ set(CREME_WIDGETS_INCLUDE_FILES
   include/creme-widgets.h
   include/frame.h
   include/label.h
+  include/widgets-exports.h
 )
 
 set(CREME_WIDGETS_SOURCE_FILES

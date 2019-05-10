@@ -2,6 +2,7 @@
 #define CREME_WIDGET_LABEL_H
 
 #include "creme-core.h"
+#include "widgets-exports.h"
 
 #include <stdlib.h>
 
@@ -9,10 +10,11 @@
 extern "C" {
 #endif
 
-struct cm_tileset;
-struct cm_render_queue;
-
-typedef struct cm_size (* cm_text_size_fn)(unsigned const char * text, size_t len, void * priv);
+typedef struct cm_size (* cm_text_size_fn)(
+  unsigned const char * text,
+  size_t len,
+  void * priv
+);
 
 struct cmw_label {
   struct cm_area area;
@@ -23,17 +25,23 @@ struct cmw_label {
   cm_text_size_fn text_size_fn;
 };
 
-extern void cmw_label_construct(struct cmw_label * label);
-extern void cmw_label_set_text(struct cmw_label * label, unsigned char const * text);
-extern unsigned char const * cwm_label_get_text(struct cmw_label * label);
+WIDGETS_API extern void cmw_label_construct(struct cmw_label * label);
 
-extern void cmw_label_set_size_fn(
+WIDGETS_API extern void cmw_label_set_text(
+  struct cmw_label * label,
+  unsigned char const * text
+);
+
+WIDGETS_API extern unsigned char const *
+cwm_label_get_text(struct cmw_label * label);
+
+WIDGETS_API extern void cmw_label_set_size_fn(
   struct cmw_label * label,
   cm_text_size_fn text_size_fn,
   void * text_size_fn_data
 );
 
-extern uint16_t cmw_label_render(
+WIDGETS_API extern uint16_t cmw_label_render(
   struct cmw_label const * label,
   struct cm_tileset const * tileset,
   struct cm_render_queue * queue

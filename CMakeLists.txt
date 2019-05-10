@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 project(creme LANGUAGES C VERSION 1.0.0)
 
+# request policies at version 3.12
+cmake_policy(VERSION 3.12)
+
 include(GNUInstallDirs)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake-modules)
 

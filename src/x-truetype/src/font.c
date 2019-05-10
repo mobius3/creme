@@ -28,7 +28,7 @@ struct cm_size cmx_truetype_calculate_pixel_buffer_size(
   size_t block_count,
   float font_height
 ) {
-  int i = 0;
+  size_t i = 0;
   float expected_size = 0;
   for (i = 0; i < block_count; i++) {
     expected_size +=
@@ -84,7 +84,7 @@ void cmx_truetype_font_pack(
   );
   font->packing.packed_block_count = block_count;
 
-  int i = 0;
+  size_t i = 0;
   size_t char_count_in_block;
   for (i = 0; i < block_count; i++) {
     char_count_in_block = blocks[i].count;
@@ -115,7 +115,7 @@ void cmx_truetype_font_pack(
     struct cmx_truetype_character_mapping * mappings = packed_block->mapping;
     stbtt_packedchar * chardata = ranges[i].chardata_for_range;
 
-    int character = 0;
+    size_t character = 0;
     for (character = 0; character < (packed_block->last - packed_block->first); character++) {
       float x = 0, y = 0;
       stbtt_aligned_quad quad;
@@ -157,8 +157,7 @@ void cmx_truetype_font_pack(
 void cmx_truetype_font_destruct(struct cmx_truetype_font * font) {
   free(font->pixels.data);
   free(font->metadata.data);
-  int i = 0;
-  for (i = 0; i < font->packing.packed_block_count; i++) {
+  for (size_t i = 0; i < font->packing.packed_block_count; i++) {
     free(font->packing.packed_blocks[i].mapping);
   }
   free(font->packing.packed_blocks);
@@ -192,8 +191,7 @@ void cmx_truetype_colorify(
 
 struct cmx_truetype_packed_block *
 cmx_truetype_locate_block(struct cmx_truetype_font const * font, uint32_t point) {
-  int i;
-  for (i = 0; i < font->packing.packed_block_count; i++) {
+  for (size_t i = 0; i < font->packing.packed_block_count; i++) {
     if (point >= font->packing.packed_blocks[i].first &&
         point <= font->packing.packed_blocks[i].last)
       return &font->packing.packed_blocks[i];
@@ -217,14 +215,14 @@ int cmx_truetype_font_render(
   size_t text_length,
   struct cmx_truetype_character_mapping * mapping
 ) {
-  int i = 0, target_index = 0, source_index = 0;
+  size_t target_index = 0, source_index = 0;
   struct cmx_truetype_packed_block * block;
   float x = 0, kern = 0, top_offset = 0.0f;
   struct utf8_decode_result decode;
 
   /* decode all utf8 characters into unicode codepoints, find their
    * block, gets their rendering parameters, adds kerning */
-  for (i = 0; i < text_length; i += decode.skip, target_index++) {
+  for (size_t i = 0; i < text_length; i += decode.skip, target_index++) {
     decode = utf8_decode(text + i, text_length -i);
 
     block = cmx_truetype_locate_block(font, decode.codepoint);
@@ -263,7 +261,7 @@ int cmx_truetype_font_render(
    * mappings and adjusts them to remove the "empty" space on top caused
    * by that. */
   top_offset = fabs(top_offset);
-  for (i = 0; i < target_index; i++) {
+  for (size_t i = 0; i < target_index; i++) {
     mapping[i].target.top += top_offset;
     mapping[i].target.bottom += top_offset;
   }

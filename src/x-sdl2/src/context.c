@@ -98,15 +98,14 @@ void render_text(
   struct SDL_Renderer * renderer,
   struct SDL_Texture * font_texture
 ) {
-  char const * text = command->data.text.value;
-  int len = strlen(text);
+  unsigned char const * text = command->data.text.value;
+  size_t len = strlen((char const *) text);
   struct cmx_truetype_character_mapping * mapping = malloc(
     (len + 1) * sizeof(*mapping));
   SDL_Rect src, dst;
-  int i = 0;
 
   cmx_truetype_font_render(font, (uint8_t *) command->data.text.value, len, mapping);
-  for (i = 0; i < len +1; i++) {
+  for (size_t i = 0; i < len +1; i++) {
     src.x = (int) (mapping[i].source.left * font->pixels.dimensions.width);
     src.y = (int) (mapping[i].source.top * font->pixels.dimensions.height);
     src.w = (int) (cm_rect_width(&mapping[i].source) * font->pixels.dimensions.width);

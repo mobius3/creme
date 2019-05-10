@@ -1,6 +1,8 @@
 #ifndef CREME_SIZE_H
 #define CREME_SIZE_H
 
+#include "core-exports.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -18,7 +20,7 @@ struct cm_size {
  * Constructs a `cm_size` value with 0 width and 0 height
  * @param size A pointer to a `cm_size` value to construct
  */
-extern void cm_size_construct(struct cm_size * size);
+CORE_API extern void cm_size_construct(struct cm_size * size);
 
 /**
  * Sets both the width and height of a `cm_size` value.
@@ -26,7 +28,7 @@ extern void cm_size_construct(struct cm_size * size);
  * @param width The width to set
  * @param height The height to set
  */
-extern void cm_size_set(struct cm_size * size, float width, float height);
+CORE_API extern void cm_size_set(struct cm_size * size, float width, float height);
 
 /**
  * Constructs and returns a `cm_size` value and sets width and height to the
@@ -35,7 +37,7 @@ extern void cm_size_set(struct cm_size * size, float width, float height);
  * @param height The height value to set
  * @return A `cm_size` value
  */
-extern struct cm_size cm_size_make(float width, float height);
+CORE_API extern struct cm_size cm_size_make(float width, float height);
 
 #ifdef __cplusplus
 };

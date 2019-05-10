@@ -1,6 +1,8 @@
 #ifndef CREME_AREA_H
 #define CREME_AREA_H
 
+#include "core-exports.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -49,7 +51,7 @@ struct cm_area {
  *
  * @param area A pointer to a `cm_area` to construct
  */
-extern void cm_area_construct(struct cm_area * area);
+CORE_API extern void cm_area_construct(struct cm_area * area);
 
 /**
  * Resets all `cm_value`s of an area to the absolute values passed in.
@@ -65,7 +67,7 @@ extern void cm_area_construct(struct cm_area * area);
  * @param right A float value to assign to `right` member
  * @param bottom A float value to assign to `bottom` member
  */
-extern void
+CORE_API extern void
 cm_area_set(
   struct cm_area * area,
   float left,
@@ -86,7 +88,7 @@ cm_area_set(
  *
  * @param area A pointer to a `cm_area` value to destroy
  */
-extern void cm_area_destruct(struct cm_area * area);
+CORE_API extern void cm_area_destruct(struct cm_area * area);
 
 /**
  * Creates a `cm_rect` value from a pointer to a `cm_area` value.
@@ -96,7 +98,7 @@ extern void cm_area_destruct(struct cm_area * area);
  * @return A `cm_rect` value
  * @sa cm_rect
  */
-extern struct cm_rect cm_area_to_rect(struct cm_area const * area);
+CORE_API extern struct cm_rect cm_area_to_rect(struct cm_area const * area);
 
 /**
  * Links left, top, right and bottom to its equivalent values in the `cm_area`
@@ -109,7 +111,7 @@ extern struct cm_rect cm_area_to_rect(struct cm_area const * area);
  * @param area A pointer to a `cm_area` value that'll be downstream of `target`
  * @param target A pointer to a `cm_area` value that wil be upstream of `area`
  */
-extern void cm_area_fill(
+CORE_API extern void cm_area_fill(
   struct cm_area * area,
   struct cm_area * target,
   struct cm_rect offset
@@ -133,7 +135,7 @@ extern void cm_area_fill(
  * @param width
  * @param height
  */
-extern void cm_area_center_at(
+CORE_API extern void cm_area_center_at(
   struct cm_area * area,
   struct cm_value * x,
   struct cm_value * y,

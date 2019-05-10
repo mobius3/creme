@@ -1,6 +1,8 @@
 #ifndef CREME_CIRCULAR_QUEUE_H
 #define CREME_CIRCULAR_QUEUE_H
 
+#include "core-exports.h"
+
 /**
  * This file contains a function-macro to declare and another to
  * define a simple circular queue. Its purpose is mainly to facilitate
@@ -35,15 +37,15 @@ Name##_dequeue__ok, \
 Name##_dequeue__empty \
 }; \
  \
-extern void Name##_construct(struct Name * queue, Type buffer[], uint16_t size); \
-extern struct Name Name##_make(Type buffer[], uint16_t size); \
-extern enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type const * item); \
-extern enum Name##_dequeue_result Name##_dequeue(struct Name * q, Type * item); \
-extern int8_t Name##_is_full(struct Name const * q); \
-extern int8_t Name##_is_empty(struct Name const * q); \
-extern uint16_t Name##_count(struct Name const * q); \
-extern void Name##_flush(struct Name * q); \
-extern uint16_t Name##_free_space(struct Name const * q);
+CORE_API extern void Name##_construct(struct Name * queue, Type buffer[], uint16_t size); \
+CORE_API extern struct Name Name##_make(Type buffer[], uint16_t size); \
+CORE_API extern enum Name##_enqueue_result Name##_enqueue(struct Name * q, Type const * item); \
+CORE_API extern enum Name##_dequeue_result Name##_dequeue(struct Name * q, Type * item); \
+CORE_API extern int8_t Name##_is_full(struct Name const * q); \
+CORE_API extern int8_t Name##_is_empty(struct Name const * q); \
+CORE_API extern uint16_t Name##_count(struct Name const * q); \
+CORE_API extern void Name##_flush(struct Name * q); \
+CORE_API extern uint16_t Name##_free_space(struct Name const * q);
 
 #include <stdio.h>
 #include <stdint.h>

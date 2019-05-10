@@ -2,6 +2,7 @@
 #define CREME_VALUE_REDUCE_H
 
 #include <stdint.h>
+#include "core-exports.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,8 +19,7 @@ typedef float (* cm_reduce_fn)(
   void * reduce_data
 );
 
-struct cm_value_reduce
-{
+struct cm_value_reduce {
   cm_reduce_fn reduce_fn;
   void * reduce_data;
 };
@@ -27,32 +27,32 @@ struct cm_value_reduce
 /**
  * Ignores all but the first value in the array and returns it.
  */
-extern struct cm_value_reduce const cm_reduce_first;
+CORE_API extern struct cm_value_reduce const cm_reduce_first;
 
 /**
  * Calculates the average of all values passed in and returns it.
  */
-extern struct cm_value_reduce const cm_reduce_average;
+CORE_API extern struct cm_value_reduce const cm_reduce_average;
 
 /**
  * Finds the maximum value in the value array and returns it.
  */
-extern struct cm_value_reduce const cm_reduce_max;
+CORE_API extern struct cm_value_reduce const cm_reduce_max;
 
 /**
  * Finds the minimum value in the value array and returns it.
  */
-extern struct cm_value_reduce const cm_reduce_min;
+CORE_API extern struct cm_value_reduce const cm_reduce_min;
 
 /**
  * Sums all values and returns the result
  */
-extern struct cm_value_reduce const cm_reduce_sum;
+CORE_API extern struct cm_value_reduce const cm_reduce_sum;
 
 /**
  * Runs (upstream[0].absolute - upstream[1].absolute) and returns the result
  */
-extern struct cm_value_reduce const cm_reduce_0_minus_1;
+CORE_API extern struct cm_value_reduce const cm_reduce_0_minus_1;
 
 #ifdef __cplusplus
 }

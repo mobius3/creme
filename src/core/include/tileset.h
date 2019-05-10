@@ -2,6 +2,7 @@
 #define CREME_TILESET_H
 
 #include "tile.h"
+#include "core-exports.h"
 
 #ifdef __cplusplus
 extern "C" {

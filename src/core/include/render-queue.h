@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "render-command.h"
 #include "circular-queue.h"
+#include "core-exports.h"
 
 #ifdef __cplusplus
 extern "C" {

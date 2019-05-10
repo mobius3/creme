@@ -5,6 +5,7 @@
 #include "tile.h"
 #include "rect.h"
 #include "size.h"
+#include "core-exports.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,7 +49,7 @@ struct cm_render_command {
  * @param tile A `cm_tile` value containing column and row in the tileset
  * @param rect A `cm_rect` value indicating the target rectangle
  */
-extern void cm_render_command_set_tile(
+CORE_API extern void cm_render_command_set_tile(
   struct cm_render_command * command,
   struct cm_tile tile,
   struct cm_rect rect
@@ -77,7 +78,7 @@ cm_render_command_set_text(
  *
  * @param command A pointer to a `cm_render_command` value.
  */
-extern void cm_render_command_construct(struct cm_render_command * command);
+CORE_API extern void cm_render_command_construct(struct cm_render_command * command);
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,8 @@
 #ifndef CREME_RECT_H
 #define CREME_RECT_H
 
+#include "core-exports.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -14,7 +16,7 @@ struct cm_rect
   float left, top, right, bottom;
 };
 
-extern struct cm_rect const cm_rect_zero;
+CORE_API extern struct cm_rect const cm_rect_zero;
 
 /**
  * Creates a `cm_rect` value by copying `left`, `top`, `right` and `bottom`.
@@ -28,7 +30,7 @@ extern struct cm_rect const cm_rect_zero;
  * @param bottom The `bottom` member value
  * @return A `cm_rect` value
  */
-extern struct cm_rect
+CORE_API extern struct cm_rect
 cm_rect_make(float left, float top, float right, float bottom);
 
 /**
@@ -44,7 +46,7 @@ cm_rect_make(float left, float top, float right, float bottom);
  * @param pad_amount How much inset padding to add
  * @return A `cm_rect` value with the padding applied.
  */
-extern struct cm_rect cm_rect_make_inset_of(struct cm_rect const * rect, float inset_amount);
+CORE_API extern struct cm_rect cm_rect_make_inset_of(struct cm_rect const * rect, float inset_amount);
 
 /**
  * This is literally `cm_rect_make_inset_of` but passing a negative
@@ -54,7 +56,7 @@ extern struct cm_rect cm_rect_make_inset_of(struct cm_rect const * rect, float i
  * @param pad_amount How much outset padding to add
  * @return A `cm_rect` value with the padding applied.
  */
-extern struct cm_rect cm_rect_make_outset_of(struct cm_rect const * rect, float outset_amount);
+CORE_API extern struct cm_rect cm_rect_make_outset_of(struct cm_rect const * rect, float outset_amount);
 
 /**
  * Constructs a `cm_rect` value with all its values zeroed.
@@ -64,7 +66,7 @@ extern struct cm_rect cm_rect_make_outset_of(struct cm_rect const * rect, float 
  * @param rect A pointer to a `cm_rect` value to construct
  * @sa cm_rect_set
  */
-extern void cm_rect_construct(struct cm_rect * rect);
+CORE_API extern void cm_rect_construct(struct cm_rect * rect);
 
 /**
  * Sets a `cm_rect` value by setting its four coordinates.
@@ -75,7 +77,7 @@ extern void cm_rect_construct(struct cm_rect * rect);
  * @param right The `right` value
  * @param bottom The `bottom` value
  */
-extern void cm_rect_set(
+CORE_API extern void cm_rect_set(
   struct cm_rect * rect,
   float left,
   float top,
@@ -91,7 +93,7 @@ extern void cm_rect_set(
  * @return The calculated width
  * @sa cm_rect_height
  */
-extern float cm_rect_width(struct cm_rect const * rect);
+CORE_API extern float cm_rect_width(struct cm_rect const * rect);
 
 /**
  * Calculates and returns the height of a rect represented by a `cm_rect` value.
@@ -101,7 +103,7 @@ extern float cm_rect_width(struct cm_rect const * rect);
  * @return The calculated height
  * @sa cm_rect_width
  */
-extern float cm_rect_height(struct cm_rect const * rect);
+CORE_API extern float cm_rect_height(struct cm_rect const * rect);
 
 #ifdef __cplusplus
 }

@@ -27,63 +27,12 @@ if(NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 option(CREME_BUILD_EXTRAS "Build extras (inside extras/ folder)" OFF)
+option(CREME_BUILD_EXTRAS_SDL2 "Build the SDL2 extra (if CMAKE_BUILD_EXTRAS is ON)" ON)
+option(CREME_BUILD_EXTRAS_TRUETYPE "Build the truetype extra (if CMAKE_BUILD_EXTRAS is ON)" ON)
 option(CREME_BUILD_EXAMPLES "Build examples (inside examples/ folder). It will also turn on all extras" OFF)
 option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" ON)
 
-# keep it sorted, directories first.
-set(CREME_HEADERS
-  include/widget/frame.h
-  include/widget/label.h
-  include/area.h
-  include/circular-queue.h
-  include/color.h
-  include/rect.h
-  include/render-command.h
-  include/render-queue.h
-  include/size.h
-  include/tile.h
-  include/value.h
-  include/value-reduce.h
-)
-
-set(CREME_SOURCES
-  src/widget/frame.c
-  src/widget/label.c
-  src/area.c
-  src/color.c
-  src/rect.c
-  src/render-command.c
-  src/render-queue.c
-  src/size.c
-  src/tile.c
-  src/value.c
-  src/value-reduce.c)
-
-add_library(creme ${CREME_SOURCES} ${CREME_HEADERS})
-add_library(creme::creme ALIAS creme)
-
-set_target_properties(creme PROPERTIES
-  C_STANDARD 90
-  VERSION ${creme_VERSION}
-  PUBLIC_HEADER "${CREME_HEADERS}"
-)
-
-target_include_directories(creme PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include/creme>)
-
-target_compile_options(creme PRIVATE
-  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall,-Wextra,-pedantic>
-  $<$<CXX_COMPILER_ID:MSVC>:/W4>)
-
-install(TARGETS creme
-  EXPORT creme-targets
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/creme
-)
-
-if (CREME_BUILD_EXAMPLES AND NOT CREME_BUILD_EXTRAS)
+if (CREME_BUILD_EXAMPLES)
   set(CREME_BUILD_EXTRAS ON)
   set(CREME_BUILD_EXTRAS_SDL2 ON)
   set(CREME_BUILD_EXTRAS_TRUETYPE ON)
@@ -91,11 +40,12 @@ endif()
 
 if (CREME_BUILD_EXTRAS)
   add_subdirectory(third-party EXCLUDE_FROM_ALL)
-  add_subdirectory(extras)
 endif()
 
 if (CREME_BUILD_EXAMPLES)
   add_subdirectory(examples)
 endif()
+
+add_subdirectory(src)
 
 include(cmake/setup-exports.cmake)

@@ -1,7 +1,7 @@
 #include "SDL.h"
 #include "c-rez/tilesets.h"
 
-#include "widget/frame.h"
+#include "frame.h"
 #include "cmx-sdl2.h"
 
 int main(int argc, const char * argv[]) {

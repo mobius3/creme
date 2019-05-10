@@ -2,13 +2,11 @@
 #include "c-rez/fonts.h"
 #include "c-rez/tilesets.h"
 
-#include "widget/label.h"
-#include "widget/frame.h"
+#include "label.h"
+#include "frame.h"
 
 #include "cmx-sdl2.h"
 #include "cmx-truetype.h"
-
-#include "stb_truetype.h"
 
 static struct cm_size text_size(unsigned char const * text, size_t len, void * priv) {
   return cmx_truetype_text_size(priv, text, len);

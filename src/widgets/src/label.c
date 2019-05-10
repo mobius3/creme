@@ -1,4 +1,4 @@
-#include "widget/label.h"
+#include "label.h"
 #include "render-command.h"
 #include "render-queue.h"
 #include <stdlib.h>

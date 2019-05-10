@@ -35,7 +35,7 @@ target_compile_options(x-truetype PRIVATE
   $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wall,-Wextra,-pedantic>
   $<$<CXX_COMPILER_ID:MSVC>:/W4>)
 
-target_link_libraries(x-truetype PUBLIC creme PRIVATE stb::truetype utf8-decode)
+target_link_libraries(x-truetype PUBLIC creme::core PRIVATE stb::truetype utf8-decode)
 
 install(TARGETS x-truetype
   EXPORT creme-targets

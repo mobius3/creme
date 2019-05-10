@@ -1,6 +1,8 @@
 #ifndef CREME_EXTRAS_TRUETYPE_FONT_SIZE_H
 #define CREME_EXTRAS_TRUETYPE_FONT_SIZE_H
 
+#include "x-truetype-exports.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -26,14 +28,16 @@ struct cmx_truetype_font_size {
  * @param value The size in floats
  * @return A `cmx_truetype_size` value using `cmx_truetype_size_type__pt`
  */
-extern struct cmx_truetype_font_size cmx_truetype_font_size_pt(float value);
+X_TRUETYPE_API extern struct cmx_truetype_font_size
+cmx_truetype_font_size_pt(float value);
 
 /**
  * Constructs and returns a `cmx_truetype_size` value specified as pixels
  * @param value The size in floats
  * @return A `cmx_truetype_size` value using `cmx_truetype_size_type__px`
  */
-extern struct cmx_truetype_font_size cmx_truetype_font_size_px(float value);
+X_TRUETYPE_API extern struct cmx_truetype_font_size
+cmx_truetype_font_size_px(float value);
 
 #ifdef __cplusplus
 }

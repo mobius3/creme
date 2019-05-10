@@ -9,6 +9,7 @@ set(CREME_X_TRUETYPE_HEADERS
   include/font-size.h
   include/packed-block.h
   include/unicode-block.h
+  include/x-truetype-exports.h
 )
 
 set(CREME_X_TRUETYPE_SOURCES

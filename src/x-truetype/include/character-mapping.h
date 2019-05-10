@@ -2,6 +2,7 @@
 #define CREME_EXTRAS_TRUETYPE_CHARACTER_MAPPING_H
 
 #include "creme-core.h"
+#include "x-truetype-exports.h"
 
 #ifdef __cplusplus
 extern "C" {

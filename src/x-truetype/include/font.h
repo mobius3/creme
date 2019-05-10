@@ -6,6 +6,7 @@
 
 #include "creme-core.h"
 
+#include "x-truetype-exports.h"
 #include "unicode-block.h"
 #include "font-size.h"
 #include "character-mapping.h"
@@ -51,7 +52,7 @@ struct cmx_truetype_font {
  * @param font_size A size either in pixels or points to apply when packing
  * @param font_color The color of the characters in the rendered bitma[
  */
-extern void cmx_truetype_font_construct(
+X_TRUETYPE_API extern void cmx_truetype_font_construct(
   struct cmx_truetype_font * font,
   unsigned char const * font_data,
   struct cmx_truetype_font_size font_size,
@@ -68,7 +69,7 @@ extern void cmx_truetype_font_construct(
  * @param blocks An array of unicode blocks to pack
  * @param block_count How many unicode blocks are in the array
  */
-extern void cmx_truetype_font_pack(
+X_TRUETYPE_API extern void cmx_truetype_font_pack(
   struct cmx_truetype_font * font,
   struct cmx_truetype_unicode_block * blocks,
   size_t block_count
@@ -94,7 +95,7 @@ extern void cmx_truetype_font_pack(
  *                       must be at least `text_length` long.
  * @return the actual number of glyphs rendered.
  */
-extern int cmx_truetype_font_render(
+X_TRUETYPE_API extern int cmx_truetype_font_render(
   struct cmx_truetype_font const * font,
   unsigned char const * text,
   size_t text_length,
@@ -108,7 +109,7 @@ extern int cmx_truetype_font_render(
  * @param text_length The length of the text (in bytes, not in characters)
  * @return A `cm_size` value containing width and height
  */
-extern struct cm_size cmx_truetype_text_size(
+X_TRUETYPE_API extern struct cm_size cmx_truetype_text_size(
   struct cmx_truetype_font const * font,
   unsigned const char * text,
   size_t text_length
@@ -119,7 +120,8 @@ extern struct cm_size cmx_truetype_text_size(
  * this once done with a `cmx_truetype_font` value else your memory will leak.
  * @param font Pointer to the `cmx_truetype_font` value that will be destroyed.
  */
-extern void cmx_truetype_font_destruct(struct cmx_truetype_font * font);
+X_TRUETYPE_API extern void
+cmx_truetype_font_destruct(struct cmx_truetype_font * font);
 
 #ifdef __cplusplus
 };

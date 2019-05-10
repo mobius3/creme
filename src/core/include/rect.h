@@ -11,8 +11,7 @@ extern "C" {
  * A `cm_rect` struct represents a rectangle with `left`, `top`, `right` and
  * bottom `float` values
  */
-struct cm_rect
-{
+struct cm_rect {
   float left, top, right, bottom;
 };
 
@@ -46,7 +45,8 @@ cm_rect_make(float left, float top, float right, float bottom);
  * @param pad_amount How much inset padding to add
  * @return A `cm_rect` value with the padding applied.
  */
-CORE_API extern struct cm_rect cm_rect_make_inset_of(struct cm_rect const * rect, float inset_amount);
+CORE_API extern struct cm_rect
+cm_rect_make_inset_of(struct cm_rect const * rect, float inset_amount);
 
 /**
  * This is literally `cm_rect_make_inset_of` but passing a negative
@@ -56,7 +56,8 @@ CORE_API extern struct cm_rect cm_rect_make_inset_of(struct cm_rect const * rect
  * @param pad_amount How much outset padding to add
  * @return A `cm_rect` value with the padding applied.
  */
-CORE_API extern struct cm_rect cm_rect_make_outset_of(struct cm_rect const * rect, float outset_amount);
+CORE_API extern struct cm_rect
+cm_rect_make_outset_of(struct cm_rect const * rect, float outset_amount);
 
 /**
  * Constructs a `cm_rect` value with all its values zeroed.

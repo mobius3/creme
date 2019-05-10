@@ -151,7 +151,7 @@ if (SDL2_LIBRARY_TEMP)
       # If the SDL2 main library is needed and found, add a target to it.
       # Also, makes the top-level SDL2 target depend on it.
       add_library(SDL2main STATIC IMPORTED)
-      set_property(TARGET SDL2main IMPORTED_LOCATION ${SDL2MAIN_LIBRARY})
+      set_property(TARGET SDL2main PROPERTY IMPORTED_LOCATION ${SDL2MAIN_LIBRARY})
       target_link_libraries(SDL2 INTERFACE SDL2main)
 
       # Keep increasing SDL2_LIBRARY_TEMP

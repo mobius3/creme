@@ -40,7 +40,7 @@ int main(int argc, const char * argv[]) {
   struct cm_render_command buffer[256];
   struct cmx_sdl2_context context = {
     .window = cmx_sdl2_window_make(
-      "cmex: text-rendering",
+      "cmex: 01-text-rendering",
       cm_size_make(320, 240)),
     .renderer = cmx_sdl2_renderer_make(
       context.window,

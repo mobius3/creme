@@ -1,4 +1,4 @@
-/* Creme sdl2-rendering example
+/* Creme 00-sdl2-rendering example
  *
  * This example shows how to integrate your program with creme::x-sdl2 library.
  * You still need to link your program against SDL2 (and SDLmain if you are on
@@ -25,7 +25,7 @@ int main(int argc, char * argv[]) {
   struct cm_render_command buffer[256];
   struct cmx_sdl2_context context = {
     .window = cmx_sdl2_window_make(
-      "cmex: sdl2-rendering",
+      "cmex: 00-sdl2-rendering",
       cm_size_make(320, 240)
     ),
     .renderer = cmx_sdl2_renderer_make(

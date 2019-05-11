@@ -21,8 +21,12 @@ CORE_API extern void cm_color_construct_set(
   uint8_t a
 );
 
-CORE_API extern struct cm_color
-cm_color_make(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+CORE_API extern struct cm_color cm_color_make(
+  uint8_t r, uint8_t g, uint8_t b, uint8_t a
+);
+
+CORE_API extern struct cm_color cm_color_0x_rgb(uint32_t hex);
+CORE_API extern struct cm_color cm_color_0x_rgba(uint32_t hex);
 
 CORE_API extern struct cm_color cm_color_red;
 CORE_API extern struct cm_color cm_color_green;

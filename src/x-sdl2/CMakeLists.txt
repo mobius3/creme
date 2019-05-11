@@ -8,6 +8,7 @@ set(CREME_X_SDL2_HEADERS
   include/context.h
   include/window.h
   include/renderer.h
+  include/command-rendering.h
   include/texture.h
   include/x-sdl2-exports.h
 )
@@ -15,6 +16,7 @@ set(CREME_X_SDL2_HEADERS
 set(CREME_X_SDL2_SOURCES
   src/context.c
   src/renderer.c
+  src/command-rendering.c
   src/window.c
   src/texture.c
 )

@@ -3,6 +3,7 @@
 
 #include "context.h"
 #include "renderer.h"
+#include "command-rendering.h"
 #include "texture.h"
 #include "window.h"
 

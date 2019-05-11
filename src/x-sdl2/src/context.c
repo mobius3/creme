@@ -2,22 +2,9 @@
 
 #include "creme-core.h"
 #include "creme-x-truetype.h"
+#include "command-rendering.h"
 
 #include <string.h>
-
-static void render_tile(
-  struct cm_render_command const * command,
-  struct cm_tileset const * tileset,
-  struct SDL_Renderer * renderer,
-  struct SDL_Texture * tileset_texture
-);
-
-static void render_text(
-  struct cm_render_command const * command,
-  struct cmx_truetype_font const * font,
-  struct SDL_Renderer * renderer,
-  struct SDL_Texture * font_texture
-);
 
 void cmx_sdl2_context_destruct(struct cmx_sdl2_context * context) {
   SDL_DestroyTexture(context->tileset_texture);
@@ -63,62 +50,19 @@ void cmx_sdl2_context_render(struct cmx_sdl2_context * context) {
     cm_render_queue_dequeue(queue, &cmd);
     switch (cmd.type) {
       case cm_render_command__tile:
-        render_tile(&cmd, tileset, renderer, tileset_texture);
+        cmx_sdl2_render_tile_command(&cmd, tileset, renderer, tileset_texture);
         break;
       case cm_render_command__text:
-        render_text(&cmd, context->font, context->renderer, context->font_texture);
+        cmx_sdl2_render_text_command(
+          &cmd,
+          context->font,
+          context->renderer,
+          context->font_texture
+        );
       default:
         break;
     }
   }
-}
-
-void render_tile(
-  struct cm_render_command const * command,
-  struct cm_tileset const * tileset,
-  struct SDL_Renderer * renderer,
-  struct SDL_Texture * tileset_texture
-) {
-  SDL_Rect src = {
-    .x = command->data.tile.column * tileset->tile_width,
-    .y = command->data.tile.row * tileset->tile_height,
-    .w = tileset->tile_width,
-    .h = tileset->tile_height
-  };
-  SDL_Rect dst = {
-    .x = (int) command->target.left,
-    .y = (int) command->target.top,
-    .w = (int) cm_rect_width(&command->target),
-    .h = (int) cm_rect_height(&command->target)
-  };
-  SDL_RenderCopy(renderer, tileset_texture, &src, &dst);
-}
-
-void render_text(
-  struct cm_render_command const * command,
-  struct cmx_truetype_font const * font,
-  struct SDL_Renderer * renderer,
-  struct SDL_Texture * font_texture
-) {
-  unsigned char const * text = command->data.text.value;
-  size_t len = strlen((char const *) text);
-  struct cmx_truetype_character_mapping * mapping = malloc(
-    (len + 1) * sizeof(*mapping));
-  SDL_Rect src, dst;
-
-  cmx_truetype_font_render(font, (uint8_t *) command->data.text.value, len, mapping);
-  for (size_t i = 0; i < len +1; i++) {
-    src.x = (int) (mapping[i].source.left * font->pixels.dimensions.width);
-    src.y = (int) (mapping[i].source.top * font->pixels.dimensions.height);
-    src.w = (int) (cm_rect_width(&mapping[i].source) * font->pixels.dimensions.width);
-    src.h = (int) (cm_rect_height(&mapping[i].source) * font->pixels.dimensions.height);
-    dst.x = (int) (mapping[i].target.left + command->target.left);
-    dst.y = (int) (mapping[i].target.top + command->target.top);
-    dst.w = (int) cm_rect_width(&mapping[i].target);
-    dst.h = (int) cm_rect_height(&mapping[i].target);
-    SDL_RenderCopy(renderer, font_texture, &src, &dst);
-  }
-  free(mapping);
 }
 
 

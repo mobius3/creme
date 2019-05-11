@@ -1,3 +1,9 @@
+/* Creme 01-text-rendering example
+ *
+ * This example demonstrates how to integrate with creme::x-truetype and
+ * creme::x-sdl2 to render text.
+ */
+
 #include "SDL.h"
 #include "c-rez/fonts.h"
 #include "c-rez/tilesets.h"

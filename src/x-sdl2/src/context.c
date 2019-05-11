@@ -64,5 +64,3 @@ void cmx_sdl2_context_render(struct cmx_sdl2_context * context) {
     }
   }
 }
-
-

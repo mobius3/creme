@@ -2,6 +2,7 @@
 #define CREME_EXTRAS_SDL2_RENDERER_H
 
 #include "creme-core.h"
+#include "creme-x-truetype.h"
 #include "SDL.h"
 #include "x-sdl2-exports.h"
 
@@ -18,6 +19,14 @@ X_SDL2_API extern struct cm_color cmx_sdl2_renderer_get_color(SDL_Renderer * ren
 X_SDL2_API extern void cmx_sdl2_renderer_set_color(
   SDL_Renderer * renderer,
   struct cm_color color
+);
+
+X_SDL2_API extern void cmx_sdl2_render_text(
+  SDL_Renderer * renderer,
+  struct cmx_truetype_font const * font,
+  SDL_Texture * font_texture,
+  struct cm_rect target,
+  unsigned char const * text
 );
 
 #ifdef __cplusplus

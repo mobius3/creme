@@ -31,7 +31,7 @@ int main(int argc, const char * argv[]) {
   };
   struct cmx_truetype_font font;
   cmx_truetype_font_construct(
-    &font, fonts_jost_600_semi_ttf.data,
+    &font, fonts_jost_500_medium_ttf.data,
     cmx_truetype_font_size_px(18), cm_color_make(109, 112, 196, 0)
   );
   cmx_truetype_font_pack(&font, blocks, sizeof(blocks) / sizeof(*blocks));

@@ -15,14 +15,14 @@ int main(int argc, char * argv[]) {
     .window = cmx_sdl2_window_make("cmex: 00-sdl2-rendering", cm_size_make(320, 240)),
     .renderer = cmx_sdl2_renderer_make(context.window, cm_color_make(238, 232, 213, 0)),
     .tileset_texture = cmx_sdl2_texture_make_from_image_data(
-      context.renderer, tilesets_kiwi_png.data, tilesets_kiwi_png.length
+      context.renderer, tilesets_creme_png.data, tilesets_creme_png.length
     ),
     .queue = cm_render_queue_make(buffer, 256),
     .tileset = {
-      .tile_height = 8,
-      .tile_width = 8,
-      .column_count = 80,
-      .row_count = 50,
+      .tile_height = 16,
+      .tile_width = 16,
+      .column_count = 512/16,
+      .row_count = 512/16,
       .frame = {
         .column = 1,
         .row = 1

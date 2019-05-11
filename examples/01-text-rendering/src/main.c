@@ -31,8 +31,8 @@ int main(int argc, const char * argv[]) {
   };
   struct cmx_truetype_font font;
   cmx_truetype_font_construct(
-    &font, fonts_symbola_ttf.data,
-    cmx_truetype_font_size_px(28), cm_color_make(109, 112, 196, 0)
+    &font, fonts_jost_600_semi_ttf.data,
+    cmx_truetype_font_size_px(18), cm_color_make(109, 112, 196, 0)
   );
   cmx_truetype_font_pack(&font, blocks, sizeof(blocks) / sizeof(*blocks));
 
@@ -53,17 +53,17 @@ int main(int argc, const char * argv[]) {
       font.pixels.dimensions
     ),
     .tileset = {
-      .tile_height = 8,
-      .tile_width = 8,
-      .column_count = 80,
-      .row_count = 50,
+      .tile_height = 16,
+      .tile_width = 16,
+      .column_count = 512/16,
+      .row_count = 512/16,
       .frame = {
         .column = 1,
         .row = 1
       }
     },
     .tileset_texture = cmx_sdl2_texture_make_from_image_data(
-      context.renderer, tilesets_kiwi_png.data, tilesets_kiwi_png.length
+      context.renderer, tilesets_creme_png.data, tilesets_creme_png.length
     ),
   };
 
@@ -72,7 +72,7 @@ int main(int argc, const char * argv[]) {
 
   struct cmw_label label;
   cmw_label_construct(&label);
-  cmw_label_set_text(&label, (uint8_t *) "Olá, mundão!  😉");
+  cmw_label_set_text(&label, (uint8_t *) "Olá, mundão!");
   cmw_label_set_size_fn(&label, text_size, &font);
   cm_area_center_at(
     &label.area,

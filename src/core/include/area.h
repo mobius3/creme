@@ -9,6 +9,8 @@ extern "C" {
 
 #include "value.h"
 #include "rect.h"
+#include "tileset.h"
+#include "render-queue.h"
 
 /**
  * A `cm_area` struct describes an area starting at
@@ -143,6 +145,24 @@ CORE_API extern void cm_area_center_at(
   struct cm_value * height
 );
 
+/**
+ * Produces render commands to draw an area with the provided tileset and at
+ * the given center_tile.
+ *
+ * This is mostly a utility function to be used by widgets when rendering their
+ * "frames".
+ * @param area A const-pointer to a `cm_area` value
+ * @param tileset A pointer to tileset information to use when rendering
+ * @param queue A pointer to a target render queue
+ * @param center_tile A `cm_tile` value pointing to the center tile
+ * @return The number of enqueued commands
+ */
+CORE_API extern int cm_area_render(
+  struct cm_area const * area,
+  struct cm_tileset const * tileset,
+  struct cm_render_queue * queue,
+  struct cm_tile center_tile
+);
 #ifdef __cplusplus
 }
 #endif

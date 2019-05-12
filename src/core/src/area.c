@@ -1,7 +1,6 @@
-
-#include <area.h>
-
 #include "area.h"
+#include "math.h"
+
 #include <stdlib.h>
 
 /* center is expected to be at [0], full size at [1], returns x - size/2 */
@@ -118,5 +117,90 @@ void cm_area_center_at(
   cm_value_set_reduce(&area->top, cm_area_reduce_half_size);
   cm_value_link_add(&area->top, y);
   cm_value_link_add(&area->top, height);
+}
+
+int cm_area_render(
+  struct cm_area const * area,
+  struct cm_tileset const * tileset,
+  struct cm_render_queue * queue,
+  struct cm_tile center_tile
+) {
+  float width = cm_value_get(&area->width),
+    height = cm_value_get(&area->height);
+  struct cm_render_command cmd;
+  struct cm_rect target;
+  struct cm_rect area_rect;
+
+  if (width < 0.01 || height < 0.01) return 0;
+
+  cm_render_command_construct(&cmd);
+  cm_rect_construct(&target);
+  area_rect = cm_area_to_rect(area);
+
+  /* flooring is important because of less-than-pixel values */
+  area_rect.left = floorf(area_rect.left);
+  area_rect.top = floorf(area_rect.top);
+  area_rect.right = floorf(area_rect.right);
+  area_rect.bottom = floorf(area_rect.bottom);
+
+  /* produce left */
+  target.left = area_rect.left;
+  target.top = area_rect.top + tileset->tile_height;
+  target.right = area_rect.left + tileset->tile_width;
+  target.bottom = area_rect.bottom - tileset->tile_height;
+  cm_render_command_set_tile(&cmd, cm_tile_left_of(&center_tile), target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  /* produce top-left, target.left and target.right from left */
+  target.top = area_rect.top;
+  target.bottom = area_rect.top + tileset->tile_height;
+  cm_render_command_set_tile(&cmd, cm_tile_top_left_of(&center_tile), target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  /* produce top; target.top and target.bottom from top-left */
+  target.left = target.right;
+  target.right = area_rect.right - tileset->tile_width;
+  cm_render_command_set_tile(&cmd, cm_tile_top_of(&center_tile), target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  /* produce top-right, target.top and target.bottom from top */
+  target.left = target.right;
+  target.right = area_rect.right;
+  cm_render_command_set_tile(&cmd, cm_tile_top_right_of(&center_tile), target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  /* produce right, target.left and target.right from top-right */
+  target.top = target.bottom;
+  target.bottom = area_rect.bottom - tileset->tile_height;
+  cm_render_command_set_tile(&cmd, cm_tile_right_of(&center_tile), target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  /* produce bottom-right, target.left and target.right  from right */
+  target.top = target.bottom;
+  target.bottom = area_rect.bottom;
+  cm_render_command_set_tile(&cmd, cm_tile_bottom_right_of(&center_tile), target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  /* produce bottom, target.top and target.bottom from bottom-right */
+  target.left = area_rect.left + tileset->tile_width;
+  target.right = area_rect.right - tileset->tile_width;
+  cm_render_command_set_tile(&cmd, cm_tile_bottom_of(&center_tile), target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  /* produce bottom-left, target.top and target.bottom from bottom */
+  target.left = area_rect.left;
+  target.right = area_rect.left + tileset->tile_width;
+  cm_render_command_set_tile(&cmd, cm_tile_bottom_left_of(&center_tile), target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  /* produce center */
+  target.left = area_rect.left + tileset->tile_width;
+  target.top = area_rect.top + tileset->tile_height;
+  target.right = area_rect.right - tileset->tile_width;
+  target.bottom = area_rect.bottom - tileset->tile_height;
+  cm_render_command_set_tile(&cmd, center_tile, target);
+  cm_render_queue_enqueue(queue, &cmd);
+
+  return 9;
 }
 

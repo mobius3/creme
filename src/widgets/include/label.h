@@ -33,7 +33,7 @@ WIDGETS_API extern void cmw_label_set_text(
 );
 
 WIDGETS_API extern unsigned char const *
-cwm_label_get_text(struct cmw_label * label);
+cmw_label_get_text(struct cmw_label * label);
 
 WIDGETS_API extern void cmw_label_set_size_fn(
   struct cmw_label * label,

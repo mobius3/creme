@@ -177,9 +177,8 @@ CORE_API extern float cm_value_get(struct cm_value const * value);
  * link is made, but you can forcefully trigger it if you must.
  *
  * @param value A pointer to a `cm_value` value
- * @return the updated absolute value
  */
-CORE_API extern float cm_value_update(struct cm_value * value);
+CORE_API extern void cm_value_update(struct cm_value * value);
 
 /**
  * Links a `cm_value` to another `cm_value` as an upstream value.

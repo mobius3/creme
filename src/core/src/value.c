@@ -12,11 +12,12 @@
 float cm_value_update_with_token(
   struct cm_value * value,
   int token,
-  int parent_index
+  int parent_index,
+  uint64_t depth
 );
 
 void
-cm_value_set_with_token(struct cm_value * value, float absolute, int token);
+cm_value_set_with_token(struct cm_value * value, float absolute, int token, uint64_t depth);
 
 
 void
@@ -173,7 +174,7 @@ void cm_value_unlink_all_downstream(struct cm_value * value) {
 
 float cm_value_update(struct cm_value * value) {
   int token = rand();
-  return cm_value_update_with_token(value, token, -1);
+  return cm_value_update_with_token(value, token, -1, 0);
 }
 
 /* The most important job of this function is to check and stop update cycles.
@@ -197,7 +198,8 @@ float cm_value_update(struct cm_value * value) {
 float cm_value_update_with_token(
   struct cm_value * value,
   int token,
-  int parent_index
+  int parent_index,
+  uint64_t depth
 ) {
   cm_reduce_fn reduce_fn = value->reduce.reduce_fn ? value->reduce.reduce_fn
                                                    : cm_reduce_first.reduce_fn;
@@ -235,10 +237,7 @@ float cm_value_update_with_token(
 
   value->update_seen |= 0x1 << parent_index;
 
-  for (i = 0; i < value->upstream_count; i++) {
-    values[i] = value->upstream[i]->absolute;
-  }
-  cm_value_set_with_token(value, new_absolute, token);
+  cm_value_set_with_token(value, new_absolute, token, depth);
   return value->absolute;
 }
 
@@ -247,15 +246,16 @@ void cm_value_set(struct cm_value * value, float absolute) {
   /* we actually don't care if its 100% random or if its truly unique
    * in each program execution.
    * we just care its different each time this function is called */
+  if (value->absolute == absolute) return;
   int token = rand();
-  value->update_token = token;
-  cm_value_set_with_token(value, absolute, token);
+  cm_value_set_with_token(value, absolute, token, 0);
 }
 
 void cm_value_set_with_token(
   struct cm_value * value,
   float absolute,
-  int token
+  int token,
+  uint64_t depth
 ) {
   /* prevent changing if absolute is the same */
   if (value->absolute == absolute) return;
@@ -265,7 +265,8 @@ void cm_value_set_with_token(
     cm_value_update_with_token(
       value->downstream[i],
       token,
-      value->index_at_downstream[i]
+      value->index_at_downstream[i],
+      depth + 1
     );
 }
 

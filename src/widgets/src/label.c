@@ -24,7 +24,7 @@ void cmw_label_set_text(struct cmw_label * label, unsigned char const * text) {
 
 void cmw_label_update_text_size(struct cmw_label * label) {
   if (label->text_size_fn == NULL) return;
-  struct cm_size size = label->text_size_fn(label->text, strlen((char *) label->text), label->text_size_fn_data);
+  struct cm_size size = label->text_size_fn(label->text, label->text ? strlen((char *) label->text) : 0, label->text_size_fn_data);
   cm_value_set(&label->text_width, size.width);
   cm_value_set(&label->text_height, size.height);
 }

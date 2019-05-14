@@ -16,6 +16,7 @@ cmw_frame_construct_set_area(struct cmw_frame * frame, struct cm_rect area) {
 void
 cmw_frame_construct(struct cmw_frame * frame) {
   cm_area_construct(&frame->area);
+  cm_area_set_tag(&frame->area, "frame");
 }
 
 void

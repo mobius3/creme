@@ -18,6 +18,7 @@ void cmx_sdl2_context_init(struct cmx_sdl2_context * context) {
   SDL_GetWindowSize(context->window, &window_w, &window_h);
 
   cm_area_construct(&context->area);
+  cm_area_set_tag(&context->area, "contx");
   cm_area_set(
     &context->area, 0, 0,
     (float) window_w,

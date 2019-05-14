@@ -51,6 +51,7 @@ void cm_value_construct(struct cm_value * value) {
   value->upstream_count = 0;
   value->downstream_count = 0;
   value->reduce = cm_reduce_first;
+  value->tag[0] = 0;
 }
 
 void cm_value_construct_set(struct cm_value * value, float absolute) {
@@ -276,6 +277,15 @@ void
 cm_value_set_reduce(struct cm_value * value, struct cm_value_reduce reduce) {
   value->reduce = reduce;
   cm_value_update(value);
+}
+
+void cm_value_set_tag(struct cm_value * value, const char tag[7]) {
+  int i = 0;
+  for (i = 0; i < 7 && tag[i] != 0; i++) {
+    value->tag[i] = tag[i] == 0 ? ' ' : tag[i];
+  }
+  for (; i < 7; i++) value->tag[i] = ' ';
+  value->tag[7] = 0;
 }
 
 

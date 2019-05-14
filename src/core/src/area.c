@@ -37,6 +37,8 @@ void cm_area_construct(struct cm_area * area) {
 
   cm_value_link_add(&area->height, &area->bottom);
   cm_value_link_add(&area->height, &area->top);
+
+  cm_area_set_tag(area, " area");
 }
 
 void cm_area_destruct(struct cm_area * area) {
@@ -202,5 +204,24 @@ int cm_area_render(
   cm_render_queue_enqueue(queue, &cmd);
 
   return 9;
+}
+
+#define dv(v, d) ((v) ? (v) : (d))
+
+void cm_area_set_tag(struct cm_area * area, const char tag[5]) {
+  char vtag[8] = {
+    dv(tag[0], ' '),
+    dv(tag[1], ' '),
+    dv(tag[2], ' '),
+    dv(tag[3], ' '),
+    dv(tag[4], ' '), '.', ' ', '\0' };
+  vtag[6] = 'l'; cm_value_set_tag(&area->left, vtag);
+  vtag[6] = 't'; cm_value_set_tag(&area->top, vtag);
+  vtag[6] = 'r'; cm_value_set_tag(&area->right, vtag);
+  vtag[6] = 'b'; cm_value_set_tag(&area->bottom, vtag);
+  vtag[6] = 'x'; cm_value_set_tag(&area->center.x, vtag);
+  vtag[6] = 'y'; cm_value_set_tag(&area->center.y, vtag);
+  vtag[6] = 'w'; cm_value_set_tag(&area->width, vtag);
+  vtag[6] = 'h'; cm_value_set_tag(&area->height, vtag);
 }
 

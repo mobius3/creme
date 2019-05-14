@@ -78,6 +78,7 @@ struct cm_value {
   int update_token;
   uint32_t update_seen;
   struct cm_value_reduce reduce;
+  char tag[8];
 };
 
 /**
@@ -293,6 +294,7 @@ CORE_API extern void cm_value_destruct(struct cm_value * value);
 CORE_API extern void
 cm_value_set_reduce(struct cm_value * value, struct cm_value_reduce reduce);
 
+CORE_API extern void cm_value_set_tag(struct cm_value * value, const char tag[8]);
 
 #ifdef __cplusplus
 }

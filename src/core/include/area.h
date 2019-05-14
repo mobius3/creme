@@ -163,6 +163,9 @@ CORE_API extern int cm_area_render(
   struct cm_render_queue * queue,
   struct cm_tile center_tile
 );
+
+CORE_API extern void cm_area_set_tag(struct cm_area * area, char const tag[4]);
+
 #ifdef __cplusplus
 }
 #endif

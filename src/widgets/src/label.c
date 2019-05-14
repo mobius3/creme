@@ -7,8 +7,11 @@ void cmw_label_update_text_size(struct cmw_label * label);
 
 void cmw_label_construct(struct cmw_label * label) {
   cm_area_construct(&label->area);
+  cm_area_set_tag(&label->area, "label");
   cm_value_construct(&label->text_width);
   cm_value_construct(&label->text_height);
+  cm_value_set_tag(&label->text_width, "text.w");
+  cm_value_set_tag(&label->text_height, "text.h");
   label->text_size_fn_data = NULL;
   label->text = NULL;
   label->text_size_fn = NULL;

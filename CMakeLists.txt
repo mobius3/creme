@@ -35,6 +35,7 @@ option(CREME_BUILD_EXTRAS_SDL2 "Build the SDL2 extra (if CMAKE_BUILD_EXTRAS is O
 option(CREME_BUILD_EXTRAS_TRUETYPE "Build the truetype extra (if CMAKE_BUILD_EXTRAS is ON)" ON)
 option(CREME_BUILD_EXAMPLES "Build examples (inside examples/ folder). It will also turn on all extras" OFF)
 option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" ON)
+option(CREME_DEBUG_UPDATE_CYCLE "Prints in the console the update cycle of all cm_values" OFF)
 
 if (CREME_BUILD_EXAMPLES)
   set(CREME_BUILD_EXTRAS ON)

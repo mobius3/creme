@@ -225,13 +225,8 @@ float cm_value_update_with_token(
     value->update_token = token;
     value->update_seen = 0;
   } else if (parent_index != -1 && value->update_seen & (0x1U << (uint32_t)parent_index)) {
-    fprintf(stderr, "\n(update cycle detected)");
-#ifdef CREME_DEBUG_UPDATE_CYCLE
-    assert(
-      (value->update_token != token) &&
-      ((value->update_seen & (0x1 << parent_index)) == 0)
-    );
-    return value->absolute;
+#ifndef CREME_DEBUG_UPDATE_CYCLE
+    fprintf(stderr, "(update cycle detected)\n");
 #endif
   }
 

@@ -3,5 +3,6 @@
 
 #include "frame.h"
 #include "label.h"
+#include "button.h"
 
 #endif /* CREME_CREME_WIDGETS_H */

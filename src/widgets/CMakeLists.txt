@@ -1,6 +1,7 @@
 set(CREME_WIDGETS_VERSION 1.0.0)
 
 set(CREME_WIDGETS_INCLUDE_FILES
+  include/button.h
   include/creme-widgets.h
   include/frame.h
   include/label.h
@@ -8,6 +9,7 @@ set(CREME_WIDGETS_INCLUDE_FILES
 )
 
 set(CREME_WIDGETS_SOURCE_FILES
+  src/button.c
   src/frame.c
   src/label.c
 )

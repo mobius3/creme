@@ -224,15 +224,15 @@ float cm_value_update_with_token(
   if (value->update_token != token) {
     value->update_token = token;
     value->update_seen = 0;
-  } else if (parent_index != -1 && value->update_seen & (0x1 << parent_index)) {
-    fprintf(stderr, "Cyclic update detected.\n");
+  } else if (parent_index != -1 && value->update_seen & (0x1U << (uint32_t)parent_index)) {
+    fprintf(stderr, "\n(update cycle detected)");
 #ifdef CREME_DEBUG_UPDATE_CYCLE
     assert(
       (value->update_token != token) &&
       ((value->update_seen & (0x1 << parent_index)) == 0)
     );
-#endif
     return value->absolute;
+#endif
   }
 
   value->update_seen |= 0x1 << parent_index;
@@ -260,6 +260,13 @@ void cm_value_set_with_token(
   /* prevent changing if absolute is the same */
   if (value->absolute == absolute) return;
   value->absolute = absolute;
+
+#ifdef CREME_DEBUG_UPDATE_CYCLE
+  printf("\n");
+  printf(depth == 0? "+ " : "- ");
+  for (uint64_t t = 0; t < depth; t++) printf("   ");
+  printf("%s[%p] = %.2f", value->tag, (void *)value, value->absolute);
+#endif
   uint16_t i = 0;
   for (i = 0; i < value->downstream_count; i++)
     cm_value_update_with_token(

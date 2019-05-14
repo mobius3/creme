@@ -22,6 +22,7 @@ typedef float (* cm_reduce_fn)(
 struct cm_value_reduce {
   cm_reduce_fn reduce_fn;
   void * reduce_data;
+  char tag[8];
 };
 
 /**

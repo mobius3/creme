@@ -24,12 +24,12 @@ float
 cm_reduce_0_minus_1_fn(float const values[], uint16_t values_count, void * data);
 
 
-struct cm_value_reduce const cm_reduce_first = {cm_reduce_first_fn, NULL};
-struct cm_value_reduce const cm_reduce_average = {cm_reduce_average_fn, NULL};
-struct cm_value_reduce const cm_reduce_max = {cm_reduce_max_fn, NULL};
-struct cm_value_reduce const cm_reduce_min = {cm_reduce_min_fn, NULL};
-struct cm_value_reduce const cm_reduce_sum = {cm_reduce_sum_fn, NULL};
-struct cm_value_reduce const cm_reduce_0_minus_1 = { cm_reduce_0_minus_1_fn, NULL };
+struct cm_value_reduce const cm_reduce_first = {cm_reduce_first_fn, NULL, "first"};
+struct cm_value_reduce const cm_reduce_average = {cm_reduce_average_fn, NULL, "avg"};
+struct cm_value_reduce const cm_reduce_max = {cm_reduce_max_fn, NULL, "max"};
+struct cm_value_reduce const cm_reduce_min = {cm_reduce_min_fn, NULL, "min"};
+struct cm_value_reduce const cm_reduce_sum = {cm_reduce_sum_fn, NULL, "sum"};
+struct cm_value_reduce const cm_reduce_0_minus_1 = { cm_reduce_0_minus_1_fn, NULL, "_0-1_" };
 
 float
 cm_reduce_first_fn(const float * values, uint16_t values_count, void * data) {

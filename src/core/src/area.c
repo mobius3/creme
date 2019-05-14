@@ -12,7 +12,8 @@ float cm_area_reduce_half_size_fn(float const values[], uint16_t values_count, v
 
 struct cm_value_reduce cm_area_reduce_half_size = {
   .reduce_fn = cm_area_reduce_half_size_fn,
-  .reduce_data = NULL
+  .reduce_data = NULL,
+  .tag = "sz/2_"
 };
 
 void cm_area_construct(struct cm_area * area) {

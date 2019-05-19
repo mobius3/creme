@@ -56,3 +56,7 @@ install(TARGETS core
 if (CREME_DEBUG_UPDATE_CYCLE)
   target_compile_definitions(core PRIVATE CREME_DEBUG_UPDATE_CYCLE)
 endif()
+
+if (NOT MSVC)
+  target_link_libraries(core PUBLIC "-lm")
+endif()

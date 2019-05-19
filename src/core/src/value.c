@@ -1,5 +1,5 @@
 #include "value.h"
-
+#include <string.h>
 
 #ifdef CREME_DEBUG_UPDATE_CYCLE
 #include <math.h>
@@ -14,7 +14,7 @@ static void cm_value_set_recursive(
   uint32_t depth
 );
 static float cm_value_calculate_absolute(struct cm_value * value);
-static void cm_value_debug_print(const struct cm_value * value, uint32_t depth);
+static void cm_value_debug_print(const struct cm_value * value, float n, uint32_t depth);
 
 void
 cm_value_construct_reduce(
@@ -179,11 +179,7 @@ cm_value_set_reduce(struct cm_value * value, struct cm_value_reduce reduce) {
 }
 
 void cm_value_set_tag(struct cm_value * value, const char tag[7]) {
-  int i = 0;
-  for (i = 0; i < 7 && tag[i] != 0; i++) {
-    value->tag[i] = tag[i] == 0 ? ' ' : tag[i];
-  }
-  for (; i < 7; i++) value->tag[i] = ' ';
+  strncpy(value->tag, tag, 7);
   value->tag[7] = 0;
 }
 
@@ -197,12 +193,14 @@ void cm_value_update(struct cm_value * value) {
 }
 
 void cm_value_set_recursive(struct cm_value * value, float absolute, int parent_index, uint32_t depth) {
-  if (value->absolute == absolute) return;
-  value->absolute = absolute;
+  if (fabsf(value->absolute - absolute) < 0.1) return;
 
 #ifdef CREME_DEBUG_UPDATE_CYCLE
-  cm_value_debug_print(value, depth);
+  cm_value_debug_print(value, absolute, depth);
 #endif
+
+  value->absolute = absolute;
+
 
   uint32_t parent_bit = 0;
   if (parent_index == -1) {
@@ -228,7 +226,7 @@ void cm_value_set_recursive(struct cm_value * value, float absolute, int parent_
   }
 }
 
-void cm_value_debug_print(const struct cm_value * value, uint32_t depth) {
+void cm_value_debug_print(const struct cm_value * value, float n, uint32_t depth) {
   printf("%*s %s", depth * 2, "", value->tag);
   if (value->upstream_count > 0) {
     printf("::%s(", value->reduce.tag);
@@ -240,9 +238,9 @@ void cm_value_debug_print(const struct cm_value * value, uint32_t depth) {
   }
   printf(" = ");
   if (fabsf(value->offset) > 0) {
-    printf("%.2f + %.2f = ", value->absolute - value->offset, value->offset);
+    printf("%.2f + %.2f = ", n - value->offset, n);
   }
-  printf("%.2f\n", value->absolute);
+  printf("%.2f (was %.2f)\n", n, value->absolute);
 }
 
 float cm_value_calculate_absolute(struct cm_value * value) {

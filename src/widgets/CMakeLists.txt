@@ -38,4 +38,8 @@ install(TARGETS widgets
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/creme/widgets
-  )
+)
+
+if (NOT MSVC)
+  target_link_libraries(widgets PUBLIC "-lm")
+endif()

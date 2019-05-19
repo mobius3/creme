@@ -238,7 +238,7 @@ void cm_value_debug_print(const struct cm_value * value, float n, uint32_t depth
   }
   printf(" = ");
   if (fabsf(value->offset) > 0) {
-    printf("%.2f + %.2f = ", n - value->offset, n);
+    printf("%.2f + %.2f = ", n - value->offset, value->offset);
   }
   printf("%.2f (was %.2f)\n", n, value->absolute);
 }

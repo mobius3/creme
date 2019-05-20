@@ -1,5 +1,7 @@
 #include "value.h"
+
 #include <string.h>
+#include <stdlib.h>
 
 #ifdef CREME_DEBUG_UPDATE_CYCLE
 #include <math.h>
@@ -194,27 +196,34 @@ void cm_value_update(struct cm_value * value) {
 
 void cm_value_set_recursive(struct cm_value * value, float absolute, int parent_index, uint32_t depth) {
   if (fabsf(value->absolute - absolute) < 0.1) return;
+  struct cm_value * parent = NULL;
+  int update_token;
+  if (parent_index != -1) {
+    parent = value->upstream[parent_index];
+    update_token = parent->update_token;
+  } else update_token = rand();
+
+  if (update_token != value->update_token) {
+    value->update_token = update_token;
+    value->visited_count = 0;
+  }
+  if (parent != NULL) value->visited_count++;
+
+  if (value->visited_count > value->upstream_count) {
+#ifdef CREME_DEBUG_UPDATE_CYCLE
+    printf("!!! %*s %s: too many visits in the same update\n", depth* 2 -4, "", value->tag);
+#endif
+    return;
+  }
 
 #ifdef CREME_DEBUG_UPDATE_CYCLE
-  cm_value_debug_print(value, absolute, depth);
+    cm_value_debug_print(value, absolute, depth);
 #endif
 
   value->absolute = absolute;
 
-
-  uint32_t parent_bit = 0;
-  if (parent_index == -1) {
-    value->update_seen = 0;
-    parent_bit = 0;
-  } else parent_bit = 1u << (uint32_t) parent_index;
-
-  if (value->update_seen & parent_bit) {
-    fprintf(stderr, "cyclic update.\n");
-  }
-
   for (uint8_t i = 0; i < value->downstream_count; i++) {
     struct cm_value * downstream = value->downstream[i];
-    if ((value->update_seen & parent_bit) == 0) downstream->update_seen = 0;
     int index_at_downstream = value->index_at_downstream[i];
     float downstream_absolute = cm_value_calculate_absolute(downstream);
     cm_value_set_recursive(

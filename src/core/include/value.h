@@ -76,7 +76,7 @@ struct cm_value {
   uint8_t downstream_count;
   uint8_t index_at_downstream[CREME_MAX_VALUE_DOWNSTREAM];
   int update_token;
-  uint32_t update_seen;
+  uint32_t visited_count;
   struct cm_value_reduce reduce;
   char tag[8];
 };

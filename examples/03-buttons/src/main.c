@@ -62,8 +62,18 @@ int main(int argc, const char * argv[]) {
         .row = 1
       },
       .button = {
-        .column = 7,
-        .row = 1
+        .normal = {
+          .column = 7,
+          .row = 1
+        },
+        .hovered = {
+          .column = 7,
+          .row = 4
+        },
+        .pressed = {
+          .column = 7,
+          .row = 7
+        }
       }
     },
     .tileset_texture = cmx_sdl2_texture_make_from_image_data(
@@ -78,14 +88,35 @@ int main(int argc, const char * argv[]) {
   cmw_frame_construct(&frame);
   cm_area_fill(&frame.area, &context.area, cm_rect_make_inset_of(&cm_rect_zero, 12));
 
-  struct cmw_button button;
-  cmw_button_construct(&button);
-  cmw_button_set_label_size_fn(&button, text_size, &font);
-  cmw_button_set_text(&button, (uint8_t *) "Olá, mundão!");
-  cm_value_link(&button.area.left, &frame.area.center.x, -50);
-  cm_value_link(&button.area.right, &frame.area.center.x, 50);
-  cm_value_link(&button.area.bottom, &frame.area.bottom, -20);
-  cm_value_link(&button.area.top, &frame.area.bottom, -52);
+  struct cmw_button button_normal;
+  cmw_button_construct(&button_normal);
+  cmw_button_set_label_size_fn(&button_normal, text_size, &font);
+  cmw_button_set_text(&button_normal, (uint8_t *) "Normal button");
+  cm_value_link(&button_normal.area.top, &frame.area.center.y, -25);
+  cm_value_link(&button_normal.area.bottom, &frame.area.center.y, 25);
+  cm_value_link(&button_normal.area.left, &frame.area.center.x, -60);
+  cm_value_link(&button_normal.area.right, &frame.area.center.x, 60);
+
+  struct cmw_button button_hover;
+  cmw_button_construct(&button_hover);
+  button_hover.state = cmw_button__state_hovered;
+  cmw_button_set_label_size_fn(&button_hover, text_size, &font);
+  cmw_button_set_text(&button_hover, (uint8_t *) "Hovered button");
+  cm_value_link(&button_hover.area.left, &button_normal.area.left, 0);
+  cm_value_link(&button_hover.area.right, &button_normal.area.right, 0);
+  cm_value_link(&button_hover.area.bottom, &button_normal.area.top, 0);
+  cm_value_link(&button_hover.area.top, &button_hover.area.bottom, -50);
+
+
+  struct cmw_button button_pressed;
+  cmw_button_construct(&button_pressed);
+  button_pressed.state = cmw_button__state_pressed;
+  cmw_button_set_label_size_fn(&button_pressed, text_size, &font);
+  cmw_button_set_text(&button_pressed, (uint8_t *) "Pressed button");
+  cm_value_link(&button_pressed.area.left, &button_normal.area.left, 0);
+  cm_value_link(&button_pressed.area.right, &button_normal.area.right, 0);
+  cm_value_link(&button_pressed.area.top, &button_normal.area.bottom, 0);
+  cm_value_link(&button_pressed.area.bottom, &button_pressed.area.top, 50);
 
   /* main program loop */
   while (!SDL_QuitRequested()) {
@@ -94,7 +125,9 @@ int main(int argc, const char * argv[]) {
     cm_render_queue_flush(&context.queue);
     SDL_RenderClear(context.renderer);
     cmw_frame_render(&frame, &context.tileset, &context.queue);
-    cmw_button_render(&button, &context.tileset, &context.queue);
+    cmw_button_render(&button_normal, &context.tileset, &context.queue);
+    cmw_button_render(&button_hover, &context.tileset, &context.queue);
+    cmw_button_render(&button_pressed, &context.tileset, &context.queue);
     cmx_sdl2_context_render(&context);
     SDL_RenderPresent(context.renderer);
   }

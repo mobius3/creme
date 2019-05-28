@@ -236,6 +236,7 @@ void cm_value_set_recursive(struct cm_value * value, float absolute, int parent_
 }
 
 void cm_value_debug_print(const struct cm_value * value, float n, uint32_t depth) {
+  if (depth == 0) printf("cycle %d\n", value->update_token);
   printf("%*s %s", depth * 2, "", value->tag);
   if (value->upstream_count > 0) {
     printf("::%s(", value->reduce.tag);

@@ -19,7 +19,11 @@ extern "C" {
  */
 struct cm_tileset {
   struct cm_tile frame;
-  struct cm_tile button;
+  struct {
+    struct cm_tile normal;
+    struct cm_tile hovered;
+    struct cm_tile pressed;
+  } button;
 
   uint16_t tile_width;
   uint16_t tile_height;

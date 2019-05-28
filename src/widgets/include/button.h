@@ -8,9 +8,16 @@
 extern "C" {
 #endif
 
+enum cmw_button_state {
+  cmw_button__state_normal,
+  cmw_button__state_hovered,
+  cmw_button__state_pressed
+};
+
 struct cmw_button {
   struct cm_area area;
   struct cmw_label label;
+  enum cmw_button_state state;
 };
 
 WIDGETS_API extern void cmw_button_construct(struct cmw_button * button);
